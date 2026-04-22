@@ -1,15 +1,15 @@
 import Link from "next/link";
 
 const links = [
-  { label: "Privacy", href: "#" },
-  { label: "Terms", href: "#" },
-  { label: "Contact", href: "#" },
+  { label: "Privacy", href: "/privacy" },
+  { label: "Terms", href: "/terms" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export default function Footer() {
   return (
     <footer className="w-full px-4 pb-10 pt-8 sm:px-8 lg:px-12">
-      <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-between gap-5 rounded-3xl border px-6 py-6 sm:flex-row">
+      <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-between gap-5 rounded-3xl px-6 pt-6 sm:flex-row">
         <p className="font-emilys-candy text-2xl">GlamMetrics</p>
 
         <div className="flex items-center gap-6">

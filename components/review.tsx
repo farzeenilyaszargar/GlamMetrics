@@ -242,7 +242,6 @@ export default function Review() {
   return (
     <section className="w-full px-4 py-16 sm:px-8 lg:px-12">
       <div className="mx-auto w-full max-w-6xl">
-        <p className="font-stack-sans-headline text-xs uppercase tracking-[0.2em]">Reviews</p>
 
         <h2 className="mt-4 max-w-3xl font-emilys-candy text-5xl leading-tight sm:text-6xl">What Creators Are Saying</h2>
 

@@ -2,17 +2,27 @@
 
 
 .font-emilys-candy {
-  font-family: "Emily's Candy", serif;
+  font-family: "Emilys Candy", serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
 .font-stack-sans-headline {
-  font-family: "Stack Sans Headline", sans-serif;
+  font-family: "Google Sans Flex", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings:
+    "slnt" 0,
+    "wdth" 100,
+    "GRAD" 0,
+    "ROND" 0;
 }
 
 @keyframes reviewMarqueeDown {
   from {
     transform: translate3d(0, -50%, 0);
   }
+
   to {
     transform: translate3d(0, 0, 0);
   }
@@ -22,6 +32,7 @@
   from {
     transform: translate3d(0, 0, 0);
   }
+
   to {
     transform: translate3d(0, -50%, 0);
   }

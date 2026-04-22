@@ -8,11 +8,10 @@ export default function Trust() {
   return (
     <section className="w-full px-4 py-10 sm:px-8 lg:px-12">
       <div className="mx-auto w-full max-w-6xl">
-        <p className="font-stack-sans-headline text-xs uppercase tracking-[0.2em]">Trusted at scale</p>
 
         <div className="mt-4 grid gap-4 md:grid-cols-3">
           {trustItems.map((item) => (
-            <article key={item.label} className="rounded-2xl border px-5 py-4 shadow-sm">
+            <article key={item.label} className="rounded-2xl text-center  px-5 py-4">
               <p className="font-emilys-candy text-4xl leading-none">{item.value}</p>
               <p className="mt-2 font-stack-sans-headline text-[11px] uppercase tracking-[0.12em]">{item.label}</p>
             </article>

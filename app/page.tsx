@@ -10,8 +10,8 @@ export default function Home() {
     <main className="min-h-screen w-full">
       <Navbar />
       <Hero />
-      <Trust />
       <Features />
+      <Trust />
       <Review />
       <Footer />
     </main>

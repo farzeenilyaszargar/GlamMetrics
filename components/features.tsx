@@ -34,9 +34,8 @@ export default function Features() {
   return (
     <section className="w-full px-4 py-20 sm:px-8 lg:px-12">
       <div className="mx-auto w-full max-w-6xl">
-        <p className="font-stack-sans-headline text-xs uppercase tracking-[0.2em]">Features</p>
 
-        <h2 className="mt-4 max-w-4xl font-emilys-candy text-5xl leading-tight sm:text-6xl lg:text-7xl">
+        <h2 className="mt-4 max-w-4xl font-emilys-candy text-4xl leading-tight sm:text-6xl lg:text-6xl">
           Bigger Insights for Better Beauty Decisions
         </h2>
 
