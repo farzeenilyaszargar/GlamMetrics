@@ -240,7 +240,7 @@ export default function Review() {
   const stackedMobile = [...colOne, ...colTwo, ...colThree];
 
   return (
-    <section className="w-full px-4 py-16 sm:px-8 lg:px-12">
+    <section id="reviews" className="w-full px-4 py-16 sm:px-8 lg:px-12">
       <div className="mx-auto w-full max-w-6xl">
 
         <h2 className="mt-4 max-w-3xl font-emilys-candy text-5xl leading-tight text-[#ED2738] sm:text-6xl">What Creators Are Saying</h2>

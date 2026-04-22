@@ -1,7 +1,10 @@
+import Image from "next/image";
+
 type Feature = {
   title: string;
   description: string;
   detail: string;
+  image: string;
   reverse?: boolean;
 };
 
@@ -11,12 +14,14 @@ const features: Feature[] = [
     description:
       "Understand facial balance and proportions through clear visual breakdowns that help you frame every shot better.",
     detail: "Precise geometry insights for cleaner composition decisions.",
+    image: "/images/f1.png",
   },
   {
     title: "Expression Intelligence",
     description:
       "Identify which expressions look strongest on camera and repeat them consistently across reels, portraits, and campaigns.",
     detail: "Confidence-focused scoring built for camera-first creators.",
+    image: "/images/f2.png",
     reverse: true,
   },
   {
@@ -24,39 +29,27 @@ const features: Feature[] = [
     description:
       "Get practical recommendations for beauty styling and pose direction based on your own face analysis patterns.",
     detail: "Actionable next steps, not generic beauty advice.",
+    image: "/images/f3.png",
   },
 ];
 
-function FeatureVisual() {
+function FeatureVisual({ image, title }: { image: string; title: string }) {
   return (
-    <div className="flex h-full min-h-[240px] items-center justify-center rounded-3xl border border-[#ED2738]/20 bg-[#F7DBE2]/55 p-8 shadow-sm transition-colors duration-300 sm:min-h-[300px]">
-      <div className="relative flex h-full w-full items-center justify-center rounded-2xl border border-[#ED2738]/25 bg-white/80 transition-colors duration-300">
-        <div className="absolute left-6 top-6 h-12 w-12 rounded-full border border-[#ED2738]/30" />
-        <div className="absolute bottom-6 right-6 h-16 w-16 rounded-2xl border border-[#ED2738]/35" />
-        <svg
-          viewBox="0 0 24 24"
-          aria-hidden="true"
-          className="h-12 w-12 text-[#ED2738]"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.8"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <circle cx="12" cy="12" r="7" />
-          <path d="M12 7v5l3 2" />
-        </svg>
-      </div>
-    </div>
+    <Image
+      src={image}
+      alt={title}
+      width={1200}
+      height={900}
+      className="h-full min-h-[240px] w-full rounded-2xl border border-[#F7DBE2] object-cover shadow-sm sm:min-h-[300px]"
+    />
   );
 }
 
 export default function Features() {
   return (
-    <section className="w-full px-4 py-20 sm:px-8 lg:px-12">
+    <section id="features" className="w-full px-4 py-20 sm:px-8 lg:px-12">
       <div className="mx-auto w-full max-w-6xl">
-        <p className="font-stack-sans-headline text-xs uppercase tracking-[0.2em] text-[#ED2738]">Features</p>
-        <h2 className="mt-4 max-w-4xl font-emilys-candy text-5xl leading-tight text-[#ED2738] sm:text-6xl lg:text-7xl">
+        <h2 className="max-w-4xl font-emilys-candy text-5xl leading-tight text-[#ED2738] sm:text-6xl lg:text-7xl">
           Clean, Powerful Features for Everyday Creators
         </h2>
 
@@ -69,12 +62,12 @@ export default function Features() {
               }`}
             >
               <div className="lg:w-1/2">
-                <FeatureVisual />
+                <FeatureVisual image={feature.image} title={feature.title} />
               </div>
 
               <div className="flex lg:w-1/2 lg:items-center">
                 <div>
-                  <h3 className="font-stack-sans-headline text-sm uppercase tracking-[0.14em] text-[#ED2738]">{feature.title}</h3>
+                  <h3 className="font-emilys-candy text-4xl leading-tight text-[#ED2738] sm:text-5xl">{feature.title}</h3>
                   <p className="mt-4 text-lg leading-relaxed text-black/85 sm:text-xl">{feature.description}</p>
                   <p className="mt-4 font-stack-sans-headline text-xs uppercase tracking-[0.12em] text-[#ED2738]/80">{feature.detail}</p>
                 </div>

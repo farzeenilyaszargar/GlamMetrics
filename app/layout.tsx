@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Emilys_Candy, Stack_Sans_Headline } from "next/font/google";
+import { Emilys_Candy, Manrope } from "next/font/google";
 import "./globals.css";
 
 export const emilysCandy = Emilys_Candy({
@@ -8,14 +8,14 @@ export const emilysCandy = Emilys_Candy({
   variable: "--font-emilys-candy",
 });
 
-export const stackSansHeadline = Stack_Sans_Headline({
+export const stackSansHeadline = Manrope({
   subsets: ["latin"],
-  weight: "400",
+  weight: ["400", "500", "600", "700"],
   variable: "--font-stack-sans-headline",
 });
 
 export const metadata: Metadata = {
-  title: "GlamMetrics | A Glamorous Face Analysis Tool",
+  title: "GlamMetrics | Get Your Glamorous Face and Fashion Analysis",
   description: "GlamMetrics is a cutting-edge face analysis tool that provides detailed insights into facial features, expressions, and emotions. With its advanced algorithms and user-friendly interface, GlamMetrics helps users understand and analyze facial data for various applications, including beauty, fashion, and social media.",
   keywords: [
     "face analysis",
