@@ -7,7 +7,7 @@ import Trust from "@/components/trust";
 
 export default function Home() {
   return (
-    <main className="min-h-screen w-full">
+    <main className="min-h-screen w-full bg-gradient-to-b from-[#F7DBE2]/70 via-white to-[#fff9fa] pt-24">
       <Navbar />
       <Hero />
       <Features />

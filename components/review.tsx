@@ -175,7 +175,7 @@ const colThree: Review[] = [
 
 function StarRow({ stars }: { stars: number }) {
   return (
-    <p className="font-stack-sans-headline text-sm tracking-[0.08em]" aria-label={`${stars} out of 5 stars`}>
+    <p className="font-stack-sans-headline text-sm tracking-[0.08em] text-[#ED2738]" aria-label={`${stars} out of 5 stars`}>
       {"★".repeat(stars)}{"☆".repeat(5 - stars)}
     </p>
   );
@@ -191,10 +191,10 @@ function Stat({ label, value }: { label: string; value: string }) {
 
 function ReviewCard({ review }: { review: Review }) {
   return (
-    <article className={`rounded-3xl border p-5 shadow-sm sm:p-6 ${review.size}`}>
+    <article className={`rounded-3xl border border-[#ED2738]/20 bg-white p-5 shadow-sm transition-colors duration-300 hover:border-[#ED2738]/45 hover:bg-[#fff8fa] sm:p-6 ${review.size}`}>
       <header className="flex items-start justify-between gap-4">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-full border font-stack-sans-headline text-xs uppercase tracking-[0.08em]">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full border border-[#ED2738]/30 bg-[#F7DBE2] font-stack-sans-headline text-xs uppercase tracking-[0.08em] text-[#ED2738]">
             {review.name
               .split(" ")
               .map((part) => part[0])
@@ -202,18 +202,18 @@ function ReviewCard({ review }: { review: Review }) {
               .slice(0, 2)}
           </div>
           <div>
-            <p className="font-stack-sans-headline text-xs uppercase tracking-[0.1em]">{review.name}</p>
+            <p className="font-stack-sans-headline text-xs uppercase tracking-[0.1em] text-black">{review.name}</p>
             <p className="text-sm opacity-75">{review.handle}</p>
           </div>
         </div>
-        <p className="font-stack-sans-headline text-xs uppercase tracking-[0.12em]">X</p>
+        <p className="font-stack-sans-headline text-xs uppercase tracking-[0.12em] text-[#ED2738]">X</p>
       </header>
 
       <p className="mt-4 text-base leading-relaxed">{review.quote}</p>
 
       <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
         <StarRow stars={review.stars} />
-        <p className="font-stack-sans-headline text-[11px] uppercase tracking-[0.12em]">{review.role}</p>
+        <p className="font-stack-sans-headline text-[11px] uppercase tracking-[0.12em] text-[#ED2738]/80">{review.role}</p>
       </div>
 
       <footer className="mt-5 flex flex-wrap items-center gap-4">
@@ -243,7 +243,7 @@ export default function Review() {
     <section className="w-full px-4 py-16 sm:px-8 lg:px-12">
       <div className="mx-auto w-full max-w-6xl">
 
-        <h2 className="mt-4 max-w-3xl font-emilys-candy text-5xl leading-tight sm:text-6xl">What Creators Are Saying</h2>
+        <h2 className="mt-4 max-w-3xl font-emilys-candy text-5xl leading-tight text-[#ED2738] sm:text-6xl">What Creators Are Saying</h2>
 
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:hidden">
           {stackedMobile.map((review) => (

@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+body {
+  background: linear-gradient(180deg, #fff6f8 0%, #ffffff 38%, #fff9fa 100%);
+  color: #111111;
+}
 
 .font-emilys-candy {
   font-family: "Emilys Candy", serif;
