@@ -2,9 +2,46 @@
 
 
 .font-emilys-candy {
-  font-family: "Emily's Candy", cursive;
+  font-family: "Emily's Candy", serif;
 }
 
 .font-stack-sans-headline {
   font-family: "Stack Sans Headline", sans-serif;
+}
+
+@keyframes reviewMarqueeDown {
+  from {
+    transform: translate3d(0, -50%, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes reviewMarqueeUp {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, -50%, 0);
+  }
+}
+
+.review-marquee-shell {
+  mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+}
+
+.review-marquee-track {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  will-change: transform;
+}
+
+.review-marquee-down {
+  animation: reviewMarqueeDown 52s linear infinite;
+}
+
+.review-marquee-up {
+  animation: reviewMarqueeUp 52s linear infinite;
 }
