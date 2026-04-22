@@ -56,6 +56,8 @@ function mapAuthError(error: FirebaseError) {
       return "This domain is not authorized in Firebase. In Firebase Console > Authentication > Settings > Authorized domains, add your current domain (for local dev, add localhost and 127.0.0.1).";
     case "auth/operation-not-allowed":
       return "This sign-in method is disabled. In Firebase Console > Authentication > Sign-in method, enable Google and/or Email/Password.";
+    case "auth/configuration-not-found":
+      return "Google sign-in configuration is missing in Firebase. In Firebase Console > Authentication > Sign-in method, enable Google, set a support email, and save. Then add your domain in Authentication > Settings > Authorized domains.";
     case "auth/popup-blocked":
       return "Popup was blocked by the browser. Allow popups for this site or try again.";
     case "auth/popup-closed-by-user":
@@ -204,11 +206,17 @@ export default function AuthPage() {
               <button
                 onClick={handleGoogleSignIn}
                 disabled={!hasFirebaseConfig || loading}
-                className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-[#ED2738] bg-white px-5 py-3 text-sm font-medium text-black transition-colors hover:bg-[#F7DBE2] disabled:cursor-not-allowed disabled:opacity-60"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-[#ED2738] bg-white px-5 py-3 text-sm font-medium text-black transition-colors hover:bg-[#F7DBE2] disabled:cursor-not-allowed disabled:opacity-60"
               >
                 <GoogleIcon />
                 Continue with Google
               </button>
+
+              <div className="flex items-center gap-3">
+                <div className="h-px flex-1 bg-[#ED2738]/20" />
+                <span className="text-xs text-black/55">or</span>
+                <div className="h-px flex-1 bg-[#ED2738]/20" />
+              </div>
 
               <div className="grid gap-3">
                 <input

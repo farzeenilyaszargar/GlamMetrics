@@ -15,9 +15,6 @@ export default function ContactPage() {
             <p>
               Email: <a href="mailto:hello@glammetrics.com" className="font-medium text-[#ED2738] underline underline-offset-4 hover:text-black">hello@glammetrics.com</a>
             </p>
-            <p>
-              Press: <a href="mailto:press@glammetrics.com" className="font-medium text-[#ED2738] underline underline-offset-4 hover:text-black">press@glammetrics.com</a>
-            </p>
             <p>Response time: usually within 24-48 hours on business days.</p>
           </div>
         </div>

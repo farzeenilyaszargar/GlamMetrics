@@ -40,6 +40,7 @@ function FeatureVisual({ image, title }: { image: string; title: string }) {
       alt={title}
       width={1200}
       height={900}
+      loading="eager"
       className="h-full min-h-[240px] w-full rounded-2xl border border-[#F7DBE2] object-cover shadow-sm sm:min-h-[300px]"
     />
   );
@@ -49,8 +50,8 @@ export default function Features() {
   return (
     <section id="features" className="w-full px-4 py-20 sm:px-8 lg:px-12">
       <div className="mx-auto w-full max-w-6xl">
-        <h2 className="max-w-4xl font-emilys-candy text-5xl leading-tight text-[#ED2738] sm:text-6xl lg:text-7xl">
-          Clean, Powerful Features for Everyday Creators
+        <h2 className="font-emilys-candy text-5xl leading-tight  text-[#ED2738] sm:text-6xl lg:text-6xl">
+          Clean & Powerful Features For You
         </h2>
 
         <div className="mt-12 space-y-8">
