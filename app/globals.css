@@ -1,1 +1,10 @@
 @import "tailwindcss";
+
+
+.font-emilys-candy {
+  font-family: "Emily's Candy", cursive;
+}
+
+.font-stack-sans-headline {
+  font-family: "Stack Sans Headline", sans-serif;
+}
