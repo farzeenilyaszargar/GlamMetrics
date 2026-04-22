@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   browserLocalPersistence,
   createUserWithEmailAndPassword,
@@ -83,6 +84,7 @@ function mapAuthError(error: FirebaseError) {
 }
 
 export default function AuthPage() {
+  const router = useRouter();
   const [mode, setMode] = useState<AuthMode>("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -121,9 +123,11 @@ export default function AuthPage() {
       if (mode === "signin") {
         await signInWithEmailAndPassword(auth, email, password);
         setNotice({ kind: "success", text: "Signed in successfully." });
+        router.push("/profile");
       } else {
         await createUserWithEmailAndPassword(auth, email, password);
         setNotice({ kind: "success", text: "Account created successfully." });
+        router.push("/profile");
       }
     } catch (err) {
       const error = err as FirebaseError;
@@ -142,6 +146,7 @@ export default function AuthPage() {
       googleProvider.setCustomParameters({ prompt: "select_account" });
       await signInWithPopup(auth, googleProvider);
       setNotice({ kind: "success", text: "Signed in with Google." });
+      router.push("/profile");
     } catch (err) {
       const error = err as FirebaseError;
 

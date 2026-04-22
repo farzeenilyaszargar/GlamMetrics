@@ -9,7 +9,7 @@ import Trust from "@/components/trust";
 
 export default function Home() {
   return (
-    <main id="top" className="flex min-h-screen w-full flex-col gap-6 bg-gradient-to-b from-[#F7DBE2]/70 via-white to-[#fff9fa] pt-24 sm:gap-8">
+    <main id="top" className="flex min-h-screen w-full flex-col gap-6 bg-[#FBD4D7] pt-24 sm:gap-8">
       <Navbar />
       <Hero />
       <HowItWorks />

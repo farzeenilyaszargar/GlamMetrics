@@ -1,4 +1,7 @@
-import Image from "next/image";
+"use client";
+
+import { auth } from "@/lib/firebase";
+import { addUserHistory } from "@/lib/user-profile-store";
 
 function CameraIcon() {
   return (
@@ -39,22 +42,29 @@ function UploadIcon() {
 
 function HeroVisual() {
   return (
-    <div className="relative mx-auto w-full rounded-2xl border border-[#F7DBE2] shadow-sm">
-        <Image
-          src="/images/hero.png"
-          alt="GlamMetrics hero visual"
-          width={1200}
-          height={961}
-          className="h-auto w-full object-cover rounded-2xl"
-          priority
-        />
+    <div className="invisible mx-auto h-full w-full rounded-2xl" aria-hidden="true">
     </div>
   );
 }
 
 export default function Hero() {
+  const handleTakePhoto = () => {
+    if (auth?.currentUser) {
+      addUserHistory(auth.currentUser.uid, "Clicked Take Photo");
+    }
+  };
+
+  const handleUploadPhoto = () => {
+    if (auth?.currentUser) {
+      addUserHistory(auth.currentUser.uid, "Clicked Upload Photo");
+    }
+  };
+
   return (
-    <section id="hero" className="w-full px-4 pb-16 pt-14 sm:px-8 lg:px-12">
+    <section
+      id="hero"
+      className="w-full bg-[url('/images/bg.png')] bg-cover bg-center bg-no-repeat px-4 pt-14 py-30 sm:px-8 lg:px-12"
+    >
       <div className="mx-auto grid w-full max-w-6xl gap-10 lg:grid-cols-2 lg:items-center">
         <div className="text-center lg:text-left">
           <h1 className="leading-tight">
@@ -71,14 +81,20 @@ export default function Hero() {
           </p>
 
           <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center lg:justify-start">
-            <button className="inline-flex min-w-44 items-center justify-center rounded-full border border-[#ED2738] bg-[#ED2738] px-6 py-3 text-base font-medium text-white transition-transform hover:-translate-y-0.5 hover:border-[#c61f2f] hover:bg-[#c61f2f] hover:text-white">
+            <button
+              onClick={handleTakePhoto}
+              className="inline-flex min-w-44 items-center justify-center rounded-full border border-[#ED2738] bg-[#ED2738] px-6 py-3 text-base font-medium text-white transition-transform hover:-translate-y-0.5 hover:border-[#c61f2f] hover:bg-[#c61f2f] hover:text-white"
+            >
               Take Photo
               <span className="text-white">
                 <CameraIcon />
               </span>
             </button>
 
-            <button className="inline-flex min-w-44 items-center justify-center rounded-full border border-[#ED2738] bg-white px-6 py-3 text-base font-medium text-black transition-transform hover:-translate-y-0.5 hover:border-[#ED2738] hover:bg-[#F7DBE2] hover:text-[#ED2738]">
+            <button
+              onClick={handleUploadPhoto}
+              className="inline-flex min-w-44 items-center justify-center rounded-full border border-[#ED2738] bg-white px-6 py-3 text-base font-medium text-black transition-transform hover:-translate-y-0.5 hover:border-[#ED2738] hover:bg-[#F7DBE2] hover:text-[#ED2738]"
+            >
               Upload Photo
               <span className="text-black">
                 <UploadIcon />

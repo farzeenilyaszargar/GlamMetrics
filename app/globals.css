@@ -5,7 +5,7 @@ html {
 }
 
 body {
-  background: linear-gradient(180deg, #fff6f8 0%, #ffffff 38%, #fff9fa 100%);
+  background: #fefefe;
   color: #111111;
   font-family: var(--font-stack-sans-headline), sans-serif;
 }

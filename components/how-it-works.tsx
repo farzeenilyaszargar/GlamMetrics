@@ -15,8 +15,8 @@ const steps = [
 
 export default function HowItWorks() {
   return (
-    <section id="how-it-works" className="w-full px-4 py-14 sm:px-8 lg:px-12">
-      <div className="mx-auto w-full max-w-6xl rounded-3xl border border-[#ED2738]/20 bg-white p-7 shadow-sm sm:p-10">
+    <section id="how-it-works" className="w-full px-4 sm:px-8 lg:px-12">
+      <div className="mx-auto w-full max-w-6xl rounded-3xl border border-[#ED2738]/20 bg-white p-7 pt-0 shadow-sm sm:p-10">
         <h2 className="font-emilys-candy text-5xl leading-tight text-[#ED2738] sm:text-6xl">How it works</h2>
 
         <div className="mt-8 grid gap-4 md:grid-cols-3">
