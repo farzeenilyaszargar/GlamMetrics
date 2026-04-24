@@ -158,20 +158,20 @@ export default function AnalysisPage() {
       <section className="w-full flex-1 px-4 py-10 sm:px-8 lg:px-12">
         <div className="mx-auto grid w-full max-w-6xl gap-6 lg:grid-cols-[1.1fr_1fr]">
           <div className="rounded-2xl border border-[#ED2738]/15 bg-white p-4 shadow-[0_14px_38px_rgba(15,23,42,0.08)] sm:p-6">
-            <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+            <div className="mb-4 flex flex-wrap items-center justify-between gap-3 max-sm:items-start">
               <h1 className="text-2xl font-semibold tracking-tight text-black sm:text-3xl">Your Analysis</h1>
-              <div className="flex gap-2">
+              <div className="flex gap-2 max-sm:w-full max-sm:flex-col">
                 <button
                   type="button"
                   onClick={() => uploadInputRef.current?.click()}
-                  className="rounded-full border border-[#ED2738] bg-[#ED2738] px-4 py-2 text-sm font-medium text-white hover:bg-[#c61f2f]"
+                  className="rounded-full border border-[#ED2738] bg-[#ED2738] px-4 py-2 text-sm font-medium text-white hover:bg-[#c61f2f] max-sm:w-full"
                 >
                   Upload another
                 </button>
                 <button
                   type="button"
                   onClick={clearAndReturnHome}
-                  className="rounded-full border border-black/20 bg-white px-4 py-2 text-sm font-medium text-black hover:bg-[#F7DBE2]"
+                  className="rounded-full border border-black/20 bg-white px-4 py-2 text-sm font-medium text-black hover:bg-[#F7DBE2] max-sm:w-full"
                 >
                   Back home
                 </button>

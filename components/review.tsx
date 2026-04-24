@@ -191,7 +191,7 @@ function Stat({ label, value }: { label: string; value: string }) {
 
 function ReviewCard({ review }: { review: Review }) {
   return (
-    <article className={`rounded-3xl border border-[#ED2738]/20 bg-white p-5 shadow-sm transition-colors duration-300 hover:border-[#ED2738]/45 hover:bg-[#fff8fa] sm:p-6 ${review.size}`}>
+    <article className={`rounded-3xl border border-[#ED2738]/20 bg-white p-5 shadow-sm transition-colors duration-300 hover:border-[#ED2738]/45 hover:bg-[#fff8fa] max-sm:min-h-0 max-sm:p-4 sm:p-6 ${review.size}`}>
       <header className="flex items-start justify-between gap-4">
         <div className="flex items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-full border border-[#ED2738]/30 bg-[#F7DBE2] font-stack-sans-headline text-xs uppercase tracking-[0.08em] text-[#ED2738]">
@@ -240,12 +240,12 @@ export default function Review() {
   const stackedMobile = [...colOne, ...colTwo, ...colThree];
 
   return (
-    <section id="reviews" className="w-full px-4 py-16 sm:px-8 lg:px-12">
+    <section id="reviews" className="w-full px-4 py-16 max-sm:py-12 sm:px-8 lg:px-12">
       <div className="mx-auto w-full max-w-6xl">
 
-        <h2 className="mt-4 max-w-3xl font-emilys-candy text-5xl leading-tight text-[#ED2738] sm:text-6xl">What Creators Are Saying</h2>
+        <h2 className="mt-4 max-w-3xl font-emilys-candy text-5xl leading-tight text-[#ED2738] max-sm:text-4xl sm:text-6xl">What Creators Are Saying</h2>
 
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:hidden">
+        <div className="mt-10 grid gap-6 max-sm:mt-7 max-sm:gap-4 sm:grid-cols-2 lg:hidden">
           {stackedMobile.map((review) => (
             <ReviewCard key={`mobile-${review.handle}`} review={review} />
           ))}

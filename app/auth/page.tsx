@@ -178,7 +178,7 @@ export default function AuthPage() {
 
       <section className="w-full flex-1 px-4 py-14 sm:px-8 lg:px-12">
         <div className="mx-auto w-full max-w-md rounded-3xl border border-[#ED2738]/20 bg-white p-7 shadow-sm sm:p-10">
-          <h1 className="font-emilys-candy text-5xl leading-tight text-[#ED2738] sm:text-6xl">{title}</h1>
+          <h1 className="font-emilys-candy text-5xl leading-tight text-[#ED2738] max-sm:text-4xl sm:text-6xl">{title}</h1>
           <p className="mt-3 text-sm text-black/70">Use Google or email/password to continue.</p>
 
           {!hasFirebaseConfig ? (
@@ -191,16 +191,16 @@ export default function AuthPage() {
             <div className="mt-6 rounded-2xl border border-[#ED2738]/20 bg-[#F7DBE2]/40 p-4">
               <p className="text-sm text-black/75">Signed in as</p>
               <p className="mt-1 text-sm font-semibold text-black">{user.email}</p>
-              <div className="mt-4 flex gap-2">
+              <div className="mt-4 flex gap-2 max-sm:flex-col">
                 <Link
                   href="/"
-                  className="inline-flex items-center justify-center rounded-full border border-[#ED2738] bg-[#ED2738] px-4 py-2 text-xs font-medium text-white transition-colors hover:bg-black"
+                  className="inline-flex items-center justify-center rounded-full border border-[#ED2738] bg-[#ED2738] px-4 py-2 text-xs font-medium text-white transition-colors hover:bg-black max-sm:w-full"
                 >
                   Go to home
                 </Link>
                 <button
                   onClick={handleSignOut}
-                  className="inline-flex items-center justify-center rounded-full border border-[#ED2738] bg-white px-4 py-2 text-xs font-medium text-black transition-colors hover:bg-[#F7DBE2]"
+                  className="inline-flex items-center justify-center rounded-full border border-[#ED2738] bg-white px-4 py-2 text-xs font-medium text-black transition-colors hover:bg-[#F7DBE2] max-sm:w-full"
                 >
                   Sign out
                 </button>

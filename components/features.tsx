@@ -48,17 +48,17 @@ function FeatureVisual({ image, title }: { image: string; title: string }) {
 
 export default function Features() {
   return (
-    <section id="features" className="w-full px-4 py-20 sm:px-8 lg:px-12">
+    <section id="features" className="w-full px-4 py-20 max-sm:py-12 sm:px-8 lg:px-12">
       <div className="mx-auto w-full max-w-6xl">
-        <h2 className="font-emilys-candy text-5xl leading-tight  text-[#ED2738] sm:text-6xl lg:text-6xl">
+        <h2 className="font-emilys-candy text-5xl leading-tight text-[#ED2738] max-sm:text-4xl sm:text-6xl lg:text-6xl">
           Clean & Powerful Features For You
         </h2>
 
-        <div className="mt-12 space-y-8">
+        <div className="mt-12 space-y-8 max-sm:mt-8 max-sm:space-y-6">
           {features.map((feature) => (
             <article
               key={feature.title}
-              className={`flex flex-col gap-6 rounded-3xl border border-[#ED2738]/20 bg-white p-6 shadow-sm transition-colors duration-300 hover:border-[#ED2738]/45 hover:bg-[#fff8fa] sm:p-8 lg:items-stretch lg:gap-10 ${
+              className={`flex flex-col gap-6 rounded-3xl border border-[#ED2738]/20 bg-white p-6 shadow-sm transition-colors duration-300 hover:border-[#ED2738]/45 hover:bg-[#fff8fa] max-sm:gap-4 max-sm:p-4 sm:p-8 lg:items-stretch lg:gap-10 ${
                 feature.reverse ? "lg:flex-row-reverse" : "lg:flex-row"
               }`}
             >
@@ -68,8 +68,8 @@ export default function Features() {
 
               <div className="flex lg:w-1/2 lg:items-center">
                 <div>
-                  <h3 className="font-emilys-candy text-4xl leading-tight text-[#ED2738] sm:text-5xl">{feature.title}</h3>
-                  <p className="mt-4 text-lg leading-relaxed text-black/85 sm:text-xl">{feature.description}</p>
+                  <h3 className="font-emilys-candy text-4xl leading-tight text-[#ED2738] max-sm:text-3xl sm:text-5xl">{feature.title}</h3>
+                  <p className="mt-4 text-lg leading-relaxed text-black/85 max-sm:mt-3 max-sm:text-base sm:text-xl">{feature.description}</p>
                   <p className="mt-4 font-stack-sans-headline text-xs uppercase tracking-[0.12em] text-[#ED2738]/80">{feature.detail}</p>
                 </div>
               </div>

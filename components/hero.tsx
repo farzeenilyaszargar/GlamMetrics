@@ -198,27 +198,27 @@ export default function Hero() {
     <>
       <section
         id="hero"
-        className="w-full bg-[url('/images/bg.png')] bg-cover bg-center bg-no-repeat px-4 py-30 pt-14 sm:px-8 lg:px-12"
+        className="w-full bg-[url('/images/bg.png')] bg-cover bg-center bg-no-repeat px-4 py-30 pt-14 max-sm:py-16 max-sm:pt-6 sm:px-8 lg:px-12"
       >
-        <div className="mx-auto grid w-full max-w-6xl gap-10 lg:grid-cols-2 lg:items-center">
+        <div className="mx-auto grid w-full max-w-6xl gap-10 max-sm:gap-7 lg:grid-cols-2 lg:items-center">
           <div className="text-center lg:text-left">
             <h1 className="leading-tight">
-              <span className="font-stack-sans-headline text-3xl uppercase tracking-[0.08em] text-black sm:text-4xl">
+              <span className="font-stack-sans-headline text-3xl uppercase tracking-[0.08em] text-black max-sm:text-[1.7rem] sm:text-4xl">
                 Unleash Your Inner
               </span>
-              <span className="mt-3 block font-emilys-candy text-7xl leading-[0.95] text-[#ED2738] sm:text-8xl md:text-9xl">
+              <span className="mt-3 block font-emilys-candy text-7xl leading-[0.95] text-[#ED2738] max-sm:text-6xl sm:text-8xl md:text-9xl">
                 Glamour
               </span>
             </h1>
 
-            <p className="mt-7 max-w-2xl text-base leading-relaxed text-black/75 lg:max-w-xl">
+            <p className="mt-7 max-w-2xl text-base leading-relaxed text-black/75 max-sm:mt-5 max-sm:text-[15px] lg:max-w-xl">
               GlamMetrics helps you find your best angles and expressions for faster, more confident beauty and content decisions.
             </p>
 
-            <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center lg:justify-start">
+            <div className="mt-10 flex flex-col items-center gap-4 max-sm:mt-7 max-sm:items-stretch sm:flex-row sm:justify-center lg:justify-start">
               <button
                 onClick={openCameraOverlay}
-                className="inline-flex min-w-44 items-center justify-center rounded-full border border-[#ED2738] bg-[#ED2738] px-6 py-3 text-base font-medium text-white transition-transform hover:-translate-y-0.5 hover:border-[#c61f2f] hover:bg-[#c61f2f] hover:text-white"
+                className="inline-flex min-w-44 items-center justify-center rounded-full border border-[#ED2738] bg-[#ED2738] px-6 py-3 text-base font-medium text-white transition-transform hover:-translate-y-0.5 hover:border-[#c61f2f] hover:bg-[#c61f2f] hover:text-white max-sm:w-full max-sm:min-w-0"
               >
                 Take Photo
                 <span className="text-white">
@@ -228,7 +228,7 @@ export default function Hero() {
 
               <button
                 onClick={() => uploadInputRef.current?.click()}
-                className="inline-flex min-w-44 items-center justify-center rounded-full border border-[#ED2738] bg-white px-6 py-3 text-base font-medium text-black transition-transform hover:-translate-y-0.5 hover:border-[#ED2738] hover:bg-[#F7DBE2] hover:text-[#ED2738]"
+                className="inline-flex min-w-44 items-center justify-center rounded-full border border-[#ED2738] bg-white px-6 py-3 text-base font-medium text-black transition-transform hover:-translate-y-0.5 hover:border-[#ED2738] hover:bg-[#F7DBE2] hover:text-[#ED2738] max-sm:w-full max-sm:min-w-0"
               >
                 Upload Photo
                 <span className="text-black">
@@ -251,7 +251,7 @@ export default function Hero() {
 
       {cameraOpen ? (
         <div className="fixed inset-0 z-[120] flex items-center justify-center bg-black/70 px-4">
-          <div className="w-full max-w-2xl rounded-2xl border border-[#ED2738]/30 bg-white p-5 shadow-[0_20px_70px_rgba(0,0,0,0.25)] sm:p-6">
+          <div className="w-full max-w-2xl rounded-2xl border border-[#ED2738]/30 bg-white p-5 shadow-[0_20px_70px_rgba(0,0,0,0.25)] max-sm:max-h-[92vh] max-sm:overflow-y-auto max-sm:p-4 sm:p-6">
             <div className="mb-4 flex items-center justify-between">
               <h2 className="text-lg font-semibold text-black">Take Photo</h2>
               <button
@@ -265,9 +265,9 @@ export default function Hero() {
 
             <div className="overflow-hidden rounded-xl border border-[#ED2738]/20 bg-black">
               {capturedImage ? (
-                <img src={capturedImage} alt="Captured preview" className="h-[320px] w-full object-cover sm:h-[420px]" />
+                <img src={capturedImage} alt="Captured preview" className="h-[320px] w-full object-cover max-sm:h-[250px] sm:h-[420px]" />
               ) : (
-                <video ref={videoRef} playsInline muted className="h-[320px] w-full object-cover sm:h-[420px]" />
+                <video ref={videoRef} playsInline muted className="h-[320px] w-full object-cover max-sm:h-[250px] sm:h-[420px]" />
               )}
             </div>
 

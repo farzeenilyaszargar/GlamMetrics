@@ -9,10 +9,10 @@ const links = [
 export default function Footer() {
   return (
     <footer className="w-full border-t border-[#ED2738]/20 bg-black">
-      <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-between gap-5 py-8 sm:flex-row">
+      <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-between gap-5 py-8 max-sm:px-4 sm:flex-row">
         <p className="font-emilys-candy text-2xl text-[#F7DBE2]">GlamMetrics</p>
 
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-6 max-sm:gap-4">
           {links.map((link) => (
             <Link
               key={link.label}

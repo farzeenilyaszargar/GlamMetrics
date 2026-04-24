@@ -304,7 +304,7 @@ export default function ProfilePage() {
             <div className="flex flex-col gap-6">
               <div className="rounded-2xl border border-[#ED2738]/10 bg-gradient-to-r from-[#fff6f8] to-white p-6 shadow-[0_8px_28px_rgba(15,23,42,0.06)]">
                 <div className="flex flex-col gap-4">
-                  <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-4 max-sm:flex-col max-sm:items-start">
                     <ProfileAvatar user={user} />
                     <div>
                       <h1 className="text-2xl font-semibold tracking-tight text-black sm:text-3xl">
