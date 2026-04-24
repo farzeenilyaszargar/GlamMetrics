@@ -237,7 +237,7 @@ function MarqueeColumn({ reviews, direction }: { reviews: Review[]; direction: "
 }
 
 export default function Review() {
-  const stackedMobile = [...colOne, ...colTwo, ...colThree];
+  const stackedMobile = [...colOne, ...colTwo, ...colThree].slice(0, 3);
 
   return (
     <section id="reviews" className="w-full px-4 py-16 max-sm:py-12 sm:px-8 lg:px-12">

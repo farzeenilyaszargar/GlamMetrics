@@ -198,7 +198,7 @@ export default function Hero() {
     <>
       <section
         id="hero"
-        className="w-full bg-[url('/images/bg.png')] bg-cover bg-center bg-no-repeat px-4 py-30 pt-14 max-sm:py-16 max-sm:pt-6 sm:px-8 lg:px-12"
+        className="w-full bg-[url('/images/bg.png')] bg-cover bg-center bg-no-repeat px-4 py-30 pt-14 max-sm:bg-none max-sm:py-16 max-sm:pt-6 sm:px-8 lg:px-12"
       >
         <div className="mx-auto grid w-full max-w-6xl gap-10 max-sm:gap-7 lg:grid-cols-2 lg:items-center">
           <div className="text-center lg:text-left">
