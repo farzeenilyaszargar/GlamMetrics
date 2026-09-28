@@ -3,7 +3,6 @@ export default function Contact() {
   const email = process.env.NEXT_PUBLIC_SUPPORT_EMAIL;
   return (
     <main id="main" className="wrap page-space legal">
-      <span className="eyebrow">WE’RE HERE FOR YOUR STYLE JOURNEY</span>
       <h1>
         Let’s <em>talk.</em>
       </h1>

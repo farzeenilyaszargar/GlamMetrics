@@ -5,9 +5,8 @@ export default function Footer() {
       <div>
         <Link className="wordmark" href="/">
           glam<span>metrics</span>
-          <i>✳</i>
         </Link>
-        <p>A little guidance. Entirely your style.</p>
+        <p>Your style. Turned up.</p>
       </div>
       <div className="footer-links">
         <Link href="/pricing">Plans</Link>
@@ -16,10 +15,7 @@ export default function Footer() {
         <Link href="/refunds">Refunds</Link>
         <Link href="/contact">Contact</Link>
       </div>
-      <small>
-        © {new Date().getFullYear()} GlamMetrics · Made for your kind of
-        beautiful.
-      </small>
+      <small>© {new Date().getFullYear()} GlamMetrics</small>
     </footer>
   );
 }

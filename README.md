@@ -37,4 +37,6 @@ See [RELEASE.md](RELEASE.md) for verified checks and remaining launch dependenci
 
 ## Visual asset provenance
 
+The dark fashion design uses a new generated campaign photograph at `public/images/street-edit.png`. Its full prompt and provenance are recorded in `public/images/ASSETS.md`.
+
 `public/images/editorial.png` was generated with the built-in image generation tool. Prompt: portrait fashion editorial of an adult Indian woman in a dusty rose silk saree, delicate gold earrings and a small handbag, in a sunlit ivory courtyard; natural skin texture, warm film-like light, clear outfit detail, no text/logos/overlays. This is illustrative imagery, not a customer testimonial. The sample score is explicitly labelled as an example.

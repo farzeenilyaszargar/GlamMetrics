@@ -3,13 +3,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Script from "next/script";
 import { useRouter } from "next/navigation";
-import {
-  Check,
-  Sparkles,
-  ArrowRight,
-  ShieldCheck,
-  LoaderCircle,
-} from "lucide-react";
+import { Check, ArrowRight, ShieldCheck, LoaderCircle } from "lucide-react";
 import { useSession } from "@/components/session";
 import { api } from "@/lib/supabase";
 type PaymentReply = {
@@ -61,7 +55,7 @@ export default function Pricing() {
         name: "GlamMetrics",
         description: "Style Circle · ₹99/month · 10 reviews",
         prefill: { email: d.email },
-        theme: { color: "#65384b" },
+        theme: { color: "#171717" },
         modal: {
           ondismiss: () => {
             setBusy(false);
@@ -109,24 +103,16 @@ export default function Pricing() {
         }
       />
       <div className="page-heading center">
-        <span className="eyebrow">A LITTLE GUIDANCE, WHENEVER YOU NEED IT</span>
         <h1>
-          Good style.
+          Your style era.
           <br />
-          <em>Beautifully simple.</em>
+          <em>Starts here.</em>
         </h1>
-        <p>
-          One membership. A considered second opinion for every kind of day.
-        </p>
+        <p>One membership. Ten fresh takes on your outfits, every month.</p>
       </div>
       <div className="membership">
         <div className="membership-top">
-          <span className="eyebrow">
-            <Sparkles size={16} /> THE STYLE CIRCLE
-          </span>
-          <h2>
-            Make room for <em>you.</em>
-          </h2>
+          <h2>Style Circle</h2>
           <div className="price">
             ₹99<span>/ month</span>
           </div>

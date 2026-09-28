@@ -71,31 +71,28 @@ export default function Auth() {
     <main id="main" className="wrap auth-layout">
       <div className="auth-photo">
         <Image
-          src="/images/editorial.png"
-          alt="An effortlessly styled rose saree"
+          src="/images/street-edit.png"
+          alt="Pink blazer styled with black denim and silver accessories"
           fill
           sizes="45vw"
         />
         <div>
-          <span className="eyebrow">YOUR NEXT CHAPTER IN STYLE</span>
           <h2>
-            A wardrobe of possibilities.
+            Good taste.
             <br />
-            <em>All yours.</em>
+            <em>All you.</em>
           </h2>
         </div>
       </div>
       <section className="auth-form">
-        <span className="brand-symbol">✳</span>
-        <span className="eyebrow">WELCOME TO YOUR STYLE STUDIO</span>
         <h1>
           {sent ? (
             "Check your inbox."
           ) : (
             <>
-              A little more
+              Your next
               <br />
-              <em>you.</em>
+              <em>great look.</em>
             </>
           )}
         </h1>

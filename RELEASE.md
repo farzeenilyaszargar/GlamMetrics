@@ -3,6 +3,7 @@
 ## Completed locally
 
 - Mobile-first application and all customer routes implemented.
+- Visual redesign: dark surfaces, lime/pink/lilac accents, sans-serif typography, campaign photography, and no eyebrow headings. Home, studio, sample report, pricing and sign-in reviewed at phone widths; desktop homepage reviewed at 1280px. Updated story-card export tested in the browser.
 - All three Supabase migrations verified on the hosted project. Temporary authenticated accounts passed account creation, one-free-review allocation, reservation/refund idempotency, saved-report persistence, cross-account isolation, direct credit-write rejection, and report deletion. Temporary identities and their data were removed after verification.
 - Google provider confirmed enabled through Supabase Auth settings, and the local Google sign-in button enabled. A completed customer OAuth round trip still needs verification.
 - OpenAI model access and a real structured outfit review verified successfully.

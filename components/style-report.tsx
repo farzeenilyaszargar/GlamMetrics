@@ -2,8 +2,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import {
-  Check,
-  Sparkles,
   Camera,
   Download,
   ArrowUpRight,
@@ -46,9 +44,8 @@ export default function Report({
   return (
     <article className="report">
       <div className="report-top">
-        <span className="eyebrow">
-          {sample ? "AN EXAMPLE STYLE EDIT" : "YOUR PERSONAL STYLE EDIT"} ·{" "}
-          {occasion.toUpperCase()}
+        <span className="report-meta">
+          {sample ? "Sample review" : occasion}
         </span>
         <div className="report-actions">
           <button
@@ -124,12 +121,7 @@ export default function Report({
       </div>
       <div className="report-columns">
         <section className="report-card">
-          <span className="eyebrow">
-            <Check size={15} /> WHAT’S WORKING
-          </span>
-          <h2>
-            Your look’s <em>lovely details.</em>
-          </h2>
+          <h2>What’s working.</h2>
           <ul>
             {r.strengths.map((s) => (
               <li key={s}>{s}</li>
@@ -137,14 +129,7 @@ export default function Report({
           </ul>
         </section>
         <section className="report-card tinted">
-          <span className="eyebrow">
-            <Sparkles size={15} /> THE FINISHING TOUCHES
-          </span>
-          <h2>
-            Little changes.
-            <br />
-            <em>Lovely difference.</em>
-          </h2>
+          <h2>Try this.</h2>
           <ol>
             {r.suggestions.map((s) => (
               <li key={s}>{s}</li>
@@ -153,10 +138,7 @@ export default function Report({
         </section>
       </div>
       <section className="report-card">
-        <span className="eyebrow">YOUR COLOUR STORY</span>
-        <h2>
-          A palette to <em>play with.</em>
-        </h2>
+        <h2>Your colour palette.</h2>
         <div className="colour-palette">
           {r.palette.map((c) => (
             <div key={c.hex}>
@@ -168,10 +150,7 @@ export default function Report({
         </div>
       </section>
       <section className="report-card">
-        <span className="eyebrow">SHOP YOUR WARDROBE FIRST</span>
-        <h2>
-          Considered <em>additions.</em>
-        </h2>
+        <h2>Finish the look.</h2>
         <div className="shopping-grid">
           {r.shopping.map((s) => (
             <div key={s.item}>

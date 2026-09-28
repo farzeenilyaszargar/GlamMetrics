@@ -127,7 +127,6 @@ export default function Profile() {
     <main id="main" className="wrap page-space">
       <div className="section-heading">
         <div>
-          <span className="eyebrow">YOUR PERSONAL STYLE JOURNAL</span>
           <h1>
             My <em>edits.</em>
           </h1>
@@ -175,8 +174,8 @@ export default function Profile() {
         <h2>
           Your <em>style journal.</em>
         </h2>
-        <span className="eyebrow">
-          {account?.reports.length || 0} SAVED EDITS
+        <span className="count-label">
+          {account?.reports.length || 0} saved
         </span>
       </div>
       {account?.reports.length ? (
@@ -192,7 +191,7 @@ export default function Profile() {
                   <small>/100</small>
                 </strong>
               </div>
-              <span className="eyebrow">
+              <span className="report-meta">
                 {r.occasion} ·{" "}
                 {new Date(r.created_at).toLocaleDateString("en-IN", {
                   day: "numeric",
@@ -227,7 +226,6 @@ export default function Profile() {
       )}
       <section className="billing-panel">
         <div>
-          <span className="eyebrow">YOUR MEMBERSHIP</span>
           <h2>
             The Style <em>Circle.</em>
           </h2>

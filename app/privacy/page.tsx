@@ -2,7 +2,6 @@ import Link from "next/link";
 export default function Privacy() {
   return (
     <main id="main" className="wrap page-space legal">
-      <span className="eyebrow">YOUR STYLE. YOUR PRIVACY.</span>
       <h1>
         Privacy <em>Policy.</em>
       </h1>

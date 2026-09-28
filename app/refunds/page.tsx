@@ -2,7 +2,6 @@ import Link from "next/link";
 export default function Refunds() {
   return (
     <main id="main" className="wrap page-space legal">
-      <span className="eyebrow">A CONSIDERED APPROACH TO BILLING</span>
       <h1>
         Refunds & <em>cancellation.</em>
       </h1>

@@ -151,15 +151,10 @@ export default function Studio({
   return (
     <main id="main" className="wrap page-space studio">
       <div className="page-heading">
-        <span className="eyebrow">
-          <Sparkles size={15} /> THE STYLE STUDIO
-        </span>
         <h1>
-          Let’s find your
-          <br />
-          <em>feel-good look.</em>
+          Let’s see <em>the fit.</em>
         </h1>
-        <p>A mirror selfie. An occasion. A fresh perspective.</p>
+        <p>Drop your outfit. Tell us the plan. Get a fresh take.</p>
       </div>
       <form className="studio-grid" onSubmit={analyze}>
         <section>

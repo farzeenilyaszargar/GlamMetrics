@@ -23,7 +23,6 @@ export default function Navbar() {
       <header className="header">
         <Link className="wordmark" href="/">
           glam<span>metrics</span>
-          <i>✳</i>
         </Link>
         <nav className="desktop-nav" aria-label="Main navigation">
           <Link className={path === "/" ? "active" : ""} href="/">
@@ -36,11 +35,11 @@ export default function Navbar() {
             Style studio
           </Link>
           <Link className={path === "/pricing" ? "active" : ""} href="/pricing">
-            Style plans
+            Style Circle
           </Link>
         </nav>
         <Link className="header-cta" href={user ? "/profile" : "/auth"}>
-          {user ? "My wardrobe" : "Get started"}
+          {user ? "My edits" : "Get started"}
           <ArrowUpRight size={15} />
         </Link>
       </header>

@@ -1,263 +1,244 @@
 import Link from "next/link";
 import Image from "next/image";
-import {
-  ArrowUpRight,
-  Sparkles,
-  ArrowRight,
-  ScanLine,
-  Palette,
-  ShieldCheck,
-  Camera,
-  Check,
-  Flower2,
-} from "lucide-react";
+import { ArrowUpRight, ArrowRight, ScanLine, Plus } from "lucide-react";
+
 export default function Home() {
   return (
-    <main id="main">
-      <div className="announcement">
-        A fresh perspective on your wardrobe <span>✧</span> Your first style
-        review is on us
-      </div>
-      <section className="hero-section wrap">
-        <div className="hero-copy">
-          <div className="eyebrow">
-            <span className="tiny-line" /> YOUR PERSONAL AI STYLE STUDIO
-          </div>
+    <main id="main" className="home">
+      <section className="campaign wrap">
+        <div className="campaign-copy">
           <h1>
-            Your style.
+            Good outfit.
             <br />
-            Beautifully
-            <br />
-            <em>considered.</em>
+            Great <span>energy.</span>
           </h1>
           <p>
-            A second opinion for the “does this work?” moments. Discover what
-            makes your outfit shine, and the little details that bring it all
-            together.
+            Your look, a fresh perspective. Get personal outfit feedback, colour
+            pairings and the details that make it click.
           </p>
-          <Link href="/analysis" className="button primary">
-            Find your style moment <ArrowUpRight size={19} />
-          </Link>
-          <div className="hero-footnote">
-            <Check size={14} /> First review free <span /> No card needed
-          </div>
-          <Link className="text-link" href="/sample">
-            Take a peek at a style report <ArrowRight size={15} />
-          </Link>
-        </div>
-        <div className="hero-art">
-          <div className="photo-frame">
-            <Image
-              src="/images/editorial.png"
-              alt="Rose silk saree with delicate gold accessories in a sunlit courtyard"
-              fill
-              priority
-              sizes="(max-width: 700px) 95vw, 48vw"
-            />
-            <div className="photo-caption">
-              <span>THE OCCASION EDIT</span>
-              <span>01 / 06</span>
-            </div>
-          </div>
-          <div className="floating-score">
-            <span className="mini-icon">
-              <Sparkles size={18} />
-            </span>
-            <div>
-              <span className="eyebrow">A LITTLE STYLE INSPIRATION</span>
-              <strong>Made for your moment.</strong>
-              <p>Colour. Details. Confidence.</p>
-            </div>
-            <span className="score-circle">
-              89<small>/100</small>
-            </span>
-          </div>
-          <span className="image-note">
-            Illustrative outfit · example score
-          </span>
-          <div className="art-star">✳</div>
-        </div>
-      </section>
-      <section className="benefit-strip">
-        <span>
-          <ScanLine size={17} /> Thoughtful outfit reviews
-        </span>
-        <span>
-          <Palette size={17} /> Your own colour story
-        </span>
-        <span>
-          <Flower2 size={17} /> Indian occasions, understood
-        </span>
-        <span>
-          <ShieldCheck size={17} /> Private by design
-        </span>
-      </section>
-      <section className="section wrap">
-        <div className="section-heading">
-          <div>
-            <span className="eyebrow">FOR EVERY VERSION OF YOU</span>
-            <h2>
-              What’s the <em>occasion?</em>
-            </h2>
-          </div>
-          <p>
-            From everyday favourites to the main event.
-            <br />A little styling help, wherever life takes you.
-          </p>
-        </div>
-        <div className="occasion-grid">
-          {[
-            {
-              title: "Everyday, elevated",
-              sub: "Coffee runs. College days. Just because.",
-              value: "Everyday",
-              n: "01",
-              cls: "everyday",
-            },
-            {
-              title: "The celebration edit",
-              sub: "Sarees, sparkle & unforgettable evenings.",
-              value: "Wedding guest",
-              n: "02",
-              cls: "festive",
-            },
-            {
-              title: "Camera-ready you",
-              sub: "Your next reel deserves a good outfit.",
-              value: "Content shoot",
-              n: "03",
-              cls: "creator",
-            },
-          ].map((o) => (
-            <Link
-              href={`/analysis?occasion=${encodeURIComponent(o.value)}`}
-              className={`occasion-card ${o.cls}`}
-              key={o.n}
-            >
-              <div className="occasion-visual">
-                <span className="occasion-number">{o.n}</span>
-                {o.cls === "festive" ? (
-                  <Image
-                    src="/images/editorial.png"
-                    alt="Rose saree occasion styling"
-                    fill
-                    sizes="(max-width: 700px) 80vw, 30vw"
-                  />
-                ) : (
-                  <div className="fashion-flatlay" aria-hidden="true">
-                    <div className="fabric" />
-                    <div className="jewellery" />
-                    <div className="palette-dots">
-                      <i />
-                      <i />
-                      <i />
-                    </div>
-                    <span>
-                      {o.cls === "everyday"
-                        ? "THE EVERYDAY EDIT"
-                        : "IN YOUR ELEMENT"}
-                    </span>
-                  </div>
-                )}
-                <span className="round-arrow">
-                  <ArrowUpRight size={20} />
-                </span>
-              </div>
-              <h3>{o.title}</h3>
-              <p>{o.sub}</p>
+          <div className="campaign-actions">
+            <Link href="/analysis" className="button primary">
+              Check my outfit <ArrowUpRight size={20} />
             </Link>
+            <Link href="/sample" className="text-link">
+              See a sample <ArrowRight size={17} />
+            </Link>
+          </div>
+          <p className="campaign-note">
+            First review free. No card, no commitment.
+          </p>
+          <div className="campaign-swatches" aria-hidden="true">
+            <i />
+            <i />
+            <i />
+            <span>Your style. Turned up.</span>
+          </div>
+        </div>
+        <div className="campaign-photo">
+          <Image
+            src="/images/street-edit.png"
+            alt="Pink oversized blazer, black denim and silver accessories"
+            fill
+            priority
+            sizes="(max-width: 700px) 100vw, 55vw"
+          />
+          <span className="photo-sticker">
+            Wear it
+            <br />
+            <strong>your way.</strong>
+            <ArrowUpRight size={25} />
+          </span>
+          <Link
+            href="/analysis"
+            className="photo-action"
+            aria-label="Review your own outfit"
+          >
+            <ScanLine size={24} />
+            <span>
+              Your next great look
+              <br />
+              <strong>starts here.</strong>
+            </span>
+            <ArrowUpRight size={24} />
+          </Link>
+        </div>
+      </section>
+
+      <section className="edits-section wrap">
+        <div className="section-heading">
+          <h2>What’s the plan?</h2>
+          <Link href="/analysis" className="text-link">
+            Find your look <ArrowUpRight size={17} />
+          </Link>
+        </div>
+        <nav className="occasion-pills" aria-label="Choose your occasion">
+          {[
+            "Everyday",
+            "Wedding guest",
+            "Work",
+            "Date night",
+            "Festive",
+            "Content shoot",
+          ].map((occasion, i) => (
+            <Link
+              key={occasion}
+              className={i === 0 ? "highlight" : ""}
+              href={`/analysis?occasion=${encodeURIComponent(occasion)}`}
+            >
+              {occasion}
+              <ArrowUpRight size={15} />
+            </Link>
+          ))}
+        </nav>
+        <div className="edit-grid">
+          <Link href="/analysis?occasion=Everyday" className="edit-card">
+            <div className="edit-photo street">
+              <Image
+                src="/images/street-edit.png"
+                alt="Relaxed tailoring with a pink blazer and black denim"
+                fill
+                sizes="(max-width:700px) 47vw, 34vw"
+              />
+              <span className="round-arrow">
+                <ArrowUpRight size={20} />
+              </span>
+            </div>
+            <h3>Off-duty. On point.</h3>
+            <p>Everyday looks, a little louder.</p>
+          </Link>
+          <Link href="/analysis?occasion=Wedding%20guest" className="edit-card">
+            <div className="edit-photo">
+              <Image
+                src="/images/editorial.png"
+                alt="Rose silk saree with gold jewellery for a celebration"
+                fill
+                sizes="(max-width:700px) 47vw, 34vw"
+              />
+              <span className="round-arrow">
+                <ArrowUpRight size={20} />
+              </span>
+            </div>
+            <h3>Make an entrance.</h3>
+            <p>For every invite on your calendar.</p>
+          </Link>
+          <Link href="/sample" className="sample-tile">
+            <div className="sample-tile-top">
+              <ScanLine size={28} />
+              <ArrowUpRight size={25} />
+            </div>
+            <div className="sample-score">
+              89<span>/100</span>
+            </div>
+            <div
+              className="sample-palette"
+              aria-label="Sample palette: rose, ivory, brown and gold"
+            >
+              <i />
+              <i />
+              <i />
+              <i />
+            </div>
+            <h3>
+              A second opinion.
+              <br />A stronger look.
+            </h3>
+            <p>Explore a sample outfit review.</p>
+          </Link>
+        </div>
+      </section>
+
+      <section className="how-edit wrap">
+        <h2>
+          Less “does this work?”
+          <br />
+          <span>More out the door.</span>
+        </h2>
+        <div className="how-edit-steps">
+          {[
+            [
+              "01",
+              "Drop your fit.",
+              "A mirror selfie or outfit photo. Just make sure we can see the whole look.",
+            ],
+            [
+              "02",
+              "Set the mood.",
+              "Pick the occasion. Add your budget and the details you want help with.",
+            ],
+            [
+              "03",
+              "Make it yours.",
+              "Get an AI outfit review with colour pairings and practical styling ideas.",
+            ],
+          ].map(([n, title, description]) => (
+            <div key={n}>
+              <span>{n}</span>
+              <h3>{title}</h3>
+              <p>{description}</p>
+            </div>
           ))}
         </div>
       </section>
-      <section className="how-section">
-        <div className="wrap how-grid">
+
+      <section className="club-section wrap">
+        <div className="club-banner">
           <div>
-            <span className="eyebrow">LESS SECOND-GUESSING. MORE YOU.</span>
             <h2>
-              A fresh pair of eyes.
+              Your style era.
               <br />
-              <em>In three little steps.</em>
+              For <span>₹99</span> a month.
             </h2>
-            <Link href="/sample" className="text-link">
-              Explore an example report <ArrowRight size={16} />
+            <p>
+              10 personal outfit reviews. Saved edits. Your next favourite
+              colour combination.
+            </p>
+            <Link href="/pricing" className="button dark-button">
+              Meet Style Circle <ArrowUpRight size={20} />
             </Link>
           </div>
-          <div className="steps">
-            {[
-              {
-                icon: Camera,
-                title: "Show us your look",
-                text: "Upload an outfit photo. A mirror selfie works beautifully.",
-              },
-              {
-                icon: Flower2,
-                title: "Set the scene",
-                text: "Tell us the occasion, your budget and what you have in mind.",
-              },
-              {
-                icon: Sparkles,
-                title: "Make it your own",
-                text: "Get a style score, colour palette and useful finishing touches.",
-              },
-            ].map((s, i) => (
-              <div className="step" key={s.title}>
-                <span className="step-index">0{i + 1}</span>
-                <s.icon size={23} />
-                <div>
-                  <h3>{s.title}</h3>
-                  <p>{s.text}</p>
-                </div>
-              </div>
-            ))}
+          <div className="club-art" aria-hidden="true">
+            <span>
+              good
+              <br />
+              taste.
+            </span>
+            <ArrowUpRight size={86} strokeWidth={1} />
           </div>
         </div>
       </section>
-      <section className="section wrap philosophy">
-        <div className="quote-mark">“</div>
-        <h2>
-          Good style isn’t about changing who you are.
-          <br />
-          It’s about feeling <em>more like yourself.</em>
-        </h2>
-        <p>
-          We review the outfit: colour, coordination and finishing touches.
-          Every suggestion is yours to take, adapt or leave. Your body is never
-          a score.
-        </p>
-        <Link href="/analysis" className="button primary">
-          Try your first style review <Sparkles size={17} />
-        </Link>
-      </section>
+
       <section className="wrap faq-section">
         <div>
-          <span className="eyebrow">A FEW THINGS YOU MIGHT WONDER</span>
           <h2>
-            Let’s make it <em>simple.</em>
+            A few good
+            <br />
+            questions.
           </h2>
+          <p>Here’s how it works.</p>
         </div>
         <div>
           {[
             [
-              "What do I get in a style review?",
-              "An outfit score, a breakdown of colour coordination and occasion suitability, practical styling suggestions, a palette and budget-aware ideas. Every review is generated by AI and is a subjective second opinion.",
+              "What’s in an outfit review?",
+              "An outfit score, colour palette, occasion feedback and specific styling suggestions. Reviews are generated by AI and offer a subjective second opinion on your clothes and styling, never your body.",
             ],
             [
-              "Will it work with sarees and Indian wear?",
-              "Yes. The studio is designed for Indian wardrobes, from sarees and kurtas to western and fusion outfits. Tell us your occasion and preferences so the advice fits your plans.",
+              "Does it work with Indian wear?",
+              "Yes. Sarees, kurtas, western looks and fusion outfits are all welcome. Choose your occasion and add your preferences to guide the review.",
             ],
             [
-              "Do you save my photos?",
-              "We send the photo securely to our AI provider to generate your review. GlamMetrics saves the written report to your account, not the original image. See our privacy policy for provider processing details.",
+              "Are my photos saved?",
+              "Your photo is sent to our AI provider to create the review. GlamMetrics saves the written report, not your original photo. Our privacy policy explains how images are processed.",
             ],
             [
-              "Is this a subscription?",
-              "Yes. The Style Circle is ₹99 per month for 10 reviews. Start with one free review before subscribing. Monthly reviews don’t roll over, and you can cancel future billing from your account.",
+              "How does the subscription work?",
+              "Try one review free. Style Circle is ₹99 per month for 10 outfit reviews. Reviews reset each billing month and don’t roll over. You can cancel future billing from your account.",
             ],
           ].map(([q, a]) => (
             <details key={q}>
               <summary>
                 {q}
-                <span>+</span>
+                <Plus size={18} />
               </summary>
               <p>{a}</p>
             </details>

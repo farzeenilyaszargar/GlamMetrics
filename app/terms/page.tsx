@@ -2,7 +2,6 @@ import Link from "next/link";
 export default function Terms() {
   return (
     <main id="main" className="wrap page-space legal">
-      <span className="eyebrow">THE DETAILS, CLEARLY</span>
       <h1>
         Terms of <em>Service.</em>
       </h1>
