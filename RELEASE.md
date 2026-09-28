@@ -3,7 +3,7 @@
 ## Completed locally
 
 - Mobile-first application and all customer routes implemented.
-- Supabase credentials verified against the project API; app tables were not present during verification.
+- All three Supabase migrations verified on the hosted project. Temporary authenticated accounts passed account creation, one-free-review allocation, reservation/refund idempotency, saved-report persistence, cross-account isolation, direct credit-write rejection, and report deletion. Temporary identities and their data were removed after verification.
 - Google provider confirmed enabled through Supabase Auth settings, and the local Google sign-in button enabled. A completed customer OAuth round trip still needs verification.
 - OpenAI model access and a real structured outfit review verified successfully.
 - Razorpay **test-mode** monthly plan created for ₹99 and 10 reviews; subscription creation and cancellation tested. The temporary test subscription was cancelled without charging anything.
@@ -13,7 +13,7 @@
 
 ## Required configuration before accepting real payments
 
-1. Apply `001_style_studio.sql`, `002_subscriptions.sql`, `003_billing_boundaries.sql` in Supabase's SQL editor in that order. The service-role API key cannot execute DDL. Alternatively provide a database connection string locally for a migration client.
+1. Database migrations are applied and hosted account/persistence checks passed. For a new environment, apply `001_style_studio.sql`, `002_subscriptions.sql`, `003_billing_boundaries.sql` in that order.
 2. Configure Supabase Auth site URL and redirect allowlist. Configure a production SMTP sender: Supabase's default mail service is unsuitable for public customer acquisition. Test a new customer's sign-in, link expiry and sign-out. Google OAuth is optional and hidden until explicitly enabled.
 3. Supply `NEXT_PUBLIC_SUPPORT_EMAIL`, the business/legal operator name, business address and production domain. Confirm the published customer policies reflect the actual business. No unverified business identity is invented in the app.
 4. Set up a Razorpay webhook on the public HTTPS endpoint `/api/razorpay-webhook`, using a strong `RAZORPAY_WEBHOOK_SECRET`. Subscribe to `subscription.authenticated`, `subscription.activated`, `subscription.charged`, `subscription.pending`, `subscription.halted`, `subscription.paused`, `subscription.resumed`, `subscription.cancelled`, `subscription.completed`, and `refund.processed` where supported.

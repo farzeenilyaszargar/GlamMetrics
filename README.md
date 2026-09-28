@@ -1,5 +1,7 @@
 # GlamMetrics
 
+Hosted integration verification: with the local app running and `.env.local` configured, run `node --env-file=.env.local --import tsx scripts/test-hosted.ts`. This explicitly creates two temporary test accounts, checks credit and report access boundaries against Supabase, and deletes the identities and their test data afterward. It sends no emails and makes no payment or AI calls.
+
 A mobile-first personal styling studio for Indian wardrobes. The Style Circle is one ₹99/month subscription with 10 outfit reviews per billing month; new accounts receive one complimentary review.
 
 ## Run locally
