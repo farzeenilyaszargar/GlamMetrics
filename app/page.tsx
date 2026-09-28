@@ -1,33 +1,269 @@
-import Features from "@/components/features";
-import Footer from "@/components/footer";
-import Hero from "@/components/hero";
-import HowItWorks from "@/components/how-it-works";
-import LowerHero from "@/components/lower-hero";
-import Navbar from "@/components/navbar";
-import Review from "@/components/review";
-import Trust from "@/components/trust";
-
+import Link from "next/link";
+import Image from "next/image";
+import {
+  ArrowUpRight,
+  Sparkles,
+  ArrowRight,
+  ScanLine,
+  Palette,
+  ShieldCheck,
+  Camera,
+  Check,
+  Flower2,
+} from "lucide-react";
 export default function Home() {
   return (
-    <main id="top" className="flex min-h-screen w-full flex-col gap-6 bg-[#FBD4D7] pt-24 sm:gap-8">
-      <Navbar />
-      <Hero />
-      <HowItWorks />
-      <Features />
-      <Trust />
-      <Review />
-      <LowerHero />
-      <p className="text-[0.1px]">
-        Glam Metrics is a next-generation AI-powered platform designed to transform how individuals understand and enhance their personal style, facial aesthetics, and fashion identity. By combining advanced artificial intelligence with cutting-edge beauty technology, Glam Metrics delivers highly accurate face analysis, facial symmetry scoring, skin tone detection, and personalized fashion insights in real time. Built for a global audience, the platform serves as a powerful AI face rating and fashion analysis tool for anyone seeking data-driven beauty and style recommendations.
-        At the heart of Glam Metrics is a sophisticated AI engine that uses computer vision and machine learning to evaluate facial features with precision. Users can upload their photos and receive detailed face ratings based on symmetry, proportions, and overall attractiveness metrics. Unlike basic beauty apps, Glam Metrics provides objective, science-backed insights into facial structure, expression intelligence, and visual harmony. This makes it an essential tool for influencers, content creators, models, and individuals aiming to improve their digital presence and confidence.
-        Glam Metrics also stands out with its advanced AI fashion analysis capabilities. The platform intelligently suggests clothing styles, outfit combinations, and color palettes tailored to each user’s unique facial features, skin tone, and aesthetic profile. Whether you're selecting outfits for social media, events, or everyday wear, Glam Metrics acts as a personalized AI stylist that helps you make smarter and more confident fashion decisions.
-        A key feature that differentiates Glam Metrics is its monthly personalized email reports. Users receive automated, AI-generated insights directly in their inbox, including fashion recommendations, outfit ideas, seasonal style updates, and clothing choices tailored specifically to their evolving preferences and appearance. These monthly auto-mails ensure continuous engagement and help users consistently refine their style with fresh, relevant suggestions based on their past analysis and trends.
-        The platform also offers real-time feedback tools such as “best camera angle,” “expression confidence,” and “style compatibility score,” allowing users to experiment with different looks and optimize their visual appeal instantly. This feature is particularly valuable for personal branding, social media optimization, and professional image building.
-        Beyond face rating and fashion recommendations, Glam Metrics integrates beauty analytics like skin texture evaluation, lighting optimization, and makeup suitability suggestions. The AI identifies subtle visual patterns and provides actionable guidance to enhance overall appearance. This comprehensive approach positions Glam Metrics as a leader in AI beauty platforms and personalized style intelligence systems.
-        From an SEO perspective, Glam Metrics is optimized around high-impact keywords such as AI face analyzer, face rating app, beauty score calculator, facial symmetry analysis, AI fashion stylist, outfit recommendation engine, personalized fashion AI, and attractiveness test online. These keywords help drive organic traffic and establish strong visibility in the competitive beauty-tech and fashion-tech landscape.
-        Glam Metrics is more than just a tool—it is a complete AI-powered ecosystem for self-improvement, confidence building, and style evolution. By merging technology with aesthetics and personalization, Glam Metrics empowers users to look better, feel confident, and make data-driven fashion choices. Whether you're exploring your face score, upgrading your wardrobe, or receiving monthly personalized fashion insights, Glam Metrics delivers a seamless, intelligent, and engaging beauty-tech experience.
-      </p>
-      <Footer />
+    <main id="main">
+      <div className="announcement">
+        A fresh perspective on your wardrobe <span>✧</span> Your first style
+        review is on us
+      </div>
+      <section className="hero-section wrap">
+        <div className="hero-copy">
+          <div className="eyebrow">
+            <span className="tiny-line" /> YOUR PERSONAL AI STYLE STUDIO
+          </div>
+          <h1>
+            Your style.
+            <br />
+            Beautifully
+            <br />
+            <em>considered.</em>
+          </h1>
+          <p>
+            A second opinion for the “does this work?” moments. Discover what
+            makes your outfit shine, and the little details that bring it all
+            together.
+          </p>
+          <Link href="/analysis" className="button primary">
+            Find your style moment <ArrowUpRight size={19} />
+          </Link>
+          <div className="hero-footnote">
+            <Check size={14} /> First review free <span /> No card needed
+          </div>
+          <Link className="text-link" href="/sample">
+            Take a peek at a style report <ArrowRight size={15} />
+          </Link>
+        </div>
+        <div className="hero-art">
+          <div className="photo-frame">
+            <Image
+              src="/images/editorial.png"
+              alt="Rose silk saree with delicate gold accessories in a sunlit courtyard"
+              fill
+              priority
+              sizes="(max-width: 700px) 95vw, 48vw"
+            />
+            <div className="photo-caption">
+              <span>THE OCCASION EDIT</span>
+              <span>01 / 06</span>
+            </div>
+          </div>
+          <div className="floating-score">
+            <span className="mini-icon">
+              <Sparkles size={18} />
+            </span>
+            <div>
+              <span className="eyebrow">A LITTLE STYLE INSPIRATION</span>
+              <strong>Made for your moment.</strong>
+              <p>Colour. Details. Confidence.</p>
+            </div>
+            <span className="score-circle">
+              89<small>/100</small>
+            </span>
+          </div>
+          <span className="image-note">
+            Illustrative outfit · example score
+          </span>
+          <div className="art-star">✳</div>
+        </div>
+      </section>
+      <section className="benefit-strip">
+        <span>
+          <ScanLine size={17} /> Thoughtful outfit reviews
+        </span>
+        <span>
+          <Palette size={17} /> Your own colour story
+        </span>
+        <span>
+          <Flower2 size={17} /> Indian occasions, understood
+        </span>
+        <span>
+          <ShieldCheck size={17} /> Private by design
+        </span>
+      </section>
+      <section className="section wrap">
+        <div className="section-heading">
+          <div>
+            <span className="eyebrow">FOR EVERY VERSION OF YOU</span>
+            <h2>
+              What’s the <em>occasion?</em>
+            </h2>
+          </div>
+          <p>
+            From everyday favourites to the main event.
+            <br />A little styling help, wherever life takes you.
+          </p>
+        </div>
+        <div className="occasion-grid">
+          {[
+            {
+              title: "Everyday, elevated",
+              sub: "Coffee runs. College days. Just because.",
+              value: "Everyday",
+              n: "01",
+              cls: "everyday",
+            },
+            {
+              title: "The celebration edit",
+              sub: "Sarees, sparkle & unforgettable evenings.",
+              value: "Wedding guest",
+              n: "02",
+              cls: "festive",
+            },
+            {
+              title: "Camera-ready you",
+              sub: "Your next reel deserves a good outfit.",
+              value: "Content shoot",
+              n: "03",
+              cls: "creator",
+            },
+          ].map((o) => (
+            <Link
+              href={`/analysis?occasion=${encodeURIComponent(o.value)}`}
+              className={`occasion-card ${o.cls}`}
+              key={o.n}
+            >
+              <div className="occasion-visual">
+                <span className="occasion-number">{o.n}</span>
+                {o.cls === "festive" ? (
+                  <Image
+                    src="/images/editorial.png"
+                    alt="Rose saree occasion styling"
+                    fill
+                    sizes="(max-width: 700px) 80vw, 30vw"
+                  />
+                ) : (
+                  <div className="fashion-flatlay" aria-hidden="true">
+                    <div className="fabric" />
+                    <div className="jewellery" />
+                    <div className="palette-dots">
+                      <i />
+                      <i />
+                      <i />
+                    </div>
+                    <span>
+                      {o.cls === "everyday"
+                        ? "THE EVERYDAY EDIT"
+                        : "IN YOUR ELEMENT"}
+                    </span>
+                  </div>
+                )}
+                <span className="round-arrow">
+                  <ArrowUpRight size={20} />
+                </span>
+              </div>
+              <h3>{o.title}</h3>
+              <p>{o.sub}</p>
+            </Link>
+          ))}
+        </div>
+      </section>
+      <section className="how-section">
+        <div className="wrap how-grid">
+          <div>
+            <span className="eyebrow">LESS SECOND-GUESSING. MORE YOU.</span>
+            <h2>
+              A fresh pair of eyes.
+              <br />
+              <em>In three little steps.</em>
+            </h2>
+            <Link href="/sample" className="text-link">
+              Explore an example report <ArrowRight size={16} />
+            </Link>
+          </div>
+          <div className="steps">
+            {[
+              {
+                icon: Camera,
+                title: "Show us your look",
+                text: "Upload an outfit photo. A mirror selfie works beautifully.",
+              },
+              {
+                icon: Flower2,
+                title: "Set the scene",
+                text: "Tell us the occasion, your budget and what you have in mind.",
+              },
+              {
+                icon: Sparkles,
+                title: "Make it your own",
+                text: "Get a style score, colour palette and useful finishing touches.",
+              },
+            ].map((s, i) => (
+              <div className="step" key={s.title}>
+                <span className="step-index">0{i + 1}</span>
+                <s.icon size={23} />
+                <div>
+                  <h3>{s.title}</h3>
+                  <p>{s.text}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+      <section className="section wrap philosophy">
+        <div className="quote-mark">“</div>
+        <h2>
+          Good style isn’t about changing who you are.
+          <br />
+          It’s about feeling <em>more like yourself.</em>
+        </h2>
+        <p>
+          We review the outfit: colour, coordination and finishing touches.
+          Every suggestion is yours to take, adapt or leave. Your body is never
+          a score.
+        </p>
+        <Link href="/analysis" className="button primary">
+          Try your first style review <Sparkles size={17} />
+        </Link>
+      </section>
+      <section className="wrap faq-section">
+        <div>
+          <span className="eyebrow">A FEW THINGS YOU MIGHT WONDER</span>
+          <h2>
+            Let’s make it <em>simple.</em>
+          </h2>
+        </div>
+        <div>
+          {[
+            [
+              "What do I get in a style review?",
+              "An outfit score, a breakdown of colour coordination and occasion suitability, practical styling suggestions, a palette and budget-aware ideas. Every review is generated by AI and is a subjective second opinion.",
+            ],
+            [
+              "Will it work with sarees and Indian wear?",
+              "Yes. The studio is designed for Indian wardrobes, from sarees and kurtas to western and fusion outfits. Tell us your occasion and preferences so the advice fits your plans.",
+            ],
+            [
+              "Do you save my photos?",
+              "We send the photo securely to our AI provider to generate your review. GlamMetrics saves the written report to your account, not the original image. See our privacy policy for provider processing details.",
+            ],
+            [
+              "Is this a subscription?",
+              "Yes. The Style Circle is ₹99 per month for 10 reviews. Start with one free review before subscribing. Monthly reviews don’t roll over, and you can cancel future billing from your account.",
+            ],
+          ].map(([q, a]) => (
+            <details key={q}>
+              <summary>
+                {q}
+                <span>+</span>
+              </summary>
+              <p>{a}</p>
+            </details>
+          ))}
+        </div>
+      </section>
     </main>
   );
 }

@@ -1,26 +1,38 @@
-import Footer from "@/components/footer";
-import Navbar from "@/components/navbar";
-
-export default function ContactPage() {
+import Link from "next/link";
+export default function Contact() {
+  const email = process.env.NEXT_PUBLIC_SUPPORT_EMAIL;
   return (
-    <main className="min-h-screen w-full bg-gradient-to-b from-[#F7DBE2]/70 via-white to-[#fff9fa] pt-24 flex flex-col justify-between">
-      <Navbar />
-
-      <section className="w-full flex-1 px-4 py-14 sm:px-8 lg:px-12">
-        <div className="mx-auto w-full max-w-4xl rounded-3xl border border-[#ED2738]/20 bg-white p-7 shadow-sm sm:p-10">
-          <h1 className="font-emilys-candy text-5xl leading-tight text-[#ED2738] sm:text-6xl">Get in Touch</h1>
-
-          <div className="mt-8 space-y-4 text-base leading-relaxed text-black/85">
-            <p>Questions, support requests, or partnership inquiries are always welcome.</p>
-            <p>
-              Email: <a href="mailto:hello@glammetrics.com" className="font-medium text-[#ED2738] underline underline-offset-4 hover:text-black">hello@glammetrics.com</a>
-            </p>
-            <p>Response time: usually within 24-48 hours on business days.</p>
-          </div>
+    <main id="main" className="wrap page-space legal">
+      <span className="eyebrow">WE’RE HERE FOR YOUR STYLE JOURNEY</span>
+      <h1>
+        Let’s <em>talk.</em>
+      </h1>
+      <p>
+        Account questions, payment help, privacy requests or a little feedback —
+        we’d love to hear from you.
+      </p>
+      {email ? (
+        <a className="button primary" href={`mailto:${email}`}>
+          {email} ↗
+        </a>
+      ) : (
+        <div className="notice">
+          Customer support details will be published before the studio opens for
+          paid memberships.
         </div>
-      </section>
-
-      <Footer />
+      )}
+      <h2>For payment help</h2>
+      <p>
+        Include your account email and Razorpay payment reference so we can find
+        the right transaction. Never share passwords, card details or your UPI
+        PIN.
+      </p>
+      <p>
+        You can manage your membership and refresh payment status in{" "}
+        <Link href="/profile">My edits</Link>. See our{" "}
+        <Link href="/refunds">refund and cancellation policy</Link> for more
+        information.
+      </p>
     </main>
   );
 }
