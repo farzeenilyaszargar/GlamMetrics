@@ -6,7 +6,7 @@ export default function Terms() {
         Terms of <em>Service.</em>
       </h1>
       <p>
-        Last updated: 28 September 2026. By creating an account or purchasing a
+        Last updated: 15 October 2026. By creating an account or purchasing a
         membership, you agree to these terms and our{" "}
         <Link href="/privacy">Privacy Policy</Link>.
       </p>
@@ -20,9 +20,12 @@ export default function Terms() {
       </p>
       <h2>Your membership</h2>
       <p>
-        Every new account receives one complimentary review. The Style Circle
+        Every new account receives one complimentary style plan. One plan
+        uses one outfit photo and includes three styling variations, a
+        wardrobe-first version and a getting-ready checklist. Previously
+        saved reviews remain available in their original format. The Style Circle
         costs ₹99 per month, the total recurring charge displayed at checkout,
-        and includes 10 reviews per billing month. Your monthly allocation
+        and includes 10 plans per billing month. Your monthly allocation
         resets after a verified successful payment. Unused reviews do not roll
         over. A failed review returns its reserved credit; interrupted reviews
         are recovered when you next start a review after five minutes.

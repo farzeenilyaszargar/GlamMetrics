@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useSession } from "@/components/session";
 import { api, browserDb } from "@/lib/supabase";
 import { writeDraft } from "@/lib/draft";
+import StylePreferences from "@/components/style-preferences";
 import ConfirmDialog from "@/components/confirm-dialog";
 import {
   Bookmark,
@@ -75,7 +76,7 @@ export default function Profile() {
       await refresh();
       setConfirm(false);
       setNotice(
-        "Your subscription is cancelled. Remaining reviews are available until the end of your paid period.",
+        "Your subscription is cancelled. Remaining plans are available until the end of your paid period.",
       );
     } catch (e) {
       setError(e instanceof Error ? e.message : "Could not cancel.");
@@ -112,9 +113,9 @@ export default function Profile() {
           <br />
           <em>all in one place.</em>
         </h1>
-        <p>Sign in to save your edits and pick up where you left off.</p>
+        <p>Sign in to save your style plans and pick up where you left off.</p>
         <Link href="/auth?next=/profile" className="button primary">
-          Open my wardrobe <ArrowUpRight size={18} />
+          Open my plans <ArrowUpRight size={18} />
         </Link>
       </main>
     );
@@ -128,7 +129,7 @@ export default function Profile() {
       <div className="section-heading">
         <div>
           <h1>
-            My <em>edits.</em>
+            My <em>style plans.</em>
           </h1>
           <p>{user.email}</p>
         </div>
@@ -157,19 +158,20 @@ export default function Profile() {
         <div>
           <Sparkles size={22} />
           <h2>
-            {account ? `${account.profile.credits} reviews` : "Loading…"}
+            {account ? `${account.profile.credits} plans` : "Loading…"}
             <em> waiting for your next look.</em>
           </h2>
           <p>
             {account?.profile.period_end
-              ? `Current reviews available until ${new Date(account.profile.period_end).toLocaleDateString("en-IN")}.`
-              : "Your first review is complimentary."}
+              ? `Current plans available until ${new Date(account.profile.period_end).toLocaleDateString("en-IN")}.`
+              : "Your first complete plan is free."}
           </p>
         </div>
         <Link className="button primary" href="/analysis">
-          Create a style edit <ArrowUpRight size={18} />
+          Plan my next outfit <ArrowUpRight size={18} />
         </Link>
       </section>
+      <StylePreferences key={user.id} />
       <div className="section-heading">
         <h2>
           Your <em>style journal.</em>
@@ -218,7 +220,7 @@ export default function Profile() {
         <div className="journal-empty">
           <Bookmark size={28} />
           <h3>A blank page. So many possibilities.</h3>
-          <p>Your personal style reviews will appear here.</p>
+          <p>Your personal style plans will appear here.</p>
           <Link className="text-link" href="/analysis">
             Create your first edit →
           </Link>
@@ -232,7 +234,7 @@ export default function Profile() {
           <p>
             {active
               ? `₹99/month · ${account?.subscription?.status}`
-              : "10 outfit reviews every month, for ₹99."}
+              : "10 personal style plans every month, for ₹99."}
           </p>
         </div>
         <div className="billing-actions">
@@ -269,7 +271,7 @@ export default function Profile() {
           <p>
             {deleteId
               ? "This removes the saved report permanently. It doesn't refund a used review."
-              : "Future billing will stop. Your remaining reviews stay available until your paid period ends."}
+              : "Future billing will stop. Your remaining plans stay available until your paid period ends."}
           </p>
           <div className="dialog-actions">
             <button

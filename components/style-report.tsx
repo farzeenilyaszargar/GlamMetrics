@@ -7,6 +7,8 @@ import {
   ArrowUpRight,
   Share2,
   ImageDown,
+  Copy,
+  Check,
 } from "lucide-react";
 import type { StyleReport } from "@/lib/report";
 import { saveStoryCard } from "@/lib/story-card";
@@ -22,6 +24,21 @@ export default function Report({
   onNewReview?: () => void;
 }) {
   const [message, setMessage] = useState("");
+  const [checked, setChecked] = useState<string[]>([]);
+  async function copyLook(look: NonNullable<StyleReport["looks"]>[number]) {
+    try {
+      await navigator.clipboard.writeText(
+        `${look.name}\n${look.outfit}\nShoes: ${look.shoes}\nAccessories: ${look.accessories}\nFinishing touch: ${look.finishingTouch}`,
+      );
+      setMessage(
+        `Copied “${look.name}”. Save it in your notes for getting ready.`,
+      );
+    } catch {
+      setMessage(
+        "Copy isn’t available in this browser. You can print or save the plan instead.",
+      );
+    }
+  }
   async function share() {
     const text = `My ${occasion.toLowerCase()} edit: ${r.title} Outfit styling score: ${r.score}/100. Discover your style at GlamMetrics.`;
     try {
@@ -45,7 +62,7 @@ export default function Report({
     <article className="report">
       <div className="report-top">
         <span className="report-meta">
-          {sample ? "Sample review" : occasion}
+          {sample ? "Sample style plan" : occasion}
         </span>
         <div className="report-actions">
           <button
@@ -86,7 +103,7 @@ export default function Report({
       </div>
       {sample && (
         <div className="notice">
-          A curated example of what you’ll receive. Your own review is created
+          A curated example of what you’ll receive. Your own plan is created
           from your outfit and preferences.
         </div>
       )}
@@ -95,83 +112,188 @@ export default function Report({
           <h1>{r.title}</h1>
           <p>{r.summary}</p>
         </div>
-        <div className="report-score">
-          <strong>{r.score}</strong>
-          <span>OUTFIT SCORE / 100</span>
-        </div>
+        {!r.looks && (
+          <div className="report-score">
+            <strong>{r.score}</strong>
+            <span>OUTFIT SCORE / 100</span>
+          </div>
+        )}
       </header>
-      <div className="score-bars">
-        {Object.entries(r.scores).map(([name, value]) => (
-          <div key={name}>
+      {r.looks && (
+        <section className="look-plan-section">
+          <div className="section-heading">
             <div>
-              <span>
-                {name === "occasion"
-                  ? "Occasion fit"
-                  : name === "details"
-                    ? "Finishing touches"
-                    : "Colour & coordination"}
-              </span>
-              <b>{value}</b>
-            </div>
-            <div className="bar">
-              <i style={{ width: `${value}%` }} />
+              <h2>One outfit. Three ways to wear it.</h2>
+              <p>Choose the version that fits your plans.</p>
             </div>
           </div>
-        ))}
-      </div>
-      <div className="report-columns">
+          <div className="look-plan-grid">
+            {r.looks.map((look, i) => (
+              <article className="look-plan-card" key={look.name}>
+                <div className="look-card-top">
+                  <span>
+                    {i === 0 ? "Your occasion look" : `Alternative ${i}`}
+                  </span>
+                  <button
+                    type="button"
+                    className="icon-button"
+                    aria-label={`Copy ${look.name}`}
+                    onClick={() => copyLook(look)}
+                  >
+                    <Copy size={16} />
+                  </button>
+                </div>
+                <h3>{look.name}</h3>
+                <p>{look.why}</p>
+                <dl>
+                  <dt>The outfit</dt>
+                  <dd>{look.outfit}</dd>
+                  <dt>Shoes</dt>
+                  <dd>{look.shoes}</dd>
+                  <dt>Accessories</dt>
+                  <dd>{look.accessories}</dd>
+                  <dt>Finishing touch</dt>
+                  <dd>{look.finishingTouch}</dd>
+                </dl>
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
+      {r.wardrobeRescue && (
+        <section className="wardrobe-rescue">
+          <div>
+            <span className="rescue-icon">
+              <Check size={21} />
+            </span>
+            <h2>The no-shopping version.</h2>
+          </div>
+          <p>{r.wardrobeRescue}</p>
+        </section>
+      )}
+      {r.checklist && (
+        <section className="report-card getting-ready">
+          <div className="section-heading">
+            <h2>Your getting-ready checklist.</h2>
+            <span className="count-label">
+              {checked.length}/{r.checklist.length}
+            </span>
+          </div>
+          <p>
+            Tick these off as you get ready. Checkmarks reset when you leave
+            this page.
+          </p>
+          <div>
+            {r.checklist.map((item) => (
+              <label key={item}>
+                <input
+                  type="checkbox"
+                  checked={checked.includes(item)}
+                  onChange={(e) =>
+                    setChecked((previous) =>
+                      e.target.checked
+                        ? [...previous, item]
+                        : previous.filter((x) => x !== item),
+                    )
+                  }
+                />
+                <span>{item}</span>
+              </label>
+            ))}
+          </div>
+        </section>
+      )}
+      {sample && (
+        <section className="report-upgrade">
+          <h2>Make it personal.</h2>
+          <p>
+            This is an illustrative plan. Upload your outfit to get three looks
+            built around your clothes, occasion and budget.
+          </p>
+          <Link href="/analysis" className="button primary">
+            Create my free plan <ArrowUpRight size={17} />
+          </Link>
+        </section>
+      )}
+      <details className="outfit-breakdown">
+        <summary>
+          Your outfit review & colour details <span>+</span>
+        </summary>
+        <div className="score-bars">
+          {Object.entries(r.scores).map(([name, value]) => (
+            <div key={name}>
+              <div>
+                <span>
+                  {name === "occasion"
+                    ? "Occasion fit"
+                    : name === "details"
+                      ? "Finishing touches"
+                      : "Colour & coordination"}
+                </span>
+                <b>{value}</b>
+              </div>
+              <div className="bar">
+                <i style={{ width: `${value}%` }} />
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="report-columns">
+          <section className="report-card">
+            <h2>What’s working.</h2>
+            <ul>
+              {r.strengths.map((s) => (
+                <li key={s}>{s}</li>
+              ))}
+            </ul>
+          </section>
+          <section className="report-card tinted">
+            <h2>Try this.</h2>
+            <ol>
+              {r.suggestions.map((s) => (
+                <li key={s}>{s}</li>
+              ))}
+            </ol>
+          </section>
+        </div>
         <section className="report-card">
-          <h2>What’s working.</h2>
-          <ul>
-            {r.strengths.map((s) => (
-              <li key={s}>{s}</li>
+          <h2>Your colour palette.</h2>
+          <div className="colour-palette">
+            {r.palette.map((c) => (
+              <div key={c.hex}>
+                <div style={{ background: c.hex }} />
+                <span>{c.name}</span>
+                <small>{c.hex}</small>
+              </div>
             ))}
-          </ul>
+          </div>
         </section>
-        <section className="report-card tinted">
-          <h2>Try this.</h2>
-          <ol>
-            {r.suggestions.map((s) => (
-              <li key={s}>{s}</li>
-            ))}
-          </ol>
+        {r.shopping.length > 0 && (
+          <section className="report-card">
+            <h2>Finish the look.</h2>
+            <div className="shopping-grid">
+              {r.shopping.map((s) => (
+                <div key={s.item}>
+                  <h3>{s.item}</h3>
+                  <p>{s.reason}</p>
+                  <span>{s.budget}</span>
+                </div>
+              ))}
+            </div>
+            <p className="fineprint">
+              Budget ideas, not live product listings. Start with something you
+              already own.
+            </p>
+          </section>
+        )}
+        <section className="camera-note">
+          <Camera size={26} />
+          <div>
+            <h3>A camera-ready finishing touch</h3>
+            <p>{r.cameraTip}</p>
+          </div>
         </section>
-      </div>
-      <section className="report-card">
-        <h2>Your colour palette.</h2>
-        <div className="colour-palette">
-          {r.palette.map((c) => (
-            <div key={c.hex}>
-              <div style={{ background: c.hex }} />
-              <span>{c.name}</span>
-              <small>{c.hex}</small>
-            </div>
-          ))}
-        </div>
-      </section>
-      <section className="report-card">
-        <h2>Finish the look.</h2>
-        <div className="shopping-grid">
-          {r.shopping.map((s) => (
-            <div key={s.item}>
-              <h3>{s.item}</h3>
-              <p>{s.reason}</p>
-              <span>{s.budget}</span>
-            </div>
-          ))}
-        </div>
-        <p className="fineprint">
-          Budget ideas, not live product listings. Start with something you
-          already own.
-        </p>
-      </section>
-      <section className="camera-note">
-        <Camera size={26} />
-        <div>
-          <h3>A camera-ready finishing touch</h3>
-          <p>{r.cameraTip}</p>
-        </div>
-      </section>
+      </details>
       <p className="fineprint">
         AI style advice is subjective. Scores describe outfit choices, never
         your body or personal worth.
@@ -183,13 +305,21 @@ export default function Report({
       )}
       {onNewReview ? (
         <button className="button primary" onClick={onNewReview}>
-          Review another look <ArrowUpRight size={18} />
+          Plan another outfit <ArrowUpRight size={18} />
         </button>
       ) : (
         <Link className="button primary" href="/analysis">
-          {sample ? "Get my own style edit" : "Review another look"}
+          {sample ? "Create my free style plan" : "Plan another outfit"}
           <ArrowUpRight size={18} />
         </Link>
+      )}
+      {!sample && (
+        <div className="report-upgrade">
+          <p>Planning your next office day, dinner or celebration?</p>
+          <Link href="/pricing" className="text-link">
+            10 plans each month for ₹99 <ArrowUpRight size={16} />
+          </Link>
+        </div>
       )}
     </article>
   );

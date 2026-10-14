@@ -68,7 +68,11 @@ export async function POST(request: Request) {
         state === "failed" ? 409 : 429,
       );
     reservation = { db, user: user.id, id: body.id };
-    const result = await analyzeOutfit(body);
+    const styleProfile =
+      typeof user.user_metadata?.style_preferences === "string"
+        ? user.user_metadata.style_preferences.slice(0, 500)
+        : "";
+    const result = await analyzeOutfit({ ...body, styleProfile });
     const { data: saved, error: saveError } = await db.rpc("finish_report", {
       p_user: user.id,
       p_id: body.id,

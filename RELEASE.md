@@ -1,9 +1,18 @@
 # Release verification
 
+## Current status — 15 October 2026
+
+- Repositioned the product as personal styling plans: exactly three looks per outfit, a wardrobe-first version and an interactive getting-ready checklist. One plan is free; the single paid offer remains ₹99/month for 10 plans.
+- Rebuilt the landing page, shared design, membership presentation and sample-plan flow around the actual deliverable. Added saved style preferences. No additional SQL migration is needed: plan fields live in the existing JSON report and preferences in Auth metadata.
+- A real OpenAI call passed the expanded schema (3 looks, a no-shopping version and checklist). Unit tests cover incomplete plans, provider rejection, legacy report compatibility and preference forwarding, alongside the existing SQL and payment-signature tests.
+- Current full hosted test is blocked: `yygrhwmjjjtatnelmene.supabase.co` returns DNS `ENOTFOUND`. No temporary test account was created during the failed attempt. Earlier hosted verification below is historical and does not establish current connectivity. Restore the project or configure an active one, then rerun `scripts/test-plan-flow.ts`.
+- Current local configuration still uses Razorpay **test** keys. Webhook secret and support email are absent; site URL is localhost. Live checkout, hosted webhooks, business details and the actual production domain remain release gates.
+- `LAUNCH_PLAN.md` records the proposed ₹1,000 experiment. No ads have been launched and no acquisition or revenue claims are made.
+
 ## Completed locally
 
 - Mobile-first application and all customer routes implemented.
-- Visual redesign: dark surfaces, lime/pink/lilac accents, sans-serif typography, campaign photography, and no eyebrow headings. Home, studio, sample report, pricing and sign-in reviewed at phone widths; desktop homepage reviewed at 1280px. Updated story-card export tested in the browser.
+- Earlier visual checks were superseded by the October editorial redesign. The upgraded sample checklist and story-card download were tested in the browser.
 - All three Supabase migrations verified on the hosted project. Temporary authenticated accounts passed account creation, one-free-review allocation, reservation/refund idempotency, saved-report persistence, cross-account isolation, direct credit-write rejection, and report deletion. Temporary identities and their data were removed after verification.
 - Google provider confirmed enabled through Supabase Auth settings, and the local Google sign-in button enabled. A completed customer OAuth round trip still needs verification.
 - OpenAI model access and a real structured outfit review verified successfully.

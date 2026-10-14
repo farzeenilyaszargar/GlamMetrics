@@ -78,9 +78,9 @@ export default function Auth() {
         />
         <div>
           <h2>
-            Good taste.
+            Your wardrobe.
             <br />
-            <em>All you.</em>
+            <em>More possibilities.</em>
           </h2>
         </div>
       </div>
@@ -90,21 +90,21 @@ export default function Auth() {
             "Check your inbox."
           ) : (
             <>
-              Your next
+              Your first plan.
               <br />
-              <em>great look.</em>
+              <em>Entirely yours.</em>
             </>
           )}
         </h1>
         <p>
           {sent
             ? `We've sent a secure sign-in link to ${email}. Open it on this device to continue. Check spam if it doesn't arrive.`
-            : "Sign in or create your account. Your first personal style review is on us."}
+            : "Create your account for one free, complete style plan. Three looks, a wardrobe-first version and a getting-ready checklist. No card needed."}
         </p>
         {!configured && (
           <div className="notice">
             Our studio is getting ready to welcome you.{" "}
-            <Link href="/sample">Explore an example review →</Link>
+            <Link href="/sample">Explore an example plan →</Link>
           </div>
         )}
         {!sent ? (
@@ -167,7 +167,7 @@ export default function Auth() {
           <Link href="/privacy">Privacy Policy</Link>. For ages 18 and over.
         </p>
         <div className="auth-perk">
-          <Sparkles size={16} /> One free review. No payment details needed.
+          <Sparkles size={16} /> One free plan. Three styled looks.
         </div>
       </section>
     </main>

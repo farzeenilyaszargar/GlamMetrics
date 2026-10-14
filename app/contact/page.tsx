@@ -28,7 +28,7 @@ export default function Contact() {
       </p>
       <p>
         You can manage your membership and refresh payment status in{" "}
-        <Link href="/profile">My edits</Link>. See our{" "}
+        <Link href="/profile">My plans</Link>. See our{" "}
         <Link href="/refunds">refund and cancellation policy</Link> for more
         information.
       </p>

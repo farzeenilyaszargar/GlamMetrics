@@ -6,10 +6,10 @@ export default function Footer() {
         <Link className="wordmark" href="/">
           glam<span>metrics</span>
         </Link>
-        <p>Your style. Turned up.</p>
+        <p>Your wardrobe. More possibilities.</p>
       </div>
       <div className="footer-links">
-        <Link href="/pricing">Plans</Link>
+        <Link href="/pricing">Membership</Link>
         <Link href="/privacy">Privacy</Link>
         <Link href="/terms">Terms</Link>
         <Link href="/refunds">Refunds</Link>

@@ -16,6 +16,9 @@ async function main() {
       strengths: result.strengths.length,
       suggestions: result.suggestions.length,
       palette: result.palette.length,
+      styledLooks: result.looks.length,
+      checklist: result.checklist.length,
+      wardrobeFirst: !!result.wardrobeRescue,
     }),
   );
 }

@@ -18,6 +18,7 @@ import { api, ClientApiError } from "@/lib/supabase";
 import { occasions } from "@/lib/catalog";
 import Report from "@/components/style-report";
 import type { StyleReport } from "@/lib/report";
+import StylePreferences from "./style-preferences";
 export default function Studio({
   initialOccasion = "Everyday",
 }: {
@@ -152,9 +153,12 @@ export default function Studio({
     <main id="main" className="wrap page-space studio">
       <div className="page-heading">
         <h1>
-          Let’s see <em>the fit.</em>
+          Your next outfit, <em>figured out.</em>
         </h1>
-        <p>Drop your outfit. Tell us the plan. Get a fresh take.</p>
+        <p>
+          One photo. Three ways to style it. Start with what’s already in your
+          wardrobe.
+        </p>
       </div>
       <form className="studio-grid" onSubmit={analyze}>
         <section>
@@ -184,18 +188,14 @@ export default function Studio({
                 >
                   <X size={18} />
                 </button>
-                <span className="image-label">YOUR LOOK, YOUR WAY</span>
+                <span className="image-label">Your outfit photo</span>
               </>
             ) : (
               <>
                 <div className="upload-ornament">
                   <Camera size={32} strokeWidth={1} />
                 </div>
-                <h2>
-                  Your next great look
-                  <br />
-                  <em>starts here.</em>
-                </h2>
+                <h2>Start with your outfit.</h2>
                 <p>
                   Drop your outfit photo here
                   <br />
@@ -302,7 +302,7 @@ export default function Studio({
           <div className="setting-title">
             <span>03</span>
             <h3>
-              A little about your style <small>optional</small>
+              What do you already own? <small>optional</small>
             </h3>
           </div>
           <label className="sr-only" htmlFor="notes">
@@ -311,12 +311,13 @@ export default function Studio({
           <textarea
             id="notes"
             disabled={busy}
-            placeholder="Love minimal jewellery? Prefer flats? Tell us what feels like you…"
+            placeholder="I have gold flats and a small black bag. I prefer minimal jewellery. Help me style this for dinner without buying anything new."
             maxLength={500}
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
           />
           <small className="counter">{notes.length}/500</small>
+          {user && <StylePreferences key={user.id} />}
           <label className="consent">
             <input
               type="checkbox"
@@ -346,14 +347,14 @@ export default function Studio({
                   </>
                 ) : (
                   <>
-                    Create my style edit <Sparkles size={18} />
+                    Create my style plan <Sparkles size={18} />
                   </>
                 )}
               </button>
               <p className="fineprint center">
                 {credits === null
-                  ? "Uses one style review."
-                  : `${credits} ${credits === 1 ? "review" : "reviews"} available · Uses one review`}
+                  ? "One plan includes three styled looks."
+                  : `${credits} ${credits === 1 ? "plan" : "plans"} available · Three looks per plan`}
               </p>
               {credits === 0 && (
                 <Link className="text-link" href="/pricing">
@@ -371,18 +372,19 @@ export default function Studio({
               >
                 {loading
                   ? "Getting your studio ready…"
-                  : "Sign in for your free review"}
+                  : "Get my first plan free"}
                 <ArrowRight size={18} />
               </button>
               <p className="fineprint center">
-                One complimentary review. No payment details needed.
+                One complete plan free. No payment details needed.
               </p>
             </>
           )}
           {busy && (
             <p className="notice" role="status">
-              We’re looking at colour, coordination and those little finishing
-              touches. This can take about a minute. Keep this page open.
+              We’re building three ways to style your outfit, a no-shopping
+              version and your getting-ready checklist. This can take about a
+              minute. Keep this page open.
             </p>
           )}
           {error && (

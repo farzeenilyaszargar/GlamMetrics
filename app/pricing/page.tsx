@@ -53,9 +53,9 @@ export default function Pricing() {
         key: d.key,
         subscription_id: d.subscription_id,
         name: "GlamMetrics",
-        description: "Style Circle · ₹99/month · 10 reviews",
+        description: "Style Circle · ₹99/month · 10 style plans",
         prefill: { email: d.email },
-        theme: { color: "#171717" },
+        theme: { color: "#742d46" },
         modal: {
           ondismiss: () => {
             setBusy(false);
@@ -104,11 +104,11 @@ export default function Pricing() {
       />
       <div className="page-heading center">
         <h1>
-          Your style era.
+          A fresh plan for
           <br />
-          <em>Starts here.</em>
+          <em>what you already own.</em>
         </h1>
-        <p>One membership. Ten fresh takes on your outfits, every month.</p>
+        <p>10 outfit photos. Up to 30 styled looks. One simple membership.</p>
       </div>
       <div className="membership">
         <div className="membership-top">
@@ -116,17 +116,18 @@ export default function Pricing() {
           <div className="price">
             ₹99<span>/ month</span>
           </div>
-          <p>10 personal outfit reviews, every month.</p>
+          <p>10 personal style plans, every month.</p>
         </div>
         <div className="membership-bottom">
           <ul>
             {[
-              "Outfit scores with practical, kind feedback",
-              "Occasion-specific styling and colour palettes",
-              "Budget-aware ideas for Indian wardrobes",
-              "Camera and framing tips for your next post",
-              "Saved style edits and downloadable reports",
-              "Cancel anytime from your account",
+              "3 complete looks for every outfit you upload",
+              "Specific shoes, accessories and finishing touches",
+              "A no-shopping version that starts with your wardrobe",
+              "Saved personal style & comfort preferences",
+              "Getting-ready checklists and colour palettes",
+              "Saved plans, printable reports & story cards",
+              "Cancel future billing from your account",
             ].map((t) => (
               <li key={t}>
                 <Check size={17} />
@@ -142,8 +143,8 @@ export default function Pricing() {
             />
             <span>
               I agree to ₹99 recurring monthly billing and the{" "}
-              <Link href="/terms">Terms</Link>. 10 reviews reset each billing
-              month; unused reviews don’t roll over.
+              <Link href="/terms">Terms</Link>. 10 plans reset each billing
+              month; unused plans don’t roll over.
             </span>
           </label>
           <button
@@ -177,14 +178,26 @@ export default function Pricing() {
         </div>
       </div>
       <p className="pricing-footnote">
-        Want to get to know us first?{" "}
-        <Link href="/analysis">Your first review is on us →</Link>
+        Want to see the value first?{" "}
+        <Link href="/analysis">Try one complete style plan free →</Link>
       </p>
       <p className="fineprint center">
         Available payment methods depend on your bank and mandate support.
-        Cancellation preserves remaining reviews until the end of your paid
+        Cancellation preserves remaining plans until the end of your paid
         period.
       </p>
+      <div className="pricing-expectations">
+        <h2>What’s included in one plan?</h2>
+        <p>
+          Upload one outfit photo and choose an occasion. You receive three
+          complete ways to style the same outfit, a wardrobe-first version and a
+          checklist. Plans are AI-generated suggestions, not personal
+          consultations with a human stylist.
+        </p>
+        <Link className="text-link" href="/sample">
+          See a complete example <ArrowRight size={16} />
+        </Link>
+      </div>
     </main>
   );
 }

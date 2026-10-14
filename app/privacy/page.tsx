@@ -6,7 +6,7 @@ export default function Privacy() {
         Privacy <em>Policy.</em>
       </h1>
       <p>
-        Last updated: 28 September 2026. This policy describes the GlamMetrics
+        Last updated: 15 October 2026. This policy describes the GlamMetrics
         style-review service.
       </p>
       <h2>What we process</h2>
@@ -16,6 +16,9 @@ export default function Privacy() {
         provides authentication and stores your written reports, review balance
         and billing references. Razorpay processes payments; GlamMetrics does
         not receive your full card details or UPI PIN.
+        If you save personal style preferences, these are stored with your
+        account in Supabase and included in future AI plan requests. You can
+        edit or clear them from My plans.
       </p>
       <h2>Your photos and AI reviews</h2>
       <p>

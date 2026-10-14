@@ -12,14 +12,14 @@ export async function saveStoryCard(report: StyleReport, occasion: string) {
   const sans =
     getComputedStyle(document.body).getPropertyValue("--font-sans").trim() ||
     "sans-serif";
-  ctx.fillStyle = "#111111";
+  ctx.fillStyle = "#FBF9F6";
   ctx.fillRect(0, 0, 1080, 1920);
-  ctx.strokeStyle = "#343434";
+  ctx.strokeStyle = "#E5DEDD";
   ctx.lineWidth = 2;
   ctx.strokeRect(54, 54, 972, 1812);
   ctx.textAlign = "center";
-  ctx.fillStyle = "#D5FF70";
-  ctx.font = `600 58px ${serif}`;
+  ctx.fillStyle = "#742D46";
+  ctx.font = `58px ${serif}`;
   ctx.fillText("glammetrics", 540, 165);
   ctx.font = `21px ${sans}`;
   ctx.fillText(occasion, 540, 252);
@@ -53,16 +53,16 @@ export async function saveStoryCard(report: StyleReport, occasion: string) {
     ctx.fillText(line, x, y);
     return y + lineHeight;
   };
-  ctx.fillStyle = "#D5FF70";
+  ctx.fillStyle = "#F2E4E8";
   ctx.beginPath();
   ctx.arc(540, 510, 175, 0, Math.PI * 2);
   ctx.fill();
-  ctx.fillStyle = "#111111";
+  ctx.fillStyle = "#742D46";
   ctx.font = `154px ${serif}`;
   ctx.fillText(String(report.score), 540, 540);
   ctx.font = `19px ${sans}`;
   ctx.fillText("OUTFIT STYLING / 100", 540, 601);
-  ctx.fillStyle = "#F5F4EF";
+  ctx.fillStyle = "#30272C";
   ctx.font = `66px ${serif}`;
   wrap(report.title, 540, 805, 850, 74, 3);
   const colours = report.palette;
@@ -73,19 +73,26 @@ export async function saveStoryCard(report: StyleReport, occasion: string) {
     ctx.fillStyle = c.hex;
     ctx.fillRect(start + i * (width + gap), 1075, width, 140);
   });
-  ctx.fillStyle = "#EFB8D3";
+  ctx.fillStyle = "#742D46";
   ctx.font = `20px ${sans}`;
   ctx.fillText("My colour palette", 540, 1268);
   ctx.font = `29px ${sans}`;
-  ctx.fillStyle = "#C9C6C0";
-  wrap(report.suggestions[0] || report.summary, 540, 1390, 790, 47, 4);
-  ctx.fillStyle = "#D5FF70";
+  ctx.fillStyle = "#766D70";
+  wrap(
+    report.looks?.[0]?.outfit || report.suggestions[0] || report.summary,
+    540,
+    1390,
+    790,
+    47,
+    4,
+  );
+  ctx.fillStyle = "#742D46";
   ctx.font = `40px ${serif}`;
-  ctx.fillText("My style. Turned up.", 540, 1680);
+  ctx.fillText("My wardrobe. More possibilities.", 540, 1680);
   ctx.font = `22px ${sans}`;
   ctx.fillText("Discover your own edit at " + window.location.host, 540, 1753);
   ctx.font = `17px ${sans}`;
-  ctx.fillStyle = "#AAA9A4";
+  ctx.fillStyle = "#766D70";
   ctx.fillText(
     "A subjective AI outfit review. Your body is never a score.",
     540,

@@ -1,4 +1,17 @@
 import { z } from "zod";
+export const lookSchema = z.object({
+  name: z.string().min(1).max(80),
+  outfit: z.string().min(1).max(500),
+  shoes: z.string().min(1).max(200),
+  accessories: z.string().min(1).max(300),
+  finishingTouch: z.string().min(1).max(300),
+  why: z.string().min(1).max(400),
+});
+const planFields = {
+  looks: z.array(lookSchema).length(3),
+  wardrobeRescue: z.string().min(1).max(800),
+  checklist: z.array(z.string().min(1).max(250)).min(3).max(6),
+};
 export const reportSchema = z.object({
   title: z.string().min(1).max(100),
   summary: z.string().min(1).max(1200),
@@ -27,10 +40,15 @@ export const reportSchema = z.object({
         budget: z.string().max(80),
       }),
     )
-    .min(1)
+    .min(0)
     .max(4),
   cameraTip: z.string().max(600),
+  // Optional only for reports saved before the styling-plan upgrade.
+  looks: planFields.looks.optional(),
+  wardrobeRescue: planFields.wardrobeRescue.optional(),
+  checklist: planFields.checklist.optional(),
 });
+export const newPlanSchema = reportSchema.extend(planFields);
 export type StyleReport = z.infer<typeof reportSchema>;
 export const sampleReport: StyleReport = {
   title: "A little rose. A lot of presence.",
@@ -68,4 +86,45 @@ export const sampleReport: StyleReport = {
   ],
   cameraTip:
     "Stand near soft window light, turn slightly, and leave space in the frame to show the full drape. Avoid direct flash on the silk.",
+  looks: [
+    {
+      name: "The wedding guest",
+      outfit:
+        "Keep the rose saree and matching blouse. Secure the shoulder pleats for a clean, easy drape.",
+      shoes: "Gold flats or low block heels you already own.",
+      accessories:
+        "Gold earrings and the embellished bag. Skip a necklace so the earrings can lead.",
+      finishingTouch: "A low bun with a soft side part.",
+      why: "Keeps the warm rose-and-gold palette together and leaves the silk as the focus.",
+    },
+    {
+      name: "The understated dinner",
+      outfit:
+        "Use the same saree, with a loosely draped pallu pinned discreetly at the shoulder.",
+      shoes: "Simple neutral sandals, if available in your wardrobe.",
+      accessories:
+        "Swap to small studs and a plain clutch. Leave the statement bag at home.",
+      finishingTouch: "Wear your hair down and keep other accessories minimal.",
+      why: "A few quieter details make the same outfit feel appropriate for a smaller evening.",
+    },
+    {
+      name: "The festive afternoon",
+      outfit:
+        "Neatly pleat the same rose saree so it stays comfortable as you move.",
+      shoes: "Comfortable flats; a gold or tan pair would work.",
+      accessories:
+        "One slim bangle and small earrings. Use a compact bag that leaves your hands free.",
+      finishingTouch:
+        "A comfortable ponytail or braid, with secure pins for the pallu.",
+      why: "Less jewellery and practical footwear keep it relaxed without losing the occasion feel.",
+    },
+  ],
+  wardrobeRescue:
+    "Keep your current saree, blouse, earrings and bag. Skip extra jewellery, pin the pleats, and use your most comfortable neutral or gold shoes. Nothing new is necessary for this version.",
+  checklist: [
+    "Secure the pallu and pleats before leaving.",
+    "Choose earrings or a necklace as the focal point, rather than both.",
+    "Check the shoe comfort with a short walk.",
+    "Pack safety pins in your bag.",
+  ],
 };
