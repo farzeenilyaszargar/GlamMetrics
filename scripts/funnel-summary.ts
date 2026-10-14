@@ -16,15 +16,15 @@ async function main() {
       .select("id", { count: "exact", head: true })
       .gte("created_at", since),
     db
-      .from("reports")
+      .from("outfit_purchases")
       .select("id", { count: "exact", head: true })
-      .eq("status", "complete")
+      .not("result", "is", null)
       .gte("created_at", since),
     db
-      .from("subscription_payments")
+      .from("outfit_purchases")
       .select("payment_id", { count: "exact", head: true })
-      .eq("refunded", false)
-      .gte("period_start", since),
+      .eq("status", "paid")
+      .gte("created_at", since),
   ]);
   for (const result of [accounts, plans, payments])
     if (result.error)
@@ -38,8 +38,8 @@ async function main() {
           : "test",
         newProfilesIncludingGuests: accounts.count,
         retainedCompletedPlans: plans.count,
-        verifiedUnrefundedBillingCycles: payments.count,
-        note: "Profiles include guest sessions and are NOT verified signups. Counts include all sources. Deleted plans are excluded. Billing cycles include renewals; they are not unique customers. Test-mode cycles are not revenue.",
+        verifiedUnrefundedOutfitPurchases: payments.count,
+        note: "Profiles include guests, not verified signups. Counts include all sources; no ad attribution. Delivery count includes hidden/refunded results. Payments are one-off purchases, not unique customers; date filter uses purchase creation. Test-mode payments are not revenue.",
       },
       null,
       2,

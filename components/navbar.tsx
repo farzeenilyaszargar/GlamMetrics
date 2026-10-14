@@ -14,8 +14,8 @@ export default function Navbar() {
   const { user } = useSession();
   const links = [
     { href: "/", label: "Home", icon: Compass },
-    { href: "/analysis", label: "Create a plan", icon: Sparkles },
-    { href: "/pricing", label: "Membership", icon: Bookmark },
+    { href: "/analysis", label: "Outfit Fix", icon: Sparkles },
+    { href: "/sample", label: "Example", icon: Bookmark },
     { href: "/profile", label: "My plans", icon: UserRound },
   ];
   return (
@@ -32,25 +32,25 @@ export default function Navbar() {
             className={path === "/analysis" ? "active" : ""}
             href="/analysis"
           >
-            Create a plan
+            Outfit Fix · ₹99
           </Link>
-          <Link className={path === "/pricing" ? "active" : ""} href="/pricing">
-            Style Circle
+          <Link className={path === "/sample" ? "active" : ""} href="/sample">
+            See an example
           </Link>
         </nav>
         <Link className="header-cta" href={user ? "/profile" : "/analysis"}>
-          {user ? "My plans" : "Try a free plan"}
+          {user ? "My plans" : "Fix my outfit"}
           <ArrowUpRight size={15} />
         </Link>
       </header>
       {path === "/" ? (
         <div className="mobile-offer">
           <div>
-            <strong>Your first plan is free</strong>
-            <span>No card needed</span>
+            <strong>Outfit Fix · ₹99 once</strong>
+            <span>No subscription</span>
           </div>
           <Link href="/analysis" className="button primary">
-            Try it free <ArrowUpRight size={16} />
+            Fix my outfit <ArrowUpRight size={16} />
           </Link>
         </div>
       ) : (

@@ -7,6 +7,7 @@ async function main() {
     occasion: "Wedding guest",
     budget: "Use what I own",
     notes: "Minimal jewellery, no new purchases.",
+    singleLook: process.env.TEST_SINGLE_LOOK === "true",
   });
   console.log(
     JSON.stringify({

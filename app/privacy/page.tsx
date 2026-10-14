@@ -31,17 +31,17 @@ export default function Privacy() {
       </p>
       <h2>A draft on your device</h2>
       <p>
-        You can create a free plan with a guest session. Its session credentials
+        You can buy an Outfit Fix with a guest session. Its session credentials
         are stored in your browser, while written plans and their balances stay
         on our server. Clearing browser data, signing out or changing browsers
         can make an unlinked guest session inaccessible. Connect a verified
-        email or Google account to keep access across devices. Payments and
-        monthly allowances are never authorised by browser storage alone.
+        email or Google account to keep access across devices. Payments and paid
+        access are never authorised by browser storage alone.
       </p>
       <p>
-        If you choose a photo before signing in, a temporary draft is kept in
-        your browser so you can continue after login. It is cleared when
-        restored and discarded on your next visit if more than two hours old.
+        A temporary outfit draft is kept in your browser before checkout so you
+        can recover an interrupted purchase. It is cleared after a completed
+        result and discarded on your next visit if more than two hours old.
         Clearing this site’s browser data removes it immediately.
       </p>
       <p>
@@ -49,13 +49,14 @@ export default function Privacy() {
         browser may temporarily retain a guest access token for up to 45 minutes
         so our server can verify ownership and attach your guest plans. That
         token is removed after a successful attachment or when an expired
-        attachment is next checked. A server-side daily counter limits guest AI
-        attempts; it does not store your photo, email or IP address.
+        attachment is next checked. Server-side attempt counters limit retries;
+        they do not store your photo or IP address.
       </p>
       <h2>Saved information</h2>
       <p>
-        Written reviews remain in your account until you delete them or request
-        account deletion. You can delete individual reviews from My edits.
+        Written reviews remain in your account until you request deletion.
+        Removing an Outfit Fix from My plans hides it from your journal; contact
+        support to erase its content. Older reviews are deleted directly.
         Payment references may need to be retained for billing, refunds and
         accounting. Provider records are subject to their own retention
         policies.

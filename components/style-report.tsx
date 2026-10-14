@@ -18,7 +18,6 @@ export default function Report({
   sample = false,
   occasion = "Your look",
   onNewReview,
-  remainingPlans,
 }: {
   report: StyleReport;
   sample?: boolean;
@@ -29,6 +28,38 @@ export default function Report({
   const { user } = useSession();
   const [message, setMessage] = useState("");
   const [checked, setChecked] = useState<string[]>([]);
+  function downloadPlan() {
+    const text = [
+      r.title,
+      r.summary,
+      "What to change",
+      ...r.suggestions.map((s, i) => `${i + 1}. ${s}`),
+      ...(r.looks || []).flatMap((l) => [
+        l.name,
+        l.outfit,
+        `Shoes: ${l.shoes}`,
+        `Accessories: ${l.accessories}`,
+        `Finishing touch: ${l.finishingTouch}`,
+      ]),
+      "Use your wardrobe",
+      r.wardrobeRescue || "",
+      "Getting-ready checklist",
+      ...(r.checklist || []).map((s) => `□ ${s}`),
+      `Photo tip: ${r.cameraTip}`,
+      "AI-generated styling advice · GlamMetrics",
+    ].join("\n\n");
+    const url = URL.createObjectURL(
+      new Blob([text], { type: "text/plain;charset=utf-8" }),
+    );
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "glammetrics-outfit-fix.txt";
+    link.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    setMessage(
+      "Your plan has been downloaded. Keep a copy before leaving this guest session.",
+    );
+  }
   async function copyLook(look: NonNullable<StyleReport["looks"]>[number]) {
     try {
       await navigator.clipboard.writeText(
@@ -123,15 +154,44 @@ export default function Report({
           </div>
         )}
       </header>
+      <div className="plan-download-actions">
+        <button className="button primary" onClick={downloadPlan}>
+          <Download size={17} />
+          Download my plan
+        </button>
+        <button className="button secondary" onClick={() => window.print()}>
+          Print / save PDF
+        </button>
+      </div>
+      {r.looks?.length === 1 && (
+        <section className="report-card tinted">
+          <h2>The changes to make.</h2>
+          <ol>
+            {r.suggestions.map((s) => (
+              <li key={s}>{s}</li>
+            ))}
+          </ol>
+        </section>
+      )}
       {r.looks && (
         <section className="look-plan-section">
           <div className="section-heading">
             <div>
-              <h2>One outfit. Three ways to wear it.</h2>
-              <p>Choose the version that fits your plans.</p>
+              <h2>
+                {r.looks.length === 1
+                  ? "Your outfit, figured out."
+                  : "Your saved styling variations."}
+              </h2>
+              <p>
+                {r.looks.length === 1
+                  ? "One complete look for your occasion."
+                  : "Choose the version that fits your plans."}
+              </p>
             </div>
           </div>
-          <div className="look-plan-grid">
+          <div
+            className={`look-plan-grid ${r.looks.length === 1 ? "single-look" : ""}`}
+          >
             {r.looks.map((look, i) => (
               <article className="look-plan-card" key={look.name}>
                 <div className="look-card-top">
@@ -175,29 +235,6 @@ export default function Report({
           <p>{r.wardrobeRescue}</p>
         </section>
       )}
-      {!sample && (user?.is_anonymous || remainingPlans === 0) && (
-        <section className="report-upgrade result-offer">
-          <h2>Have your next outfit figured out, too.</h2>
-          <p>
-            Style Circle gives you 10 personal plans each month, with three
-            styled looks in every plan.
-          </p>
-          <div className="result-offer-actions">
-            <Link href="/pricing" className="button primary">
-              Get 10 plans for ₹99/month <ArrowUpRight size={17} />
-            </Link>
-            {user?.is_anonymous && (
-              <Link href="/auth?next=/profile" className="text-link">
-                Just save my free plan
-              </Link>
-            )}
-          </div>
-          <p className="fineprint">
-            Billed monthly. Cancel future billing in your account. Unused plans
-            don’t roll over.
-          </p>
-        </section>
-      )}
       {r.checklist && (
         <section className="report-card getting-ready">
           <div className="section-heading">
@@ -234,11 +271,11 @@ export default function Report({
         <section className="report-upgrade">
           <h2>Make it personal.</h2>
           <p>
-            This is an illustrative plan. Upload your outfit to get three looks
-            built around your clothes, occasion and budget.
+            This is an illustrative Outfit Fix. Get one personal plan built
+            around your outfit and occasion, for ₹99 once.
           </p>
           <Link href="/analysis" className="button primary">
-            Create my free plan <ArrowUpRight size={17} />
+            Fix my outfit · ₹99 <ArrowUpRight size={17} />
           </Link>
         </section>
       )}
@@ -336,16 +373,15 @@ export default function Report({
         </button>
       ) : (
         <Link className="button primary" href="/analysis">
-          {sample ? "Create my free style plan" : "Plan another outfit"}
+          {sample ? "Fix my outfit · ₹99" : "New Outfit Fix · ₹99"}
           <ArrowUpRight size={18} />
         </Link>
       )}
       {!sample && user?.is_anonymous && (
         <div className="report-upgrade">
           <p>
-            Your free plan is saved to this guest session. Connect an email or
-            Google so it stays accessible if you change browsers or clear your
-            data.
+            Your plan is saved to this guest session. Connect an email or Google
+            so it stays accessible if you change browsers or clear your data.
           </p>
           <Link href="/auth?next=/profile" className="text-link">
             Keep my plan across devices <ArrowUpRight size={16} />

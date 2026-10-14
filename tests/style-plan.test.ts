@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { newPlanSchema, reportSchema, sampleReport } from "../lib/report";
 import { analyzeOutfit } from "../lib/ai-style";
 
-test("new paid offering requires three complete looks; old saved reviews remain readable", () => {
+test("legacy plan requires three complete looks; older saved reviews remain readable", () => {
   assert.ok(newPlanSchema.safeParse(sampleReport).success);
   const { looks, wardrobeRescue, checklist, ...legacy } = sampleReport;
   assert.ok(reportSchema.safeParse(legacy).success);
@@ -40,7 +40,10 @@ test("AI output cannot silently deliver a partial plan or a refusal as a complet
   let preferences: unknown;
   globalThis.fetch = async (_url, init) => {
     const body = JSON.parse(String(init?.body));
-    preferences = JSON.parse(body.messages[1].content[0].text).styleProfile;
+    preferences = JSON.parse(
+      body.messages.find((m: { role: string }) => m.role === "user").content[0]
+        .text,
+    ).styleProfile;
     return Response.json({
       choices: [{ message: { content: JSON.stringify(output) } }],
     });

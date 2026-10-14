@@ -17,15 +17,15 @@ export const metadata: Metadata = {
     process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
   ),
   title: {
-    default: "GlamMetrics — Your wardrobe. More possibilities.",
+    default: "Outfit Fix · ₹99 once | GlamMetrics",
     template: "%s | GlamMetrics",
   },
   description:
-    "Turn one outfit photo into three ways to wear it. Personal AI styling plans for Indian wardrobes, with wardrobe-first advice and practical checklists. First plan free. ₹99/month for 10 plans.",
+    "Get your outfit figured out for ₹99 once. A personal AI styling plan with specific changes, shoes, accessories and a getting-ready checklist. No subscription.",
   openGraph: {
-    title: "You have the clothes. Let’s make the look.",
+    title: "Your outfit, figured out. ₹99 once.",
     description:
-      "Three styled looks, a no-shopping version and a getting-ready checklist. Try your first plan free.",
+      "One photo. One complete Outfit Fix. ₹99 once, no subscription.",
     images: [{ url: "/images/editorial.png", width: 1086, height: 1448 }],
   },
   twitter: { card: "summary_large_image" },

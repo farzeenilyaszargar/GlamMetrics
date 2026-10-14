@@ -1,20 +1,20 @@
 import Link from "next/link";
 import Image from "next/image";
-import { guestTrialsEnabled } from "@/lib/identity";
 import {
   ArrowRight,
-  Check,
   ArrowUpRight,
+  Check,
   Camera,
-  Shirt,
+  CreditCard,
   Bookmark,
   Plus,
 } from "lucide-react";
 
-const benefits = [
-  "3 complete looks per outfit",
-  "A no-shopping version",
-  "Made for your occasion",
+const included = [
+  "3 specific changes to your outfit",
+  "One complete look for your occasion",
+  "Shoes, jewellery & bag, figured out",
+  "A getting-ready checklist to keep",
 ];
 export default function Home() {
   return (
@@ -22,32 +22,33 @@ export default function Home() {
       <section className="landing-hero wrap">
         <div className="landing-hero-copy">
           <h1>
-            You have the clothes.
+            Love the outfit.
             <br />
-            <em>Let’s make the look.</em>
+            <em>
+              Not sure how
+              <br className="mobile-break" /> to finish it?
+            </em>
           </h1>
           <p>
-            Turn an outfit photo into three ways to wear it—with the right
-            shoes, accessories and finishing touches. Personal AI styling for
-            your plans, your budget and your wardrobe.
+            Send us your outfit photo. Get a personal styling plan with the
+            exact changes, shoes and accessories to bring it together—for the
+            occasion you have in mind.
           </p>
           <Link className="button primary" href="/analysis">
-            Get my first style plan free <ArrowRight size={18} />
+            Fix my outfit · ₹99 <ArrowRight size={18} />
           </Link>
           <div className="hero-reassurance">
-            <Check size={14} />
-            {guestTrialsEnabled ? "No login to try" : "No card needed"}{" "}
-            <span>·</span> ₹99/month when you’re ready
+            <Check size={14} /> One-time payment <span>·</span> No subscription
           </div>
           <Link href="/sample" className="text-link">
-            See exactly what you’ll receive <ArrowUpRight size={16} />
+            See exactly what you get <ArrowUpRight size={16} />
           </Link>
         </div>
         <div className="landing-hero-art">
           <div className="hero-outfit-photo">
             <Image
               src="/images/street-edit.png"
-              alt="A pink blazer styled with black denim and understated silver jewellery"
+              alt="A pink blazer, black denim and silver jewellery styled together"
               fill
               loading="eager"
               sizes="(max-width:700px) 90vw, 45vw"
@@ -58,306 +59,226 @@ export default function Home() {
               <Check size={17} />
             </span>
             <div>
-              <strong>One outfit. More possibilities.</strong>
-              <p>Workday polish · Weekend coffee · Dinner out</p>
+              <strong>The outfit stays. The details change.</strong>
+              <p>Sleeves folded. Jewellery edited. Evening sorted.</p>
             </div>
           </div>
-          <p className="image-disclosure">Illustrative styling example</p>
+          <p className="image-disclosure">
+            Illustrative styling example · AI-generated image
+          </p>
         </div>
       </section>
       <div className="value-bar">
         <div className="wrap">
-          {benefits.map((item) => (
-            <span key={item}>
+          {[
+            "Made from your outfit photo",
+            "Indian & western wardrobes",
+            "Written plan you can download",
+          ].map((t) => (
+            <span key={t}>
               <Check size={15} />
-              {item}
+              {t}
             </span>
           ))}
         </div>
       </div>
-
-      <section className="landing-section wrap" id="how-it-works">
-        <div className="landing-heading">
-          <h2>
-            For the “what do I wear?”
-            <br />
-            <em>moments.</em>
-          </h2>
-          <p>
-            A dinner invite. A workday. Another wedding. You don’t always need a
-            new outfit. Sometimes you need a different way to put it together.
-          </p>
-        </div>
-        <div className="occasion-editorial-grid">
-          <Link
-            className="occasion-editorial-card"
-            href="/analysis?occasion=Work"
-          >
-            <div className="occasion-image">
-              <Image
-                src="/images/street-edit.png"
-                alt="Relaxed pink tailoring for a smart everyday outfit"
-                fill
-                sizes="(max-width:700px) 44vw, 35vw"
-              />
-            </div>
-            <div>
-              <h3>The everyday outfit</h3>
-              <p>Feel put-together for work, coffee and everything between.</p>
-              <span>
-                Style my everyday look <ArrowUpRight size={16} />
-              </span>
-            </div>
-          </Link>
-          <Link
-            className="occasion-editorial-card"
-            href="/analysis?occasion=Wedding%20guest"
-          >
-            <div className="occasion-image">
-              <Image
-                src="/images/editorial.png"
-                alt="A rose saree with gold accessories for a special occasion"
-                fill
-                sizes="(max-width:700px) 44vw, 35vw"
-              />
-            </div>
-            <div>
-              <h3>The special occasion</h3>
-              <p>
-                Sarees, kurtas and celebration looks, with the details sorted.
-              </p>
-              <span>
-                Plan my occasion look <ArrowUpRight size={16} />
-              </span>
-            </div>
-          </Link>
-          <div className="wardrobe-message">
-            <Shirt size={32} strokeWidth={1.2} />
-            <h3>
-              Start with what
-              <br />
-              you already love.
-            </h3>
-            <p>
-              Tell us the shoes, bags and jewellery you own. Choose “Use what I
-              own” for a plan that prioritises your wardrobe.
-            </p>
-            <Link href="/analysis" className="text-link">
-              No shopping required <ArrowRight size={16} />
-            </Link>
-          </div>
-        </div>
-      </section>
-
       <section className="sample-section" id="your-plan">
         <div className="wrap sample-section-grid">
           <div className="sample-explanation">
             <h2>
-              Advice you can
+              Less “looks nice.”
               <br />
-              <em>actually get dressed with.</em>
+              <em>More “here’s what to do.”</em>
             </h2>
             <p>
-              Each plan turns one outfit into three complete looks. You’ll know
-              what to wear with it, what to change, and which details to skip.
+              Your Outfit Fix is a decision made easier. What to keep. What to
+              change. How to put it all together—using your wardrobe first.
             </p>
             <ul>
-              {[
-                "A look for the occasion you chose",
-                "Two alternative ways to restyle the same outfit",
-                "Shoes, accessories and finishing touches",
-                "A wardrobe-first version and a practical checklist",
-              ].map((item) => (
-                <li key={item}>
+              {included.map((t) => (
+                <li key={t}>
                   <Check size={16} />
-                  {item}
+                  {t}
                 </li>
               ))}
             </ul>
             <Link href="/sample" className="button secondary">
-              Explore a full sample plan <ArrowUpRight size={17} />
+              Read a complete example <ArrowUpRight size={17} />
             </Link>
           </div>
           <div className="sample-plan-preview">
             <div className="sample-preview-heading">
-              <span>Example: a dinner outfit</span>
+              <span>Example · dinner with friends</span>
               <Bookmark size={18} />
             </div>
             <h3>
-              Your pink blazer,
+              Your pink blazer.
               <br />
-              ready for the evening.
+              An evening finish.
             </h3>
-            <div className="preview-look-tabs">
-              <span>Dinner out</span>
-              <span>Workday</span>
-              <span>Weekend</span>
-            </div>
             <dl>
               <div>
-                <dt>The outfit</dt>
+                <dt>Keep</dt>
                 <dd>
-                  Pink blazer + black top + your dark jeans. Keep the blazer
-                  open for a relaxed finish.
+                  The pink blazer, black top and dark jeans. They already work
+                  together.
                 </dd>
               </div>
               <div>
-                <dt>The finishing touches</dt>
+                <dt>Change</dt>
                 <dd>
-                  Small silver earrings, a black bag and comfortable black
-                  flats—if you own them.
+                  Fold the sleeves neatly, leave the blazer open and choose one
+                  jewellery focal point.
                 </dd>
               </div>
               <div>
-                <dt>Skip the shopping</dt>
+                <dt>Finish</dt>
                 <dd>
-                  Keep your current bag and jewellery. A neat sleeve fold is
-                  enough to change the feel.
+                  Black flats, a compact black bag and small silver earrings—if
+                  you own them. No extra necklace needed.
                 </dd>
               </div>
             </dl>
             <div className="sample-preview-footer">
-              <Check size={15} /> A plan to save and use again
+              <Check size={15} /> Clear instructions. Not another mood board.
             </div>
           </div>
         </div>
       </section>
-
-      <section className="landing-section wrap process-section">
+      <section
+        className="landing-section wrap process-section"
+        id="how-it-works"
+      >
         <div className="landing-heading">
           <h2>
-            A little styling help.
+            An outfit question.
             <br />
-            <em>A very simple start.</em>
+            <em>A straightforward answer.</em>
           </h2>
-          <p>You bring the outfit. We’ll help with the details.</p>
+          <p>No quizzes. No booking a call. No monthly commitment.</p>
         </div>
         <div className="process-grid">
           {[
             {
               icon: Camera,
-              title: "Upload your outfit",
-              text: "A clear mirror selfie works. Make sure the full outfit is visible.",
+              title: "Show us the outfit",
+              text: "Upload a clear photo and choose the occasion. Add any pieces you own or comfort preferences.",
             },
             {
-              icon: Shirt,
-              title: "Tell us your plans",
-              text: "Pick the occasion, budget and any pieces you want to use.",
+              icon: CreditCard,
+              title: "Pay ₹99 once",
+              text: "One transparent price for one personal Outfit Fix. No login wall or recurring mandate.",
             },
             {
               icon: Bookmark,
-              title: "Save your style plan",
-              text: "Choose one of three looks. Follow your checklist, and keep the plan for later.",
+              title: "Get dressed with a plan",
+              text: "Your AI-written fix is generated after payment. Read it, follow the checklist and download it.",
             },
-          ].map((step, i) => (
-            <div key={step.title}>
+          ].map((s, i) => (
+            <div key={s.title}>
               <div className="process-number">
                 0{i + 1}
-                <step.icon size={21} strokeWidth={1.3} />
+                <s.icon size={21} strokeWidth={1.3} />
               </div>
-              <h3>{step.title}</h3>
-              <p>{step.text}</p>
+              <h3>{s.title}</h3>
+              <p>{s.text}</p>
             </div>
           ))}
         </div>
       </section>
-
-      <section className="landing-section wrap" id="membership">
+      <section className="landing-section wrap" id="outfit-fix">
         <div className="offer-layout">
           <div className="offer-copy">
             <h2>
-              Your wardrobe has
+              One outfit.
               <br />
-              <em>more to give.</em>
+              <em>
+                One less thing
+                <br />
+                to overthink.
+              </em>
             </h2>
             <p>
-              Make room for a fresh idea each time you get dressed for something
-              that matters. Style Circle gives you 10 personal plans a month,
-              saved in one place.
+              A wedding invite. Dinner plans. A work presentation. Get help
+              finishing the clothes you already want to wear, without committing
+              to a stylist subscription.
             </p>
             <div className="offer-uses">
-              <span>Office days</span>
-              <span>Dinner plans</span>
-              <span>Wedding invites</span>
-              <span>Festival outfits</span>
+              <span>Sarees & kurtas</span>
+              <span>Dinner outfits</span>
+              <span>Workwear</span>
+              <span>Wedding guests</span>
             </div>
-            <p className="offer-free-note">
-              Start with one complete plan free. See the value before you
-              subscribe.
-            </p>
           </div>
           <div className="offer-card">
-            <h3>Style Circle</h3>
+            <h3>Outfit Fix</h3>
             <div className="offer-price">
-              ₹99<span>/ month</span>
+              ₹99<span>one time</span>
             </div>
-            <p>10 outfit plans. 3 styled looks in every plan.</p>
+            <p>One photo → one complete personal styling plan.</p>
             <ul>
-              {[
-                "Up to 30 look ideas from 10 outfit photos",
-                "Wardrobe-first styling, suited to your budget",
-                "Saved personal style preferences",
-                "Getting-ready checklists & saved plans",
-                "Cancel future billing from your account",
-              ].map((item) => (
-                <li key={item}>
+              {included.map((t) => (
+                <li key={t}>
                   <Check size={16} />
-                  {item}
+                  {t}
                 </li>
               ))}
+              <li>
+                <Check size={16} />
+                Download your plan. Keep it yours.
+              </li>
             </ul>
-            <Link className="button primary full" href="/pricing">
-              See membership details <ArrowRight size={17} />
+            <Link className="button primary full" href="/analysis">
+              Fix my outfit · ₹99 <ArrowRight size={17} />
             </Link>
             <p className="fineprint center">
-              ₹99 billed monthly. Unused plans don’t roll over.
+              No subscription. No auto-renewal. AI-generated advice.
             </p>
           </div>
         </div>
       </section>
-
       <section className="landing-section wrap landing-faq">
         <div>
           <h2>
-            A few things
+            Before you
             <br />
-            <em>you might ask.</em>
+            <em>send the selfie.</em>
           </h2>
           <p>
-            Something else on your mind?
-            <br />
-            <Link className="text-link" href="/contact">
-              Get in touch <ArrowUpRight size={16} />
+            <Link href="/contact" className="text-link">
+              A question? Get in touch <ArrowUpRight size={16} />
             </Link>
           </p>
         </div>
         <div>
           {[
             [
-              "Why pay for this instead of asking a chatbot?",
-              "GlamMetrics gives your outfit a consistent, saveable plan: three complete ways to style it, a wardrobe-first version, a checklist and a colour palette. Your saved comfort and wardrobe preferences are used in future plans. You can try a complete plan free and decide whether the convenience is worth ₹99/month to you.",
+              "What exactly am I buying?",
+              "One written Outfit Fix based on one outfit photo and your occasion: three practical changes, one complete styled look with shoes and accessories, and a getting-ready checklist. It is not a subscription, a human stylist appointment, a shopping order or a generated try-on image.",
+            ],
+            [
+              "How quickly do I get it?",
+              "Generation begins once your payment is verified. Stay on the page while it runs; it may take a minute or more depending on demand. There is no appointment or manual delivery. If processing fails, retry the same purchase without paying again.",
+            ],
+            [
+              "Do I need an account?",
+              "No signup is required to buy. We create a secure guest session behind the scenes, while payment and purchase ownership are verified on the server—not just saved locally. Download the result or connect an email afterwards. Clearing browser data or changing browsers can otherwise lose your guest access.",
             ],
             [
               "Is this a human stylist?",
-              "No. Plans are generated by AI using your outfit photo and preferences. They are suggestions, not guarantees. We focus on your clothes, coordination and occasion—not rating your face or body.",
+              "No. The advice is generated by AI from your photo and notes. It is subjective and may make mistakes. We advise on the outfit and occasion, never your body or attractiveness. Read the example before deciding whether this convenience is worth ₹99 to you.",
             ],
             [
-              "Does it work for sarees and kurtas?",
-              "Yes. Use it for Indian, western and fusion outfits. Tell us the occasion and any comfort or coverage preferences so your plan fits how you like to dress.",
+              "Will I need to shop?",
+              "The fix prioritises your visible clothes and items you tell us you own. Add your shoes, bags and jewellery in the optional notes. Unconfirmed items are suggestions with wardrobe swaps, not a requirement to buy anything.",
             ],
             [
-              "Will I need to buy more clothes?",
-              "You can choose “Use what I own” and list the pieces you already have. Your plan will prioritise visible and explicitly owned items. Shopping suggestions are optional budget ideas, not live product listings.",
+              "What if I pay but it doesn’t work?",
+              "Use Check payment & result in the studio to recover an interrupted purchase. Failed generations can be retried on that same purchase. If the service still cannot deliver, contact support with your purchase or Razorpay reference for help or a refund under our policy.",
             ],
             [
-              "How does the free plan work?",
-              guestTrialsEnabled
-                ? "Upload an outfit and create your first plan as a guest—no email or payment details required. Guest access stays in this browser. Connect Google or verify an email to keep your plans across devices and before starting the ₹99/month subscription. Unused paid plans don’t roll over."
-                : "Create an account and upload one outfit. Your first complete plan is free with no payment details. Style Circle adds 10 plans per paid billing month for ₹99; unused plans don’t roll over.",
-            ],
-            [
-              "Are my outfit photos saved?",
-              "Your photo is sent to our AI provider to generate the plan. GlamMetrics saves your written plan, not the original image. Our privacy policy explains provider processing and retention.",
+              "What happens to my photo?",
+              "Your selected photo is held in a temporary draft in this browser and sent to our AI provider when you generate the fix. GlamMetrics stores the written result, not the original photo on our server. Read the privacy policy for provider processing details.",
             ],
           ].map(([q, a]) => (
             <details key={q}>
@@ -370,16 +291,15 @@ export default function Home() {
           ))}
         </div>
       </section>
-
       <section className="final-invitation wrap">
         <h2>
-          Meet your wardrobe
+          Wear the outfit.
           <br />
-          <em>all over again.</em>
+          <em>Lose the second-guessing.</em>
         </h2>
-        <p>Your first personal outfit plan is on us.</p>
+        <p>A personal Outfit Fix. ₹99, just once.</p>
         <Link href="/analysis" className="button primary">
-          Create my free style plan <ArrowRight size={18} />
+          Fix my outfit · ₹99 <ArrowRight size={18} />
         </Link>
       </section>
     </main>

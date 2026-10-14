@@ -17,18 +17,20 @@ export default function Contact() {
       ) : (
         <div className="notice">
           Customer support details will be published before the studio opens for
-          paid memberships.
+          paid Outfit Fixes.
         </div>
       )}
       <h2>For payment help</h2>
       <p>
-        Include your account email and Razorpay payment reference so we can find
-        the right transaction. Never share passwords, card details or your UPI
-        PIN.
+        Include your purchase reference or Razorpay payment reference so we can
+        find the transaction. If you have an account, include its email. Never
+        share passwords, card details or your UPI PIN.
       </p>
       <p>
-        You can manage your membership and refresh payment status in{" "}
-        <Link href="/profile">My plans</Link>. See our{" "}
+        You can resume unfinished purchases from{" "}
+        <Link href="/profile">My plans</Link> or use “Check payment & result” in
+        the studio. Existing members can also manage their older subscription in
+        My plans. See our{" "}
         <Link href="/refunds">refund and cancellation policy</Link> for more
         information.
       </p>

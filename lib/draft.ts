@@ -4,6 +4,7 @@ type Draft = {
   budget: string;
   notes: string;
   savedAt: number;
+  purchaseId?: string;
 };
 function open(): Promise<IDBDatabase> {
   return new Promise((resolve, reject) => {
@@ -41,7 +42,6 @@ export async function readDraft(): Promise<Draft | null> {
     db.close();
   }
   if (value && Date.now() - value.savedAt < 2 * 60 * 60 * 1000) {
-    await writeDraft(null);
     return value;
   }
   await writeDraft(null);

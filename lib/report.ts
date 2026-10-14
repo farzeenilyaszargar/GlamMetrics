@@ -44,11 +44,15 @@ export const reportSchema = z.object({
     .max(4),
   cameraTip: z.string().max(600),
   // Optional only for reports saved before the styling-plan upgrade.
-  looks: planFields.looks.optional(),
+  looks: z.array(lookSchema).min(1).max(3).optional(),
   wardrobeRescue: planFields.wardrobeRescue.optional(),
   checklist: planFields.checklist.optional(),
 });
 export const newPlanSchema = reportSchema.extend(planFields);
+export const outfitFixSchema = newPlanSchema.extend({
+  looks: z.array(lookSchema).length(1),
+  suggestions: z.array(z.string().min(1).max(500)).length(3),
+});
 export type StyleReport = z.infer<typeof reportSchema>;
 export const sampleReport: StyleReport = {
   title: "A little rose. A lot of presence.",

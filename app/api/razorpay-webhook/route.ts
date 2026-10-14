@@ -1,6 +1,7 @@
 import { adminDb, ApiError, failure } from "@/lib/server";
 import { signatureValid, razorpay } from "@/lib/payments";
 import { syncSubscription } from "@/lib/subscriptions";
+import { confirmOutfitPayment } from "@/lib/outfit-payments";
 export async function POST(request: Request) {
   try {
     const secret = process.env.RAZORPAY_WEBHOOK_SECRET;
@@ -16,12 +17,26 @@ export async function POST(request: Request) {
     )
       throw new ApiError("Invalid signature.", 401);
     const event = JSON.parse(text);
+    if (
+      event.event === "payment.captured" &&
+      event.payload?.payment?.entity?.order_id
+    ) {
+      const payment = event.payload.payment.entity;
+      if (payment.amount === 9900 && payment.currency === "INR")
+        await confirmOutfitPayment(payment.id);
+    }
     if (event.event === "refund.processed") {
       const id = event.payload?.refund?.entity?.payment_id;
       if (typeof id !== "string" || !/^pay_[a-zA-Z0-9]+$/.test(id))
         throw new ApiError("Invalid refund event.");
       const payment = await razorpay(`payments/${id}`);
       if (payment.amount_refunded >= payment.amount) {
+        if (
+          payment.amount === 9900 &&
+          payment.currency === "INR" &&
+          payment.order_id
+        )
+          await confirmOutfitPayment(id);
         const { error } = await adminDb().rpc("revoke_refunded_payment", {
           p_payment: id,
         });

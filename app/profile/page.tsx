@@ -26,6 +26,7 @@ type Account = {
     result: StyleReport;
   }[];
   subscription: { status: string; current_end: string | null } | null;
+  purchases: { id: string; status: string; created_at: string }[];
 };
 export default function Profile() {
   const router = useRouter();
@@ -155,7 +156,7 @@ export default function Profile() {
           <p>
             Your guest session can be lost if you clear browser data or switch
             from Instagram to another browser. Connect Google or verify an email
-            to keep your plans and make membership recoverable.
+            to keep your plans and purchases recoverable.
           </p>
           <Link className="button primary" href="/auth?next=/profile">
             Keep my plans <ArrowUpRight size={16} />
@@ -172,23 +173,43 @@ export default function Profile() {
           {notice}
         </p>
       )}
-      <section className="account-banner">
-        <div>
-          <Sparkles size={22} />
-          <h2>
-            {account ? `${account.profile.credits} plans` : "Loading…"}
-            <em> waiting for your next look.</em>
-          </h2>
-          <p>
-            {account?.profile.period_end
-              ? `Current plans available until ${new Date(account.profile.period_end).toLocaleDateString("en-IN")}.`
-              : "Your first complete plan is free."}
-          </p>
-        </div>
-        <Link className="button primary" href="/analysis">
-          Plan my next outfit <ArrowUpRight size={18} />
-        </Link>
-      </section>
+      {account?.profile.period_end && (
+        <section className="account-banner">
+          <div>
+            <Sparkles size={22} />
+            <h2>
+              {account ? `${account.profile.credits} plans` : "Loading…"}
+              <em> waiting for your next look.</em>
+            </h2>
+            <p>
+              {account?.profile.period_end
+                ? `Current plans available until ${new Date(account.profile.period_end).toLocaleDateString("en-IN")}.`
+                : "Your first complete plan is free."}
+            </p>
+          </div>
+          <Link className="button primary" href="/legacy-studio">
+            Plan my next outfit <ArrowUpRight size={18} />
+          </Link>
+        </section>
+      )}
+      {!!account?.purchases?.length && (
+        <section className="report-card">
+          <h2>Unfinished purchases.</h2>
+          <p>Pick up an existing purchase before starting a new one.</p>
+          {account.purchases.map((p) => (
+            <p key={p.id}>
+              <Link className="text-link" href={`/analysis?purchase=${p.id}`}>
+                {p.status === "paid"
+                  ? "Finish your paid Outfit Fix"
+                  : "Check payment / resume checkout"}{" "}
+                →
+              </Link>
+              <br />
+              <small>{p.id}</small>
+            </p>
+          ))}
+        </section>
+      )}
       <StylePreferences key={user.id} />
       <div className="section-heading">
         <h2>
@@ -244,38 +265,40 @@ export default function Profile() {
           </Link>
         </div>
       )}
-      <section className="billing-panel">
-        <div>
-          <h2>
-            The Style <em>Circle.</em>
-          </h2>
-          <p>
-            {active
-              ? `₹99/month · ${account?.subscription?.status}`
-              : "10 personal style plans every month, for ₹99."}
-          </p>
-        </div>
-        <div className="billing-actions">
-          {active ? (
-            <>
-              <button
-                className="button secondary"
-                disabled={busy}
-                onClick={sync}
-              >
-                Refresh payment status
-              </button>
-              <button className="text-link" onClick={() => setConfirm(true)}>
-                Cancel subscription
-              </button>
-            </>
-          ) : (
-            <Link className="button primary" href="/pricing">
-              Explore membership <ArrowUpRight size={17} />
-            </Link>
-          )}
-        </div>
-      </section>
+      {account?.subscription && (
+        <section className="billing-panel">
+          <div>
+            <h2>
+              The Style <em>Circle.</em>
+            </h2>
+            <p>
+              {active
+                ? `₹99/month · ${account?.subscription?.status}`
+                : "Your previous membership has ended. New purchases are ₹99 one-time Outfit Fixes."}
+            </p>
+          </div>
+          <div className="billing-actions">
+            {active ? (
+              <>
+                <button
+                  className="button secondary"
+                  disabled={busy}
+                  onClick={sync}
+                >
+                  Refresh payment status
+                </button>
+                <button className="text-link" onClick={() => setConfirm(true)}>
+                  Cancel subscription
+                </button>
+              </>
+            ) : (
+              <Link className="button primary" href="/pricing">
+                Outfit Fix · ₹99 once <ArrowUpRight size={17} />
+              </Link>
+            )}
+          </div>
+        </section>
+      )}
       {(confirm || deleteId) && (
         <ConfirmDialog
           title={deleteId ? "Delete this edit?" : "Cancel your membership?"}
@@ -288,7 +311,7 @@ export default function Profile() {
         >
           <p>
             {deleteId
-              ? "This removes the saved report permanently. It doesn't refund a used review."
+              ? "This removes the report from your journal. One-time purchase references are retained for payment support; this does not refund a delivered plan. Contact support to erase purchase content."
               : "Future billing will stop. Your remaining plans stay available until your paid period ends."}
           </p>
           <div className="dialog-actions">

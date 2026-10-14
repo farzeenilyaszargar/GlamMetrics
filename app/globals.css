@@ -2303,6 +2303,216 @@ input[type="checkbox"] {
     animation-iteration-count: 1 !important;
   }
 }
+.fix-studio {
+  max-width: 1120px;
+}
+.fix-checkout-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  gap: 64px;
+  align-items: start;
+}
+.fix-form {
+  min-width: 0;
+}
+.fix-form > h2,
+.fix-order-summary > h2 {
+  font-family: var(--font-display), serif;
+  font-size: 32px;
+  font-weight: 400;
+  margin-bottom: 12px;
+}
+.fix-form > p {
+  color: var(--muted);
+  margin-bottom: 24px;
+}
+.fix-upload {
+  border: 1px dashed #c6b8b8;
+  background: #f2ede9;
+  border-radius: 18px;
+  min-height: 310px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 18px;
+  padding: 30px;
+  text-align: center;
+}
+.fix-upload > p {
+  font-family: var(--font-display), serif;
+  font-size: 30px;
+  line-height: 1.2;
+}
+.fix-upload small {
+  color: var(--muted);
+  font-size: 12px;
+}
+.fix-photo {
+  position: relative;
+  height: 380px;
+  background: #eee8e3;
+  border-radius: 18px;
+  overflow: hidden;
+}
+.fix-photo img {
+  object-fit: contain;
+}
+.fix-photo button {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+}
+.fix-field {
+  display: block;
+  font-size: 14px;
+  margin-top: 26px;
+  font-weight: 500;
+}
+.fix-field > span {
+  float: right;
+  color: var(--muted);
+  font-weight: 400;
+  font-size: 12px;
+}
+.fix-field select,
+.fix-field textarea {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  padding: 14px;
+  background: #fffdfb;
+  color: #30292a;
+  border: 1px solid #d9ceca;
+  border-radius: 10px;
+  font: inherit;
+  font-size: 16px;
+}
+.fix-form .consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--muted);
+  margin: 26px 0;
+}
+.fix-form .consent input {
+  flex-shrink: 0;
+  margin-top: 4px;
+  accent-color: #742d46;
+}
+.fix-form .consent a {
+  text-decoration: underline;
+}
+.fix-order-summary {
+  padding: 32px;
+  border: 1px solid #e0d5d0;
+  border-radius: 18px;
+  background: #f4ede7;
+  position: sticky;
+  top: 110px;
+}
+.fix-order-summary > p {
+  font-size: 14px;
+  line-height: 1.7;
+  margin-top: 16px;
+}
+.fix-order-summary ul {
+  padding: 20px 0;
+  margin-top: 20px;
+  border-top: 1px solid #ddd0c9;
+  border-bottom: 1px solid #ddd0c9;
+  list-style: none;
+  display: grid;
+  gap: 16px;
+  font-size: 14px;
+}
+.fix-order-summary li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.fix-order-summary li svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.fix-order-summary .fineprint {
+  font-size: 12px;
+  color: var(--muted);
+}
+.fix-order-summary .text-link {
+  margin-top: 24px;
+}
+.fix-recovery {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #e0d5d0;
+  display: grid;
+  gap: 14px;
+}
+.fix-recovery p {
+  font-size: 11px;
+  overflow-wrap: anywhere;
+  color: var(--muted);
+}
+.fix-recovery button {
+  text-align: left;
+  justify-content: flex-start;
+}
+.plan-download-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 24px 0;
+}
+.look-plan-grid.single-look {
+  grid-template-columns: 1fr;
+}
+.single-look .look-plan-card dl {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: 12px 24px;
+}
+.single-look .look-plan-card dt,
+.single-look .look-plan-card dd {
+  margin: 0;
+}
+.mobile-break {
+  display: none;
+}
+@media (max-width: 700px) {
+  .fix-checkout-layout {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .fix-order-summary {
+    position: static;
+    padding: 24px;
+  }
+  .fix-studio .page-heading h1 {
+    font-size: 47px;
+  }
+  .fix-studio .page-heading {
+    margin-bottom: 32px;
+  }
+  .fix-form > .button {
+    font-size: 14px;
+  }
+  .single-look .look-plan-card dl {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .single-look .look-plan-card dd {
+    margin-bottom: 16px;
+  }
+  .mobile-break {
+    display: block;
+  }
+  .landing-hero-copy h1 {
+    font-size: clamp(44px, 11vw, 66px);
+  }
+}
 @media print {
   body {
     padding: 0;
@@ -2314,6 +2524,7 @@ input[type="checkbox"] {
   .mobile-nav,
   .mobile-offer,
   .report-actions,
+  .plan-download-actions,
   .report > .button,
   .skip-link,
   .report-upgrade,

@@ -2,7 +2,6 @@ import { z } from "zod";
 import { authenticate, ApiError, failure, jsonBody } from "@/lib/server";
 import { analyzeOutfit } from "@/lib/ai-style";
 import { occasions } from "@/lib/catalog";
-import { guestTrialsEnabled } from "@/lib/identity";
 export const runtime = "nodejs";
 export const maxDuration = 90;
 const input = z.object({
@@ -29,10 +28,21 @@ export async function POST(request: Request) {
   } | null = null;
   try {
     const { db, user } = await authenticate(request);
-    if (user.is_anonymous && !guestTrialsEnabled)
+    // Legacy paid members retain their already-purchased allocation. New sales
+    // exclusively use the payment-bound Outfit Fix endpoint.
+    const { data: entitlement, error: entitlementError } = await db
+      .from("profiles")
+      .select("period_end")
+      .eq("id", user.id)
+      .maybeSingle();
+    if (entitlementError) throw entitlementError;
+    if (
+      !entitlement?.period_end ||
+      new Date(entitlement.period_end).getTime() <= Date.now()
+    )
       throw new ApiError(
-        "Guest plans are currently unavailable. Please sign in to continue.",
-        403,
+        "Get an Outfit Fix for ₹99 once. New free plans and subscriptions are no longer offered.",
+        402,
       );
     const parsed = input.safeParse(await jsonBody(request, 6_010_000));
     if (!parsed.success)
@@ -88,7 +98,7 @@ export async function POST(request: Request) {
     }
     if (state === "empty")
       throw new ApiError(
-        "You're out of reviews. Join the Style Circle or wait for your next monthly allocation.",
+        "Your existing allocation is used. Get an Outfit Fix for ₹99 once, or wait for your next paid membership allocation.",
         402,
       );
     if (state !== "reserved")

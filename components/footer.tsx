@@ -6,10 +6,10 @@ export default function Footer() {
         <Link className="wordmark" href="/">
           glam<span>metrics</span>
         </Link>
-        <p>Your wardrobe. More possibilities.</p>
+        <p>One outfit. A little clarity.</p>
       </div>
       <div className="footer-links">
-        <Link href="/pricing">Membership</Link>
+        <Link href="/analysis">Outfit Fix · ₹99</Link>
         <Link href="/privacy">Privacy</Link>
         <Link href="/terms">Terms</Link>
         <Link href="/refunds">Refunds</Link>

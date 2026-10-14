@@ -14,7 +14,7 @@ export async function ensureGuestSession() {
     if (error) throw error;
     if (data.session) return data.session;
     if (!guestTrialsEnabled)
-      throw new Error("Please sign in to create your free plan.");
+      throw new Error("Please sign in to continue with your Outfit Fix.");
     const created = await db.auth.signInAnonymously();
     if (created.error || !created.data.session)
       throw new Error(

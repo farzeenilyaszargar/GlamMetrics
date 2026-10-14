@@ -32,7 +32,8 @@ export default function Auth() {
   const guest = user?.is_anonymous === true;
   const next = () => {
     const value = new URLSearchParams(window.location.search).get("next");
-    return value && /^\/(analysis|pricing|profile)(\?|$)/.test(value)
+    return value &&
+      /^\/(analysis|pricing|profile|legacy-studio)(\?|$)/.test(value)
       ? value
       : "/analysis";
   };
@@ -160,8 +161,8 @@ export default function Auth() {
           {sent
             ? `We've sent a secure sign-in link to ${email}. Open it on this device to continue. Check spam if it doesn't arrive.`
             : guest
-              ? "Connect Google or verify your email to keep your guest plans and access them on any device. Do this before starting a paid membership."
-              : "Sign in to find your plans and manage your membership. Just trying the studio? Your first guest plan doesn’t need a login."}
+              ? "Connect Google or verify your email to keep your Outfit Fixes and access them on another device. This is optional, not a subscription."
+              : "Sign in to find your saved plans. Buying an Outfit Fix? You can continue as a guest without signing up."}
         </p>
         {!configured && (
           <div className="notice">
@@ -308,9 +309,7 @@ export default function Auth() {
         <div className="auth-perk">
           <Sparkles size={16} />{" "}
           <Link href="/analysis">
-            {guest
-              ? "Back to my studio"
-              : "Try one free plan without logging in"}
+            {guest ? "Back to my studio" : "Get an Outfit Fix · ₹99 once"}
           </Link>
         </div>
       </section>

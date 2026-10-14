@@ -10,6 +10,7 @@ export async function GET(request: Request) {
       { data: profile, error: p },
       { data: reports, error: r },
       { data: subscriptions, error: o },
+      { data: purchases, error: purchaseError },
     ] = await Promise.all([
       db
         .from("profiles")
@@ -29,15 +30,32 @@ export async function GET(request: Request) {
         .eq("user_id", user.id)
         .order("created_at", { ascending: false })
         .limit(1),
+      db
+        .from("outfit_purchases")
+        .select("id,status,result,occasion,created_at,hidden")
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: false })
+        .limit(100),
     ]);
-    if (p || r || o) throw p || r || o;
+    if (p || r || o || purchaseError) throw p || r || o || purchaseError;
     if (
       profile?.period_end &&
       new Date(profile.period_end).getTime() <= Date.now()
     )
       profile.credits = 0;
     return Response.json(
-      { profile, reports, subscription: subscriptions?.[0] || null },
+      {
+        profile,
+        reports: [
+          ...(reports || []),
+          ...(purchases || []).filter((p) => p.result && !p.hidden),
+        ].sort((a, b) => b.created_at.localeCompare(a.created_at)),
+        purchases: (purchases || []).filter(
+          (p) =>
+            !p.result && ["creating", "created", "paid"].includes(p.status),
+        ),
+        subscription: subscriptions?.[0] || null,
+      },
       { headers: { "Cache-Control": "no-store" } },
     );
   } catch (error) {

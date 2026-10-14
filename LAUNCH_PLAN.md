@@ -1,68 +1,38 @@
-# GlamMetrics: first paying customer experiment
+# First customer experiment · Outfit Fix
 
-## The offer
+## One sentence, one offer
 
-**“You have the clothes. Let’s make the look.”** Upload one outfit photo, choose an occasion and receive three complete ways to style it, a no-shopping version, a colour palette and a getting-ready checklist. Save comfort and wardrobe preferences for future plans.
+“Send a photo of the outfit you want to wear. Get the changes, shoes and accessories figured out for ₹99 once.”
 
-One complete plan is free. Style Circle is **₹99/month for 10 plans** (up to 30 styled looks). The three looks are text instructions for styling the same garment, not generated try-on photographs. Plans are AI-generated. No live shopping catalog or human stylist is included. Unused plans do not roll over. Existing reports remain readable.
+The product is a written **AI-generated Outfit Fix**, not a human stylist, try-on image, shopping catalogue or recurring subscription. One photo, one occasion, one finished look with three practical changes and a getting-ready checklist. The reason to buy is convenience at a specific getting-dressed moment—not access to AI itself. Demand is a hypothesis, not established fact. A general chatbot is a real alternative; never pretend this technology is exclusive.
 
-## Conversion path to test
+## One path
 
-**Instagram ad → choose outfit/occasion → complete free guest plan → ₹99/month offer → connect Google or verify email → explicit billing consent → Razorpay → verified payment → 10 plans.**
+Instagram demonstration → landing page → upload/occasion → ₹99 once → generated result → download → optional save-account link.
 
-Do not send cold ad traffic to a login page. The header and primary trial CTAs now open the studio, where no email is required for a guest plan. Keep budget/wardrobe preferences optional. Show the full free result before asking to pay; the result has a specific ₹99/month offer and a separate “just save my free plan” option.
+Show the sample before payment, price on every purchase CTA and no surprise recurring mandate. No signup wall, quiz or pricing tiers. Actual payment authority stays on the server. Guest access depends on the browser; state this before checkout and encourage download afterwards.
 
-Guest sessions are stored in the browser; entitlements and plans are stored and authorised on the server. A guest can lose access when clearing browser data or switching from Instagram to Chrome/Safari. For that reason, recurring checkout requires a recoverable identity. It is not a localStorage-only account or a local paid/unpaid flag. The daily guest-attempt cap limits anonymous AI costs, but does not identify unique people or prevent all signup abuse.
+## Before spending
 
-Google can reject OAuth in embedded webviews ([Google guidance](https://developers.google.com/identity/protocols/oauth2/javascript-implicit-flow)). Prefer the same-page email-code path for Instagram/Facebook browsers, configure the Supabase email templates to include the code, and test it on actual Android/iOS devices. Do not attempt to bypass Google's browser restrictions.
+Finish every release gate in `RELEASE.md`. Test a full purchase and recovery on actual phones, including Instagram's browser. Let five target users inspect the full sample and ask “Would you pay ₹99 to get this for your next outfit?” Record what they actually use, not compliments about the design. Do not count test-mode transactions as sales.
 
-Before launch, apply migration 004, enable Anonymous Sign-Ins and Manual Linking, test guest-to-new-account and guest-to-existing-account flows, and confirm no extra free credit is granted. If guest trials must be stopped, set `NEXT_PUBLIC_GUEST_TRIAL_ENABLED=false` and rebuild/redeploy. The studio retains the regular sign-in fallback. CAPTCHA is not yet wired into the guest SDK call, so do not require a CAPTCHA token without adding that integration.
+## A single 15-second ad concept
 
-The initial audience hypothesis is adult women in India who already have occasion outfits but need help choosing shoes, accessories and a comfortable finish. Treat this as a hypothesis to validate with real users, not proven demand.
+1. Show a permitted outfit photo: “Love this outfit. What shoes? What bag?”
+2. Screen record the actual upload and occasion selection.
+3. Show the exact changes and finished-look instructions from its real output.
+4. End: “Your Outfit Fix. ₹99 once. No subscription.” Disclose AI styling.
 
-## Before spending the ₹1,000
+Caption: “Outfit picked. Details not quite there? Upload your photo and get a personal AI styling plan—what to change, shoes, accessories and a getting-ready checklist. ₹99 one time. See an example before you buy.”
 
-Get five people to try the complete flow on their own phones. Ask them: “Which suggestion would you actually use?” and “Would you pay ₹99 for ten plans like this?” Record their exact answers privately. A compliment about the design is not purchase intent. A completed payment is the main signal.
+Use only images with advertising permission. Generated site images are illustrative, not customer evidence. No fabricated testimonials, confidence guarantees, exaggerated instant timing or fake before/after try-ons. If cutting out generation time in a recording, make the edit clear rather than imply zero processing time.
 
-Complete Google sign-in, one real plan, report retrieval, a live authorised recurring payment, cancellation and webhook delivery on the production domain. Current local credentials were still in Razorpay test mode when this guide was written; test-mode activity is not sales. Supply support contact and business information, and finish the release items in `RELEASE.md`. This implementation does not spend money or launch ads for you.
+## ₹1,000 total experiment, not an income promise
 
-## A simple ad to record
+Use ₹1,000 as a total spending ceiling, not per day. Do not launch ads until the checkout/support gates are closed. Keep one message and one destination. Inspect the first ₹500 before spending the rest; taxes/provider controls affect what an actual ad budget permits.
 
-Use an outfit photo you have permission to advertise and a screen recording of its actual generated result. Avoid customer photos, invented testimonials, fake discounts and fake before/after claims. If using the illustrative site photos, do not present them as customers.
+Measure completed captured purchases and delivered fixes, not logins. At ₹99, 11 payments yield ₹1,089 gross—only ₹89 above ₹1,000 ad spend **before** gateway fees, AI, refunds, hosting and taxes. One sale is valuable validation, not profitability. Because this is one-off, do not assume future subscription revenue or repeat purchase.
 
-15–20 second vertical demonstration:
+No advertising pixel or UTM attribution is installed. `scripts/funnel-summary.ts` gives aggregate purchases/deliveries and test/live mode only. It cannot calculate landing-page conversion, attributable CAC or unique ad customers. Inspect actual Ads Manager spend separately; add consent-appropriate attribution before claiming those metrics.
 
-1. 0–3 seconds: show an outfit. Text: **“Before buying another outfit, try styling this one.”**
-2. 3–7 seconds: select “Dinner” or the closest available occasion, “Use what I own”, and list shoes/accessories actually available.
-3. 7–14 seconds: show the three look plans. Zoom into a specific shoe/accessory combination and the no-shopping version.
-4. 14–20 seconds: show the checklist. Text: **“Your first style plan is free. GlamMetrics.”** Show **“Then ₹99/month for 10 plans”** clearly.
-
-Suggested caption: “A wardrobe full of clothes, but unsure what goes together? Upload an outfit and get three ways to style it for your occasion, with practical details and a wardrobe-first option. Try one complete AI style plan free. Style Circle: ₹99/month for 10 plans.”
-
-Link to the homepage for the full explanation, or test a direct studio link such as `/analysis?occasion=Wedding%20guest` with an ad showing wedding-guest styling. Keep the ad and destination message consistent. A UTM-tagged link can be used for future analytics, but this app does not currently attribute signups to UTMs or install Meta Pixel. Do not choose purchase-event optimisation assuming those events already exist.
-
-## Budget and decision rules
-
-Use **₹1,000 as a total experiment ceiling**, not a daily budget. Reserve half until you have inspected the first half’s results. Check the actual budget and spending controls offered by Ads Manager before publishing; account minimums and taxes may affect the configuration. Do not distribute this small test across many audiences, messages and landing pages at once.
-
-First goal: one real paying customer, followed by an explanation of why they subscribed. This is not a profit forecast. At ₹99, **11 first-month payments produce ₹1,089 gross**, only ₹89 above ₹1,000 ad spend before payment fees, AI usage, hosting, refunds and taxes. Profit requires more or better acquisition economics. A single first customer is useful validation but does not cover the ad budget.
-
-Inspect the first ₹500:
-
-- No clicks: reconsider the creative/message before spending the remainder.
-- Clicks but no guest plans: inspect page speed, upload, consent and AI failures; ask users what stopped them.
-- Free plans but no verified identities: inspect account linking and code delivery, especially inside Instagram.
-- Completed plans but no purchases: ask what would make the plan worth paying for. Better wording alone may not solve weak value.
-- A payment: ask what prompted it and whether the customer uses the service again before increasing spend.
-
-There is no assumed conversion benchmark for a new product with this tiny sample. Avoid declaring an ad “proven” from a handful of clicks.
-
-## Measure without pretending attribution is installed
-
-Record daily ad spend and link clicks in Meta Ads Manager. Its official [campaign metrics guide](https://developers.meta.com/vr/resources/optimize-ad-campaign/) defines spend and link-click metrics; the page describes Horizon app campaigns, so its app-specific optimisation advice is not a setup guide for this website.
-
-Run `node --env-file=.env.local --import tsx scripts/funnel-summary.ts 14` for aggregate profiles (including guests), retained completed plans and verified unrefunded billing cycles in the previous 14 days. A guest profile is **not a verified signup or a login conversion**. This prints no customer identities. These counts include all traffic, exclude deleted plans, and count renewals as billing cycles. They are not an attributed ad conversion funnel. The script labels test/live payment mode; test results are not revenue.
-
-For a measured funnel, the next instrumentation should distinguish landing views, completed guest trials, verified identities, checkout opens and server-verified first payments. A browser `Purchase` event must never unlock membership or be counted as proof of money received. No pixel is loaded by this implementation; configure the actual Pixel ID, appropriate privacy choices and verified events before relying on Ads Manager purchase reports.
-
-Keep a simple log: spend, clicks, new accounts, completed plans, new live paying customers, refunds, what customers said. Use the live Razorpay dashboard to distinguish new customers from renewals and to reconcile actual receipts. Never calculate revenue from checkout opens or subscription authorisation alone.
+If visits do not become uploads, inspect message/photo trust. If uploads do not become payment, interview users about value and price. If paid users cannot get results, pause ads and repair delivery immediately. If customers do not find the advice useful, improve the offering before spending more. None of these steps guarantees revenue.

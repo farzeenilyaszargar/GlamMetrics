@@ -1,58 +1,46 @@
-# GlamMetrics
+# GlamMetrics · Outfit Fix
 
-Hosted integration verification: with the local app running and `.env.local` configured, run `node --env-file=.env.local --import tsx scripts/test-hosted.ts`. This explicitly creates two temporary test accounts, checks credit and report access boundaries against Supabase, and deletes the identities and their test data afterward. It sends no emails and makes no payment or AI calls.
-
-A personal styling service for Indian wardrobes. Upload one outfit and receive three complete ways to style it, a wardrobe-first version and a getting-ready checklist. Style Circle is one ₹99/month subscription with 10 style plans per billing month; new accounts receive one complete plan free.
+One product, ₹99 once: upload one outfit, select an occasion, pay, and receive one AI-written styling plan. It contains three specific changes, one complete look, shoes/accessories, and a getting-ready checklist. No new subscriptions or free trials. No human consultation, physical products or generated try-on image.
 
 ## Run locally
 
 1. `npm ci`
-2. Create `.env.local` using the variable names in `.env.example`. Never commit credentials.
-3. Apply all SQL migrations in `supabase/migrations` in numeric order using the Supabase SQL editor.
-4. Configure Supabase Auth URL settings: site URL plus allowed redirect `http://localhost:3000/auth` for local testing, and your production `/auth` URL for launch.
-   For guest trials, apply `004_guest_trials.sql`, enable **Anonymous Sign-Ins** and **Manual Linking** in Supabase Auth, and set `NEXT_PUBLIC_GUEST_TRIAL_ENABLED=true`. Keep Auth rate limits and deployment request limits enabled. The guest AI reservation limit defaults to 40 attempts per UTC day across the project (`GUEST_DAILY_PLAN_LIMIT`); it is not one per person or per IP. If CAPTCHA is required by Auth, a CAPTCHA widget/token integration is needed before guest sign-in can run; this UI does not currently include one.
-5. `npm run dev` and open http://localhost:3000.
+2. Configure `.env.local` from `.env.example`. Never commit credentials.
+3. Apply **all five** files in `supabase/migrations` in numeric order. Existing installations need `004_guest_trials.sql` if not already applied, then **`005_outfit_fix.sql`**.
+4. Enable Supabase Anonymous Sign-Ins and Manual Linking for guest checkout and optional recovery. `NEXT_PUBLIC_GUEST_TRIAL_ENABLED=true` is the legacy-named switch for anonymous sessions; it no longer grants a free plan. Auth rate limits remain necessary. CAPTCHA token integration is not implemented; if your provider requires it, add the widget before launching guest checkout.
+5. Configure Supabase site URL and allowed `/auth` callback for localhost and production. Google Cloud must allow the exact Supabase `/auth/v1/callback`, not just the Supabase origin. Enable Google in Supabase if desired.
+6. Configure Razorpay **automatic capture**, API keys and a signed webhook at `/api/razorpay-webhook` for `payment.captured` and `refund.processed`. Retain `subscription.*` events and the old plan ID if existing memberships need management.
+7. Set support email, business identity and production URL before enabling live payments. Live order creation refuses missing webhook/support configuration; presence alone does not verify delivery.
+8. `npm run dev`, then open [localhost](http://localhost:3000).
 
-## What is implemented
+## Purchase flow
 
-- Responsive editorial discovery, outfit studio, sample report, private saved reports, account and pricing pages.
-- Supabase email magic-link login. Optional Google login appears when `NEXT_PUBLIC_GOOGLE_AUTH_ENABLED=true`; enable the provider in Supabase first.
-- Guest-first free plans: the visitor chooses an image/occasion and consents before an anonymous session is created. The browser stores the session; server-owned credits and reports remain authoritative. Budget and wardrobe notes are optional. A verified email or Google identity is required before any recurring subscription is created.
-- Guest upgrades use `linkIdentity`/`updateUser` to preserve the same account. Existing-account sign-in retains a short-lived guest proof; `/api/claim-guest` verifies both sessions before attaching reports. The SQL transaction never transfers billing or invents a new free allowance. Anonymous users are never shown an accidental sign-out action.
-- Email-code verification is available without leaving the page. Include `{{ .Token }}` alongside the confirmation link in Supabase's **Change Email** and **Magic Link** templates, with production SMTP. Instagram/Facebook browser detection prefers email because Google can reject embedded-browser OAuth. Test the actual devices; this is not a claim of universal in-app browser compatibility.
-- Photo resize in the browser, occasion/budget/preferences, explicit processing consent, validated AI output and private report storage.
-- Each new plan requires exactly three complete looks, a no-shopping version and 3–6 checklist actions. Incomplete provider output fails validation instead of consuming a successful review. Older saved reports retain their original format.
-- Saved personal style/comfort preferences use Supabase account metadata and are included in new plan requests. These editable preferences never grant billing or access permissions. The style-plan data itself needs no extra migration; the guest flow requires migration 004.
-- A browser-only sign-in draft is restored once, discarded if older than two hours on the next visit, and cleared on sign-out. Photos are not saved in the app database.
-- Server-verified ₹99 Razorpay subscriptions, captured invoice verification, monthly review reset, duplicate-event protection, cancellation and payment reconciliation.
-- Atomic review reservations, failure refunds, interrupted-request recovery and per-account hourly limits.
-- Instagram story-card download, share summary, printable/PDF reports, self-service report deletion.
-- Privacy, terms, refund and contact pages. Business identity and support settings must be completed before launch.
+`/` → `/analysis` → photo + occasion + optional wardrobe notes + consent → secure anonymous session if needed → Razorpay ₹99 order → server signature and captured-payment verification → AI generation → result/download → optional email/Google linking.
 
-## Checks
+Payments and results are owned and authorised in Supabase, never by a local “paid” flag. A durable order reservation recovers ambiguous provider responses without blindly creating a duplicate order. Captured payments are checked for amount, currency and order ownership. Webhooks and “Check payment & result” recover missed callbacks. Full refunds revoke unused generation access and cannot be reversed by delayed capture events.
 
-`npm run lint`, `npm test`, `npm run build`, `npm audit`.
+Migration 005 stores purchases separately from legacy report credits. Row locks prevent parallel generation, attempt numbers fence stale responses, and up to five failed/interrupted attempts reuse the paid purchase. A completed result cannot be replaced. Exhausted attempts require support/refund; they do not prompt another payment.
 
-Tests run real SQL using an in-memory PostgreSQL-compatible PGlite instance with a minimal Supabase auth schema. They cover permissions, tenant isolation, credit consumption, duplicate refunds, expiry, subscription replay, renewal boundaries and revoked payments. These do not replace hosted Supabase or gateway end-to-end tests.
+Browser IndexedDB retains the draft for refresh recovery, cleared after success or on the next read after two hours. A guest who loses browser storage can lose access: download the written plan or link a verified identity. The existing two-session proof flow now moves one-time purchases as well as reports. Original photos are not persisted server-side. AI provider retention is disclosed in the privacy policy.
 
-Optional paid API smoke test: `node --env-file=.env.local --import tsx scripts/test-ai.ts`. Sends the generated editorial image to the configured AI provider and validates the real production analysis schema. It does not send a user's photo.
+`/pricing` redirects to the same product studio. New subscription creation returns HTTP 410. Existing membership cancellation, reconciliation, paid-period credits and `/legacy-studio` remain available; a new one-time purchase does not cancel an existing mandate.
 
-Optional full plan-flow test: `node --env-file=.env.local --import tsx scripts/test-plan-flow.ts`. Creates a temporary identity, saves style preferences, calls the local authenticated AI endpoint with the illustrative image, verifies persistence and an idempotent retry, then removes test data. Requires a reachable Supabase project and a running local app. It incurs one AI call and sends no emails or payments.
+## Verification
 
-Optional guest ownership test: `node --env-file=.env.local --import tsx scripts/test-guest-flow.ts`. With anonymous sign-in enabled and all four migrations applied, it creates disposable guest/permanent identities, checks the checkout guard and two-session plan attachment, then removes test data. It sends no emails, AI calls or payments. The actual OAuth/email confirmation round trip still needs a manual hosted test.
+`npm run lint`, `npm run typecheck`, `npm test`, `npm run build`.
 
-The provider's strict JSON schema is generated from the same Zod schema used for persistence validation, following the official [Structured Outputs documentation](https://developers.openai.com/api/docs/guides/structured-outputs).
+Tests use real SQL in PGlite for tenant boundaries, service-only writes, payment replay/refunds, retry limits, stale completion fencing, guest ownership transfer and legacy billing. Model tests require exactly one complete look and three changes; older reports remain readable.
 
-## First customer launch
+Optional actual AI smoke (uses the illustrative generated image, incurs API usage):
 
-See [LAUNCH_PLAN.md](LAUNCH_PLAN.md) for the concrete offer, a vertical ad script, the ₹1,000 validation experiment, gross-revenue arithmetic and decision rules. `node --env-file=.env.local --import tsx scripts/funnel-summary.ts 14` prints aggregate operator counts without customer identities. No Meta Pixel or ad-attribution system is installed.
+`TEST_SINGLE_LOOK=true node --env-file=.env.local --import tsx scripts/test-ai.ts`
 
-## Release status
+Legacy hosted scripts `test-hosted.ts`, `test-plan-flow.ts`, `test-guest-flow.ts` are historical diagnostics for the credit/subscription flow and must not be mistaken for one-off checkout end-to-end verification. In particular, free-trial and subscription-creation assertions are obsolete. The new flow needs a hosted Razorpay test purchase, webhook/refund/retry and guest-linking test before live release.
 
-See [RELEASE.md](RELEASE.md) for verified checks and remaining launch dependencies. Configuration present on one developer's machine is not shipped to hosting automatically. Never call the application production-ready solely because the build passes.
+See [RELEASE.md](RELEASE.md) for unresolved gates and [LAUNCH_PLAN.md](LAUNCH_PLAN.md) for the ₹1,000 validation experiment. `scripts/funnel-summary.ts` prints aggregate purchase counts, not ad attribution. No Meta Pixel is installed.
 
-## Visual asset provenance
+## Assets and implementation references
 
-The editorial design uses a generated campaign photograph at `public/images/street-edit.png`. Its full prompt and provenance are recorded in `public/images/ASSETS.md`.
+Both site fashion photographs are generated illustrations, not customers/testimonials. See `public/images/ASSETS.md` for the campaign asset. The sample is explicitly illustrative, not a customer result.
 
-`public/images/editorial.png` was generated with the built-in image generation tool. Prompt: portrait fashion editorial of an adult Indian woman in a dusty rose silk saree, delicate gold earrings and a small handbag, in a sunlit ivory courtyard; natural skin texture, warm film-like light, clear outfit detail, no text/logos/overlays. This is illustrative imagery, not a customer testimonial. The sample score is explicitly labelled as an example.
+Structured output follows [OpenAI documentation](https://developers.openai.com/api/docs/guides/structured-outputs); checkout follows [Razorpay Standard Checkout](https://razorpay.com/docs/payments/payment-gateway/web-integration/standard/integration-steps/).
