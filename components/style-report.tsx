@@ -12,17 +12,21 @@ import {
 } from "lucide-react";
 import type { StyleReport } from "@/lib/report";
 import { saveStoryCard } from "@/lib/story-card";
+import { useSession } from "./session";
 export default function Report({
   report: r,
   sample = false,
   occasion = "Your look",
   onNewReview,
+  remainingPlans,
 }: {
   report: StyleReport;
   sample?: boolean;
   occasion?: string;
   onNewReview?: () => void;
+  remainingPlans?: number | null;
 }) {
+  const { user } = useSession();
   const [message, setMessage] = useState("");
   const [checked, setChecked] = useState<string[]>([]);
   async function copyLook(look: NonNullable<StyleReport["looks"]>[number]) {
@@ -171,6 +175,29 @@ export default function Report({
           <p>{r.wardrobeRescue}</p>
         </section>
       )}
+      {!sample && (user?.is_anonymous || remainingPlans === 0) && (
+        <section className="report-upgrade result-offer">
+          <h2>Have your next outfit figured out, too.</h2>
+          <p>
+            Style Circle gives you 10 personal plans each month, with three
+            styled looks in every plan.
+          </p>
+          <div className="result-offer-actions">
+            <Link href="/pricing" className="button primary">
+              Get 10 plans for ₹99/month <ArrowUpRight size={17} />
+            </Link>
+            {user?.is_anonymous && (
+              <Link href="/auth?next=/profile" className="text-link">
+                Just save my free plan
+              </Link>
+            )}
+          </div>
+          <p className="fineprint">
+            Billed monthly. Cancel future billing in your account. Unused plans
+            don’t roll over.
+          </p>
+        </section>
+      )}
       {r.checklist && (
         <section className="report-card getting-ready">
           <div className="section-heading">
@@ -313,11 +340,15 @@ export default function Report({
           <ArrowUpRight size={18} />
         </Link>
       )}
-      {!sample && (
+      {!sample && user?.is_anonymous && (
         <div className="report-upgrade">
-          <p>Planning your next office day, dinner or celebration?</p>
-          <Link href="/pricing" className="text-link">
-            10 plans each month for ₹99 <ArrowUpRight size={16} />
+          <p>
+            Your free plan is saved to this guest session. Connect an email or
+            Google so it stays accessible if you change browsers or clear your
+            data.
+          </p>
+          <Link href="/auth?next=/profile" className="text-link">
+            Keep my plan across devices <ArrowUpRight size={16} />
           </Link>
         </div>
       )}

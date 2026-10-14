@@ -19,6 +19,8 @@ import { occasions } from "@/lib/catalog";
 import Report from "@/components/style-report";
 import type { StyleReport } from "@/lib/report";
 import StylePreferences from "./style-preferences";
+import { ensureGuestSession } from "@/lib/guest-session";
+import { guestTrialsEnabled } from "@/lib/identity";
 export default function Studio({
   initialOccasion = "Everyday",
 }: {
@@ -109,11 +111,12 @@ export default function Studio({
   }
   async function analyze(e: React.FormEvent) {
     e.preventDefault();
-    if (!user || !image) return;
+    if (!image || !consent) return;
     setBusy(true);
     setError("");
     requestId.current ??= crypto.randomUUID();
     try {
+      if (!user) await ensureGuestSession();
       const data = await api("/api/analyze-image", {
         method: "POST",
         body: JSON.stringify({
@@ -142,6 +145,7 @@ export default function Studio({
         <Report
           report={result}
           occasion={occasion}
+          remainingPlans={credits}
           onNewReview={() => {
             setResult(null);
             requestId.current = null;
@@ -159,6 +163,11 @@ export default function Studio({
           One photo. Three ways to style it. Start with what’s already in your
           wardrobe.
         </p>
+        {guestTrialsEnabled && !user && (
+          <p className="guest-start-note">
+            Your first plan is free. No email or login to get started.
+          </p>
+        )}
       </div>
       <form className="studio-grid" onSubmit={analyze}>
         <section>
@@ -277,47 +286,53 @@ export default function Studio({
               </button>
             ))}
           </div>
-          <div className="setting-title">
-            <span>02</span>
-            <h3>Your styling budget</h3>
-          </div>
-          <label className="sr-only" htmlFor="budget">
-            Styling budget
-          </label>
-          <select
-            id="budget"
-            disabled={busy}
-            value={budget}
-            onChange={(e) => setBudget(e.target.value)}
-          >
-            {[
-              "Use what I own",
-              "Under ₹1,000",
-              "₹1,000–₹3,000",
-              "₹3,000–₹5,000",
-            ].map((v) => (
-              <option key={v}>{v}</option>
-            ))}
-          </select>
-          <div className="setting-title">
-            <span>03</span>
-            <h3>
-              What do you already own? <small>optional</small>
-            </h3>
-          </div>
-          <label className="sr-only" htmlFor="notes">
-            Style preferences
-          </label>
-          <textarea
-            id="notes"
-            disabled={busy}
-            placeholder="I have gold flats and a small black bag. I prefer minimal jewellery. Help me style this for dinner without buying anything new."
-            maxLength={500}
-            value={notes}
-            onChange={(e) => setNotes(e.target.value)}
-          />
-          <small className="counter">{notes.length}/500</small>
-          {user && <StylePreferences key={user.id} />}
+          <details className="optional-styling">
+            <summary>
+              Personalise the details <span>+</span>
+            </summary>
+            <p>Optional: add your budget and pieces you already own.</p>
+            <div className="setting-title">
+              <span>02</span>
+              <h3>Your styling budget</h3>
+            </div>
+            <label className="sr-only" htmlFor="budget">
+              Styling budget
+            </label>
+            <select
+              id="budget"
+              disabled={busy}
+              value={budget}
+              onChange={(e) => setBudget(e.target.value)}
+            >
+              {[
+                "Use what I own",
+                "Under ₹1,000",
+                "₹1,000–₹3,000",
+                "₹3,000–₹5,000",
+              ].map((v) => (
+                <option key={v}>{v}</option>
+              ))}
+            </select>
+            <div className="setting-title">
+              <span>03</span>
+              <h3>
+                What do you already own? <small>optional</small>
+              </h3>
+            </div>
+            <label className="sr-only" htmlFor="notes">
+              Style preferences
+            </label>
+            <textarea
+              id="notes"
+              disabled={busy}
+              placeholder="I have gold flats and a small black bag. I prefer minimal jewellery. Help me style this for dinner without buying anything new."
+              maxLength={500}
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+            />
+            <small className="counter">{notes.length}/500</small>
+          </details>
+          {user && !user.is_anonymous && <StylePreferences key={user.id} />}
           <label className="consent">
             <input
               type="checkbox"
@@ -327,17 +342,22 @@ export default function Studio({
               disabled={busy}
             />
             <span>
-              I’m 18+, have permission to use this photo, and agree to its AI
-              processing as described in the{" "}
-              <Link href="/privacy">Privacy Policy</Link>.
+              I’m 18+, have permission to use this photo, and agree to the{" "}
+              <Link href="/terms">Terms</Link> and its AI processing as
+              described in the <Link href="/privacy">Privacy Policy</Link>.
             </span>
           </label>
-          {user ? (
+          {user || guestTrialsEnabled ? (
             <>
               <button
                 className="button primary full"
                 disabled={
-                  !image || !consent || busy || processing || credits === 0
+                  !image ||
+                  !consent ||
+                  busy ||
+                  processing ||
+                  loading ||
+                  credits === 0
                 }
               >
                 {busy ? (
@@ -347,7 +367,8 @@ export default function Studio({
                   </>
                 ) : (
                   <>
-                    Create my style plan <Sparkles size={18} />
+                    {user ? "Create my style plan" : "Create my free plan"}{" "}
+                    <Sparkles size={18} />
                   </>
                 )}
               </button>
@@ -356,6 +377,12 @@ export default function Studio({
                   ? "One plan includes three styled looks."
                   : `${credits} ${credits === 1 ? "plan" : "plans"} available · Three looks per plan`}
               </p>
+              {(!user || user.is_anonymous) && (
+                <p className="fineprint center">
+                  Guest access stays in this browser. Connect an email or Google
+                  later to keep your plans across devices.
+                </p>
+              )}
               {credits === 0 && (
                 <Link className="text-link" href="/pricing">
                   Join the Style Circle for ₹99/month →
@@ -388,9 +415,14 @@ export default function Studio({
             </p>
           )}
           {error && (
-            <p className="error" role="alert">
+            <div className="error" role="alert">
               {error}
-            </p>
+              {(!user || user.is_anonymous) && (
+                <button type="button" className="text-link" onClick={signIn}>
+                  Continue with email or Google instead <ArrowRight size={15} />
+                </button>
+              )}
+            </div>
           )}
         </section>
       </form>

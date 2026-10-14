@@ -1612,6 +1612,50 @@ input[type="checkbox"] {
   white-space: nowrap !important;
   border: 0 !important;
 }
+.guest-start-note {
+  color: var(--plum);
+  font-size: 12px !important;
+  margin-top: 15px;
+}
+.optional-styling {
+  border: 1px solid var(--line);
+  background: #fff;
+  border-radius: 5px;
+  padding: 0 18px;
+  margin: 15px 0 25px;
+}
+.optional-styling > summary {
+  padding: 17px 0;
+  font-size: 12px;
+}
+.optional-styling > p {
+  font-size: 11px;
+  padding-bottom: 20px;
+}
+.optional-styling .setting-title {
+  margin-top: 5px;
+}
+.guest-recovery {
+  padding: 27px;
+  margin: 25px 0;
+  border: 1px solid #dfc7d0;
+  background: #f5edef;
+  border-radius: 5px;
+}
+.guest-recovery h2 {
+  font-size: 33px;
+}
+.guest-recovery p {
+  font-size: 12px;
+  margin: 15px 0 20px;
+  max-width: 680px;
+}
+.result-offer-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
 .spin {
   animation: spin 1s linear infinite;
 }

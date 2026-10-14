@@ -1,9 +1,15 @@
 import { authenticate, ApiError, failure } from "@/lib/server";
 import { razorpay } from "@/lib/payments";
 import { syncSubscription } from "@/lib/subscriptions";
+import { hasRecoverableIdentity } from "@/lib/identity";
 export async function POST(request: Request) {
   try {
     const { db, user } = await authenticate(request);
+    if (!hasRecoverableIdentity(user))
+      throw new ApiError(
+        "Connect Google or verify an email before subscribing so you can recover and manage your membership.",
+        403,
+      );
     if (!process.env.RAZORPAY_PLAN_ID)
       throw new ApiError(
         "Membership checkout is being prepared. Please try again soon.",

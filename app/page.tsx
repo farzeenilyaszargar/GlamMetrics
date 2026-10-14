@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { guestTrialsEnabled } from "@/lib/identity";
 import {
   ArrowRight,
   Check,
@@ -35,7 +36,8 @@ export default function Home() {
           </Link>
           <div className="hero-reassurance">
             <Check size={14} />
-            No card needed <span>·</span> ₹99/month when you’re ready
+            {guestTrialsEnabled ? "No login to try" : "No card needed"}{" "}
+            <span>·</span> ₹99/month when you’re ready
           </div>
           <Link href="/sample" className="text-link">
             See exactly what you’ll receive <ArrowUpRight size={16} />
@@ -349,7 +351,9 @@ export default function Home() {
             ],
             [
               "How does the free plan work?",
-              "Create an account and upload one outfit. Your first complete plan is free with no payment details. Style Circle adds 10 plans per paid billing month for ₹99; unused plans don’t roll over.",
+              guestTrialsEnabled
+                ? "Upload an outfit and create your first plan as a guest—no email or payment details required. Guest access stays in this browser. Connect Google or verify an email to keep your plans across devices and before starting the ₹99/month subscription. Unused paid plans don’t roll over."
+                : "Create an account and upload one outfit. Your first complete plan is free with no payment details. Style Circle adds 10 plans per paid billing month for ₹99; unused plans don’t roll over.",
             ],
             [
               "Are my outfit photos saved?",

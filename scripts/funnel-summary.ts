@@ -36,10 +36,10 @@ async function main() {
         paymentMode: process.env.RAZORPAY_KEY_ID?.startsWith("rzp_live_")
           ? "live"
           : "test",
-        newProfiles: accounts.count,
+        newProfilesIncludingGuests: accounts.count,
         retainedCompletedPlans: plans.count,
         verifiedUnrefundedBillingCycles: payments.count,
-        note: "Counts include all sources. Deleted plans are excluded. Billing cycles include renewals; they are not unique customers. Test-mode cycles are not revenue.",
+        note: "Profiles include guest sessions and are NOT verified signups. Counts include all sources. Deleted plans are excluded. Billing cycles include renewals; they are not unique customers. Test-mode cycles are not revenue.",
       },
       null,
       2,

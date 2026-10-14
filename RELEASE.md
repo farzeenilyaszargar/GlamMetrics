@@ -8,6 +8,8 @@
 - Current full hosted test is blocked: `yygrhwmjjjtatnelmene.supabase.co` returns DNS `ENOTFOUND`. No temporary test account was created during the failed attempt. Earlier hosted verification below is historical and does not establish current connectivity. Restore the project or configure an active one, then rerun `scripts/test-plan-flow.ts`.
 - Current local configuration still uses Razorpay **test** keys. Webhook secret and support email are absent; site URL is localhost. Live checkout, hosted webhooks, business details and the actual production domain remain release gates.
 - `LAUNCH_PLAN.md` records the proposed ₹1,000 experiment. No ads have been launched and no acquisition or revenue claims are made.
+- Guest conversion flow added: no signup before the free result, optional styling fields, a result-page ₹99/month offer, and one verified account step before recurring checkout. Server-side guest reservations have a global daily attempt budget; browser storage cannot grant credits. SQL tests cover budget rollover/replay, report attachments, billing isolation and free-credit preservation.
+- Guest launch requires applying `004_guest_trials.sql`, enabling Supabase Anonymous Sign-Ins and Manual Linking, and testing real email/Google linking plus an existing-account attachment. Configure Change Email/Magic Link templates to include a code for same-page verification. The Supabase DNS issue still prevents live verification. No Meta Pixel is configured and no conversion uplift is claimed.
 
 ## Completed locally
 
@@ -23,7 +25,7 @@
 
 ## Required configuration before accepting real payments
 
-1. Database migrations are applied and hosted account/persistence checks passed. For a new environment, apply `001_style_studio.sql`, `002_subscriptions.sql`, `003_billing_boundaries.sql` in that order.
+1. The first three database migrations passed hosted checks earlier. Guest trials now require `004_guest_trials.sql` as well. Apply all migrations in numeric order in the active project; enable Anonymous Sign-Ins and Manual Linking before testing the guest funnel.
 2. Configure Supabase Auth site URL and redirect allowlist. Configure a production SMTP sender: Supabase's default mail service is unsuitable for public customer acquisition. Test a new customer's sign-in, link expiry and sign-out. Google OAuth is optional and hidden until explicitly enabled.
 3. Supply `NEXT_PUBLIC_SUPPORT_EMAIL`, the business/legal operator name, business address and production domain. Confirm the published customer policies reflect the actual business. No unverified business identity is invented in the app.
 4. Set up a Razorpay webhook on the public HTTPS endpoint `/api/razorpay-webhook`, using a strong `RAZORPAY_WEBHOOK_SECRET`. Subscribe to `subscription.authenticated`, `subscription.activated`, `subscription.charged`, `subscription.pending`, `subscription.halted`, `subscription.paused`, `subscription.resumed`, `subscription.cancelled`, `subscription.completed`, and `refund.processed` where supported.

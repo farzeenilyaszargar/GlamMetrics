@@ -15,10 +15,10 @@ export default function Privacy() {
         occasion, preferences and budget to create a style review. Supabase
         provides authentication and stores your written reports, review balance
         and billing references. Razorpay processes payments; GlamMetrics does
-        not receive your full card details or UPI PIN.
-        If you save personal style preferences, these are stored with your
-        account in Supabase and included in future AI plan requests. You can
-        edit or clear them from My plans.
+        not receive your full card details or UPI PIN. If you save personal
+        style preferences, these are stored with your account in Supabase and
+        included in future AI plan requests. You can edit or clear them from My
+        plans.
       </p>
       <h2>Your photos and AI reviews</h2>
       <p>
@@ -31,10 +31,26 @@ export default function Privacy() {
       </p>
       <h2>A draft on your device</h2>
       <p>
+        You can create a free plan with a guest session. Its session credentials
+        are stored in your browser, while written plans and their balances stay
+        on our server. Clearing browser data, signing out or changing browsers
+        can make an unlinked guest session inaccessible. Connect a verified
+        email or Google account to keep access across devices. Payments and
+        monthly allowances are never authorised by browser storage alone.
+      </p>
+      <p>
         If you choose a photo before signing in, a temporary draft is kept in
         your browser so you can continue after login. It is cleared when
         restored and discarded on your next visit if more than two hours old.
         Clearing this site’s browser data removes it immediately.
+      </p>
+      <p>
+        When you connect or sign in to an account from a guest session, the
+        browser may temporarily retain a guest access token for up to 45 minutes
+        so our server can verify ownership and attach your guest plans. That
+        token is removed after a successful attachment or when an expired
+        attachment is next checked. A server-side daily counter limits guest AI
+        attempts; it does not store your photo, email or IP address.
       </p>
       <h2>Saved information</h2>
       <p>

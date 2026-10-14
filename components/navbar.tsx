@@ -16,7 +16,7 @@ export default function Navbar() {
     { href: "/", label: "Home", icon: Compass },
     { href: "/analysis", label: "Create a plan", icon: Sparkles },
     { href: "/pricing", label: "Membership", icon: Bookmark },
-    { href: user ? "/profile" : "/auth", label: "My plans", icon: UserRound },
+    { href: "/profile", label: "My plans", icon: UserRound },
   ];
   return (
     <>
@@ -38,7 +38,7 @@ export default function Navbar() {
             Style Circle
           </Link>
         </nav>
-        <Link className="header-cta" href={user ? "/profile" : "/auth"}>
+        <Link className="header-cta" href={user ? "/profile" : "/analysis"}>
           {user ? "My plans" : "Try a free plan"}
           <ArrowUpRight size={15} />
         </Link>

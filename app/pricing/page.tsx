@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { Check, ArrowRight, ShieldCheck, LoaderCircle } from "lucide-react";
 import { useSession } from "@/components/session";
 import { api } from "@/lib/supabase";
+import { hasRecoverableIdentity } from "@/lib/identity";
 type PaymentReply = {
   razorpay_payment_id: string;
   razorpay_subscription_id: string;
@@ -37,7 +38,7 @@ export default function Pricing() {
   const [error, setError] = useState("");
   const [accepted, setAccepted] = useState(false);
   async function checkout() {
-    if (!user) {
+    if (!hasRecoverableIdentity(user)) {
       router.push("/auth?next=/pricing");
       return;
     }
@@ -135,31 +136,44 @@ export default function Pricing() {
               </li>
             ))}
           </ul>
-          <label className="consent">
-            <input
-              type="checkbox"
-              checked={accepted}
-              onChange={(e) => setAccepted(e.target.checked)}
-            />
-            <span>
-              I agree to ₹99 recurring monthly billing and the{" "}
-              <Link href="/terms">Terms</Link>. 10 plans reset each billing
-              month; unused plans don’t roll over.
-            </span>
-          </label>
+          {hasRecoverableIdentity(user) && (
+            <label className="consent">
+              <input
+                type="checkbox"
+                checked={accepted}
+                onChange={(e) => setAccepted(e.target.checked)}
+              />
+              <span>
+                I agree to ₹99 recurring monthly billing and the{" "}
+                <Link href="/terms">Terms</Link>. 10 plans reset each billing
+                month; unused plans don’t roll over.
+              </span>
+            </label>
+          )}
           <button
             className="button primary full"
             onClick={checkout}
-            disabled={busy || !accepted || (!!user && !ready)}
+            disabled={
+              busy || (hasRecoverableIdentity(user) && (!accepted || !ready))
+            }
           >
             {busy ? (
               <LoaderCircle className="spin" size={18} />
             ) : (
               <>
-                Join the Style Circle <ArrowRight size={18} />
+                {hasRecoverableIdentity(user)
+                  ? "Subscribe for ₹99/month"
+                  : "Save my account & continue"}{" "}
+                <ArrowRight size={18} />
               </>
             )}
           </button>
+          {!hasRecoverableIdentity(user) && (
+            <p className="fineprint center">
+              A verified email or Google account keeps your recurring membership
+              recoverable. You’ll return here before payment.
+            </p>
+          )}
           {error && (
             <p className="error" role="alert">
               {error}

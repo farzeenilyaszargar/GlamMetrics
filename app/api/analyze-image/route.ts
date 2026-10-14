@@ -2,6 +2,7 @@ import { z } from "zod";
 import { authenticate, ApiError, failure, jsonBody } from "@/lib/server";
 import { analyzeOutfit } from "@/lib/ai-style";
 import { occasions } from "@/lib/catalog";
+import { guestTrialsEnabled } from "@/lib/identity";
 export const runtime = "nodejs";
 export const maxDuration = 90;
 const input = z.object({
@@ -28,6 +29,11 @@ export async function POST(request: Request) {
   } | null = null;
   try {
     const { db, user } = await authenticate(request);
+    if (user.is_anonymous && !guestTrialsEnabled)
+      throw new ApiError(
+        "Guest plans are currently unavailable. Please sign in to continue.",
+        403,
+      );
     const parsed = input.safeParse(await jsonBody(request, 6_010_000));
     if (!parsed.success)
       throw new ApiError(
@@ -39,12 +45,37 @@ export async function POST(request: Request) {
         503,
       );
     const body = parsed.data;
-    const { data: state, error } = await db.rpc("reserve_report", {
-      p_user: user.id,
-      p_id: body.id,
-      p_occasion: body.occasion,
-    });
-    if (error) throw error;
+    const guestLimit = Number(process.env.GUEST_DAILY_PLAN_LIMIT || 40);
+    if (
+      user.is_anonymous &&
+      (!Number.isInteger(guestLimit) || guestLimit < 1 || guestLimit > 1000)
+    )
+      throw new ApiError(
+        "Guest plans are temporarily unavailable. No credit has been used.",
+        503,
+      );
+    const { data: state, error } = await db.rpc(
+      user.is_anonymous ? "reserve_guest_report" : "reserve_report",
+      {
+        p_user: user.id,
+        p_id: body.id,
+        p_occasion: body.occasion,
+        ...(user.is_anonymous ? { p_limit: guestLimit } : {}),
+      },
+    );
+    if (error) {
+      if (user.is_anonymous)
+        throw new ApiError(
+          "Guest plans are temporarily unavailable. No credit was used. Please sign in or try again shortly.",
+          503,
+        );
+      throw error;
+    }
+    if (state === "guest_limited")
+      throw new ApiError(
+        "Today’s guest plans have been claimed. Sign in to use your account or try again tomorrow.",
+        429,
+      );
     if (state === "complete") {
       const { data, error: e } = await db
         .from("reports")

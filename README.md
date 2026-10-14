@@ -10,15 +10,19 @@ A personal styling service for Indian wardrobes. Upload one outfit and receive t
 2. Create `.env.local` using the variable names in `.env.example`. Never commit credentials.
 3. Apply all SQL migrations in `supabase/migrations` in numeric order using the Supabase SQL editor.
 4. Configure Supabase Auth URL settings: site URL plus allowed redirect `http://localhost:3000/auth` for local testing, and your production `/auth` URL for launch.
+   For guest trials, apply `004_guest_trials.sql`, enable **Anonymous Sign-Ins** and **Manual Linking** in Supabase Auth, and set `NEXT_PUBLIC_GUEST_TRIAL_ENABLED=true`. Keep Auth rate limits and deployment request limits enabled. The guest AI reservation limit defaults to 40 attempts per UTC day across the project (`GUEST_DAILY_PLAN_LIMIT`); it is not one per person or per IP. If CAPTCHA is required by Auth, a CAPTCHA widget/token integration is needed before guest sign-in can run; this UI does not currently include one.
 5. `npm run dev` and open http://localhost:3000.
 
 ## What is implemented
 
 - Responsive editorial discovery, outfit studio, sample report, private saved reports, account and pricing pages.
 - Supabase email magic-link login. Optional Google login appears when `NEXT_PUBLIC_GOOGLE_AUTH_ENABLED=true`; enable the provider in Supabase first.
+- Guest-first free plans: the visitor chooses an image/occasion and consents before an anonymous session is created. The browser stores the session; server-owned credits and reports remain authoritative. Budget and wardrobe notes are optional. A verified email or Google identity is required before any recurring subscription is created.
+- Guest upgrades use `linkIdentity`/`updateUser` to preserve the same account. Existing-account sign-in retains a short-lived guest proof; `/api/claim-guest` verifies both sessions before attaching reports. The SQL transaction never transfers billing or invents a new free allowance. Anonymous users are never shown an accidental sign-out action.
+- Email-code verification is available without leaving the page. Include `{{ .Token }}` alongside the confirmation link in Supabase's **Change Email** and **Magic Link** templates, with production SMTP. Instagram/Facebook browser detection prefers email because Google can reject embedded-browser OAuth. Test the actual devices; this is not a claim of universal in-app browser compatibility.
 - Photo resize in the browser, occasion/budget/preferences, explicit processing consent, validated AI output and private report storage.
 - Each new plan requires exactly three complete looks, a no-shopping version and 3–6 checklist actions. Incomplete provider output fails validation instead of consuming a successful review. Older saved reports retain their original format.
-- Saved personal style/comfort preferences use Supabase account metadata and are included in new plan requests. These editable preferences never grant billing or access permissions. No new database migration is required for this upgrade.
+- Saved personal style/comfort preferences use Supabase account metadata and are included in new plan requests. These editable preferences never grant billing or access permissions. The style-plan data itself needs no extra migration; the guest flow requires migration 004.
 - A browser-only sign-in draft is restored once, discarded if older than two hours on the next visit, and cleared on sign-out. Photos are not saved in the app database.
 - Server-verified ₹99 Razorpay subscriptions, captured invoice verification, monthly review reset, duplicate-event protection, cancellation and payment reconciliation.
 - Atomic review reservations, failure refunds, interrupted-request recovery and per-account hourly limits.
@@ -34,6 +38,8 @@ Tests run real SQL using an in-memory PostgreSQL-compatible PGlite instance with
 Optional paid API smoke test: `node --env-file=.env.local --import tsx scripts/test-ai.ts`. Sends the generated editorial image to the configured AI provider and validates the real production analysis schema. It does not send a user's photo.
 
 Optional full plan-flow test: `node --env-file=.env.local --import tsx scripts/test-plan-flow.ts`. Creates a temporary identity, saves style preferences, calls the local authenticated AI endpoint with the illustrative image, verifies persistence and an idempotent retry, then removes test data. Requires a reachable Supabase project and a running local app. It incurs one AI call and sends no emails or payments.
+
+Optional guest ownership test: `node --env-file=.env.local --import tsx scripts/test-guest-flow.ts`. With anonymous sign-in enabled and all four migrations applied, it creates disposable guest/permanent identities, checks the checkout guard and two-session plan attachment, then removes test data. It sends no emails, AI calls or payments. The actual OAuth/email confirmation round trip still needs a manual hosted test.
 
 The provider's strict JSON schema is generated from the same Zod schema used for persistence validation, following the official [Structured Outputs documentation](https://developers.openai.com/api/docs/guides/structured-outputs).
 

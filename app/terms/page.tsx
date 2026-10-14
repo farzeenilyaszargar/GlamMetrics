@@ -20,15 +20,23 @@ export default function Terms() {
       </p>
       <h2>Your membership</h2>
       <p>
-        Every new account receives one complimentary style plan. One plan
-        uses one outfit photo and includes three styling variations, a
-        wardrobe-first version and a getting-ready checklist. Previously
-        saved reviews remain available in their original format. The Style Circle
-        costs ₹99 per month, the total recurring charge displayed at checkout,
-        and includes 10 plans per billing month. Your monthly allocation
-        resets after a verified successful payment. Unused reviews do not roll
-        over. A failed review returns its reserved credit; interrupted reviews
-        are recovered when you next start a review after five minutes.
+        The first plan can be tried through a guest session where available.
+        Guest access depends on this browser and is subject to a daily
+        availability limit. Connect Google or verify an email before
+        subscribing, so you can recover access and manage recurring billing.
+        Changing accounts does not grant an additional free plan through a
+        guest-plan attachment.
+      </p>
+      <p>
+        Every new account receives one complimentary style plan. One plan uses
+        one outfit photo and includes three styling variations, a wardrobe-first
+        version and a getting-ready checklist. Previously saved reviews remain
+        available in their original format. The Style Circle costs ₹99 per
+        month, the total recurring charge displayed at checkout, and includes 10
+        plans per billing month. Your monthly allocation resets after a verified
+        successful payment. Unused reviews do not roll over. A failed review
+        returns its reserved credit; interrupted reviews are recovered when you
+        next start a review after five minutes.
       </p>
       <h2>Renewal and cancellation</h2>
       <p>

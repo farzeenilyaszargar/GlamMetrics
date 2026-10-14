@@ -6,6 +6,7 @@ import { useSession } from "@/components/session";
 import { api, browserDb } from "@/lib/supabase";
 import { writeDraft } from "@/lib/draft";
 import StylePreferences from "@/components/style-preferences";
+import { hasRecoverableIdentity } from "@/lib/identity";
 import ConfirmDialog from "@/components/confirm-dialog";
 import {
   Bookmark,
@@ -131,19 +132,36 @@ export default function Profile() {
           <h1>
             My <em>style plans.</em>
           </h1>
-          <p>{user.email}</p>
+          <p>
+            {user.is_anonymous ? "Guest session · this browser" : user.email}
+          </p>
         </div>
-        <button
-          className="text-link"
-          onClick={async () => {
-            await browserDb()?.auth.signOut();
-            await writeDraft(null).catch(() => {});
-            router.push("/");
-          }}
-        >
-          <LogOut size={15} /> Sign out
-        </button>
+        {!user.is_anonymous && (
+          <button
+            className="text-link"
+            onClick={async () => {
+              await browserDb()?.auth.signOut();
+              await writeDraft(null).catch(() => {});
+              router.push("/");
+            }}
+          >
+            <LogOut size={15} /> Sign out
+          </button>
+        )}
       </div>
+      {!hasRecoverableIdentity(user) && (
+        <section className="guest-recovery">
+          <h2>Keep these plans beyond this browser.</h2>
+          <p>
+            Your guest session can be lost if you clear browser data or switch
+            from Instagram to another browser. Connect Google or verify an email
+            to keep your plans and make membership recoverable.
+          </p>
+          <Link className="button primary" href="/auth?next=/profile">
+            Keep my plans <ArrowUpRight size={16} />
+          </Link>
+        </section>
+      )}
       {error && (
         <div className="error" role="alert">
           {error} <button onClick={refresh}>Try again</button>
